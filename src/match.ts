@@ -246,7 +246,9 @@ export interface TypedCurriedMatchFunc<
 
 export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 	// curryable wrapper around match.
-	const prematch = (_?: {}) => (
+	const prematch =
+		(_?: {}) =>
+		(
 			handler:
 				| Handler<Record<K, string>, K>
 				| ((t: {}) => Handler<Record<K, string>, K>),
@@ -271,10 +273,13 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 			];
 
 			const instanceOrCreator = typeIs(instanceOrTypeOrCreator, "string")
-					? (ofLiteral(instanceOrTypeOrCreator) as T)
-					: instanceOrTypeOrCreator;
+				? (ofLiteral(instanceOrTypeOrCreator) as T)
+				: instanceOrTypeOrCreator;
 			// unpack handler from function if necessary.
-			const handler: WithDefault<Handler<T, K>, T> = typeIs(handlerParam, "function")
+			const handler: WithDefault<Handler<T, K>, T> = typeIs(
+				handlerParam,
+				"function",
+			)
 				? (handlerParam as Extract<H, Func>)(instanceOrCreator as any)
 				: handlerParam;
 
