@@ -1,5 +1,5 @@
-import { VariantCreator, Func } from "./precepts";
-import { TypeStr } from "./util";
+import type { VariantCreator, Func } from "./precepts";
+import type { TypeStr } from "./util";
 
 export interface IsTypeFunc<K extends string> {
 	/**
@@ -37,13 +37,13 @@ export function isTypeImpl<K extends string>(key: K): IsTypeFunc<K> {
 		O extends Record<K, T>,
 		T extends string | VariantCreator<string, Func, K>,
 	>(
-		object: O | null | undefined,
+		object: O | undefined,
 		type: T,
 	): object is Extract<O, Record<K, TypeStr<T, K>>>;
 	function isType<
 		T extends O[K] | VariantCreator<O[K], Func, K>,
 		O extends Record<K, string>,
-	>(instanceOrType: O | {} | null | undefined | T, type?: T) {
+	>(instanceOrType: O | {} | undefined | T, type?: T) {
 		if (instanceOrType != undefined) {
 			if (
 				typeof instanceOrType === "function" ||
