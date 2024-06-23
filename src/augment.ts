@@ -1,5 +1,5 @@
 import { variation } from "./type";
-import {
+import type {
 	Func,
 	PatchObjectOrPromise,
 	RawVariant,
@@ -7,7 +7,7 @@ import {
 	VariantOf,
 } from "./precepts";
 import type { Identity } from "./util";
-import { isVariantCreator, VariantRecord } from "./variant";
+import { isVariantCreator, type VariantRecord } from "./variant";
 import { keys } from "@rbxts/phantom/src/Dictionary";
 
 /**

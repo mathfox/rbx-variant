@@ -64,7 +64,7 @@ export type Stringable<ReturnType extends string> = {
  */
 export type VariantCreator<
 	T extends string,
-	F extends (...args: any[]) => {} = () => {},
+	F extends (...args: Array<any>) => {} = () => {},
 	K extends string = "type",
 > = ((
 	...args: Parameters<F>
@@ -86,7 +86,7 @@ export type CreatorOutput<VC extends VariantCreator<string, Func, string>> =
 /**
  * Basic building block, the loose function signature.
  */
-export type Func = (...args: any[]) => any;
+export type Func = (...args: Array<any>) => any;
 
 /**
  * A variant module definition. Literally an object serving as

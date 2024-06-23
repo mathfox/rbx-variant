@@ -1,4 +1,4 @@
-import { Array } from "@rbxts/phantom";
+import { map } from "@rbxts/phantom/src/Array";
 import { flagsImpl } from "./flags";
 import type {
 	Func,
@@ -145,7 +145,7 @@ export type GP<T extends TypeNames<typeof GP> = undefined> = VariantOf<
 /**
  * Object with placeholders for generic terms.
  */
-export const Alpha = flags(Array.map(GP, (f) => f()));
+export const Alpha = flags(map(GP, (f) => f()));
 /**
  * Type with placeholders for generic terms.
  */

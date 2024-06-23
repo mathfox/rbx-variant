@@ -1,4 +1,4 @@
-import { SumType, VariantModule } from "./precepts";
+import type { SumType, VariantModule } from "./precepts";
 
 export interface IsOfVariantFunc<K extends string> {
 	/**
@@ -16,7 +16,7 @@ export interface IsOfVariantFunc<K extends string> {
 	 * @returns instance is variant
 	 */
 	isOfVariant<T extends VariantModule<K>>(
-		instance: {} | null | undefined,
+		instance: {} | undefined,
 		variant: T,
 	): instance is SumType<T>;
 	/**
@@ -32,32 +32,32 @@ export interface IsOfVariantFunc<K extends string> {
 	 */
 	isOfVariant<T extends VariantModule<K>>(
 		variant: T,
-	): (instance: {} | null | undefined) => instance is SumType<T>;
+	): (instance: {} | undefined) => instance is SumType<T>;
 }
 
 export function isOfVariantImpl<K extends string>(key: K): IsOfVariantFunc<K> {
 	function isOfVariant<T extends VariantModule<K>>(
-		instance: {} | null | undefined,
+		instance: {} | undefined,
 		variant: T,
 	): instance is SumType<T>;
 	function isOfVariant<T extends VariantModule<K>>(
 		variant: T,
-	): (instance: {} | null | undefined) => instance is SumType<T>;
+	): (instance: {} | undefined) => instance is SumType<T>;
 	function isOfVariant<T extends VariantModule<K>>(
-		...args: [T] | [{} | null | undefined, T]
+		...args: [T] | [{} | undefined, T]
 	) {
-		if (args.length === 1) {
+		if (args.size() === 1) {
 			const [variant] = args;
 
-			return (instance: {} | null | undefined) =>
-				instance != undefined &&
-				Object.values(variant).some(
+			return (instance: {} | undefined) =>
+				instance !== undefined &&
+				values(variant).some(
 					(vc) => vc.output.type === (instance as Record<K, string>)[key],
 				);
-		} else if (args.length === 2) {
+		} else if (args.size() === 2) {
 			const [instance, variant] = args;
 			return (
-				instance != undefined &&
+				instance !== undefined &&
 				Object.values(variant).some(
 					(vc) => vc.output.type === (instance as Record<K, string>)[key],
 				)
