@@ -274,7 +274,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		T extends Record<K, TType>,
 		H extends Handler<T, K> | ((t: T) => Handler<T, K>),
 		TType extends string,
-	>(...args: any[]) {
+	>(...args: unknown[]) {
 		if (args.size() === 1) {
 			// inline match
 			const [handler] = args as [H];

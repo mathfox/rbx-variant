@@ -33,13 +33,13 @@ export function tableToHandler<
 	T extends Record<K, string>,
 	K extends string,
 	Table extends Record<T[K], unknown>,
->(table: Table) {
-	return keys(table).reduce(
+>(tbl: Table) {
+	return keys(tbl).reduce(
 		(acc, cur) => {
 			const key = cur as keyof Table;
 			return {
 				...acc,
-				[key]: just(table[key]),
+				[key]: just(tbl[key]),
 			};
 		},
 		{} as Handler<T, K>,
@@ -242,11 +242,11 @@ export class Matcher<
 	 * @returns
 	 */
 	register<Table extends Splay<ComplementaryLookup<T, K, H>>>(
-		table: Limited<Table, T[K]> & Table,
+		tbl: Limited<Table, T[K]> & Table,
 	): Matcher<T, K, H & LookupTableToHandler<Table>> {
 		const newHandler = {
 			...this.handler,
-			...tableToHandler(table),
+			...tableToHandler(tbl),
 		} as H & LookupTableToHandler<Table>;
 		return new Matcher(this.target, this.key, newHandler);
 	}
@@ -269,11 +269,11 @@ export class Matcher<
 	 * @returns
 	 */
 	lookup<Table extends Record<RemainingKeys<T, K, H>, any>>(
-		table: Table,
+		tbl: Table,
 	): ReturnType<(H & LookupTableToHandler<Table>)[T[K]]> {
 		const combinedHandler = {
 			...this.handler,
-			...tableToHandler(table),
+			...tableToHandler(tbl),
 		} as H & LookupTableToHandler<Table>;
 
 		return combinedHandler[this.target[this.key]]?.(this.target as any);
@@ -323,13 +323,13 @@ export class Matcher<
 			const list = isArray(variations) ? variations : [variations];
 			const newCases = list.reduce(
 				(acc, cur) => {
-					const type = typeIs(cur, "string")
+					const t = typeIs(cur, "string")
 						? cur
 						: isVariantCreator(cur)
 							? cur.output.type
 							: undefined;
 
-					return type !== undefined ? { ...acc, [type]: handler } : acc;
+					return t !== undefined ? { ...acc, [t]: handler } : acc;
 				},
 				{} as Record<TypeStr<Variation1, K>, HandlerFunc>,
 			);
