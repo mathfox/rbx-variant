@@ -11,11 +11,11 @@
 					"@rbxts": {
 						"$path": "node_modules/@rbxts"
 					}
-				},
-				"Variant": {
-					"$path": "out"
 				}
-			}
+			},
+            "Variant": {
+                "$path": "out"
+            }
 		}
 	}
 }
