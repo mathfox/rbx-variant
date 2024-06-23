@@ -6,8 +6,9 @@ import {
 	VariantCreator,
 	VariantOf,
 } from "./precepts";
-import { Identity } from "./util";
+import type { Identity } from "./util";
 import { isVariantCreator, VariantRecord } from "./variant";
+import { keys } from "@rbxts/phantom/src/Dictionary";
 
 /**
  * Augment an existing variant model with new or overridden fields.
@@ -32,7 +33,7 @@ export function augment<
 	T extends RawVariant,
 	F extends (x: VariantOf<VariantRecord<T, string>>) => any,
 >(variantDefinition: T, f: F) {
-	return Object.keys(variantDefinition).reduce((acc, key: keyof T) => {
+	return keys(variantDefinition).reduce((acc, key: keyof T) => {
 		let inputFunc = variantDefinition[key] as Func;
 
 		let returnFunc = isVariantCreator(inputFunc)
@@ -49,7 +50,7 @@ export function augment<
 						: []
 				) => {
 					const branch = variantDefinition[key];
-					let item = typeof branch === "function" ? branch(...args) : {};
+					let item = typeIs(branch, "function") ? branch(...args) : {};
 					return {
 						...f(item),
 						...item,
