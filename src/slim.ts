@@ -6,7 +6,7 @@ export type { Flags, Matrix } from "./flags";
 export { onTerms, type GVariantOf } from "./generic";
 export { type TypeCatalog, typeMap, typeCatalog } from "./typeCatalog";
 export { catalog } from "./catalog";
-export { constant, just, unpack } from "./match.tools";
+export { constant, just, unload } from "./match.tools";
 export { patterned } from "./patterned";
 export type {
 	TypesOf,

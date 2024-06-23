@@ -13,9 +13,9 @@ export const just = constant;
  * ```
  * match(object, {
  *     ...
- *     case: unpack,
+ *     case: unload,
  *     ...
  * })
  * ```
  */
-export const unpack = <T>(x: { payload: T }) => x.payload;
+export const unload = <T>(x: { payload: T }) => x.payload;

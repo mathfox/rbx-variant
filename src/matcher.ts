@@ -318,7 +318,7 @@ export class Matcher<
 		variations: Variation1 | Variation2 | Variation3 | Variation4,
 		handler?: HandlerFunc,
 	) {
-		if (handler != undefined) {
+		if (handler !== undefined) {
 			// 2 param case
 			const list = isArray(variations) ? variations : [variations];
 			const newCases = list.reduce(

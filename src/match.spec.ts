@@ -7,7 +7,6 @@ import {
 	scoped,
 	TypeNames,
 	VariantOf,
-	variation,
 } from ".";
 import { variantCosmos } from "./cosmos";
 import {
@@ -20,7 +19,7 @@ import {
 	withFallback,
 } from "./type";
 import { typeMap } from "./typeCatalog";
-import { constant, just, unpack } from "./match.tools";
+import { constant, just, unload } from "./match.tools";
 import { Animal, CapsAnimal, sample } from "./__test__/animal";
 import { equals } from "@rbxts/phantom/src/Dictionary";
 
@@ -231,17 +230,17 @@ export = () => {
 		expect(rating(Animal2.Cat({ name: "steve" }))).to.equal("steve");
 	});
 
-	it("unpack", () => {
+	it("unload", () => {
 		const thing = Test1.Alpha("yolo") as Test1;
 
 		expect(test1Result(thing)).to.equal("yolo");
 	});
 
-	it("unpack (solo)", () => {
+	it("unload (solo)", () => {
 		const thing = Test1.Alpha("yolo");
 
 		const ret = match(thing, {
-			Alpha: unpack,
+			Alpha: unload,
 		});
 
 		expect(ret).to.equal("yolo");
@@ -259,7 +258,7 @@ export = () => {
 
 	const test1Result = (thing: Test1) =>
 		match(thing, {
-			Alpha: unpack,
+			Alpha: unload,
 			Beta: ({ prop }) => prop,
 			Gamma: just("gamma"),
 		});

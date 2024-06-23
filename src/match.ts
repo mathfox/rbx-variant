@@ -333,7 +333,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		branches: P,
 		elseFunc: Else,
 	): (input: T) => HandlerFromPartial<P & { default: Else }, T[K]> {
-		return (_) => ({ ...branches, default: elseFunc });
+		return (_) => ({ ...branches, default: elseFunc }) as unknown as HandlerFromPartial<P & { default: Else; }, T[K]>
 	}
 
 	function withFallback<
@@ -349,7 +349,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		ofLiteral,
 		otherwise,
 		partial,
-		prematch,
+		prematch: prematch as PrematchFunc<string>,
 		lookup,
 		withFallback,
 	};
