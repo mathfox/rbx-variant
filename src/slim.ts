@@ -5,7 +5,7 @@ export { variantCosmos } from "./cosmos";
 export { Flags, Matrix } from "./flags";
 export { onTerms, GVariantOf } from "./generic";
 export { TypeCatalog, typeMap, typeCatalog } from "./typeCatalog";
-export { catalog, literalist } from "./catalog";
+export { catalog } from "./catalog";
 export { constant, just, unpack } from "./match.tools";
 export { patterned } from "./patterned";
 export {
