@@ -28,9 +28,7 @@ export type Variant<
 export type PatchObjectOrPromise<
 	T extends {} | PromiseLike<{}>,
 	U extends {},
-> = T extends PromiseLike<infer R>
-	? Promise<Identity<U & R>>
-	: Identity<U & T>;
+> = T extends PromiseLike<infer R> ? Promise<Identity<U & R>> : Identity<U & T>;
 
 /**
  * The type marking metadata.
@@ -71,8 +69,8 @@ export type VariantCreator<
 ) => PatchObjectOrPromise<ReturnType<F>, Record<K, T>>) &
 	Outputs<K, T> &
 	Stringable<T> & {
-        name: T
-    };
+		name: T;
+	};
 
 /**
  * Given a VariantCreator, extract the output type. Unpack it
@@ -179,7 +177,7 @@ export type VariantOf<
  * The input type for `variant`/`variantModule`.
  */
 export type RawVariant = {
-    [type: string]: Func | {}
+	[type: string]: Func | {};
 };
 
 /**

@@ -70,8 +70,8 @@ export type GenericVariantCreator<
 >) &
 	Outputs<K, Type> &
 	Stringable<Type> & {
-        name: Type
-    };
+		name: Type;
+	};
 
 /**
  * Generic equivalent of `VariantTypeSpread`.

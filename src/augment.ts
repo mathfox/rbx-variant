@@ -34,7 +34,7 @@ export function augment<
 	F extends (x: VariantOf<VariantRecord<T, string>>) => any,
 >(variantDefinition: T, f: F) {
 	return keys(variantDefinition).reduce((acc, key) => {
-		let inputObject = variantDefinition[key]
+		let inputObject = variantDefinition[key];
 
 		let returnFunc = isVariantCreator(inputObject)
 			? variation(inputObject.output.type, (...args: any[]) => {
@@ -50,7 +50,9 @@ export function augment<
 						? TArgs
 						: []
 				) => {
-					let item = typeIs(inputObject, "function") ? inputObject(...args) : {};
+					let item = typeIs(inputObject, "function")
+						? inputObject(...args)
+						: {};
 
 					return {
 						...f(item),
@@ -79,9 +81,10 @@ type FullyFuncRawVariant<V extends RawVariant> = {
 
 type PatchFunc<F, O extends object> = F extends (
 	...args: infer TArgs
-) => infer TReturn ? TReturn extends {} | PromiseLike<{}>
-        ? (...args: TArgs) => PatchObjectOrPromise<TReturn, O>
-        : never
+) => infer TReturn
+	? TReturn extends {} | PromiseLike<{}>
+		? (...args: TArgs) => PatchObjectOrPromise<TReturn, O>
+		: never
 	: never;
 
 /**

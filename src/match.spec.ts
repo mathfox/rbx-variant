@@ -1,13 +1,6 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import {
-	fields,
-	match,
-	payload,
-	scoped,
-	TypeNames,
-	VariantOf,
-} from ".";
+import { fields, match, payload, scoped, TypeNames, VariantOf } from ".";
 import { variantCosmos } from "./cosmos";
 import {
 	lookup,
@@ -293,12 +286,12 @@ export = () => {
 			);
 
 		expect(result(sample.cerberus)).to.equal(2);
-        const resultObject = result(Animal.snake("Test"))
+		const resultObject = result(Animal.snake("Test"));
 		expect(
-			equals( resultObject as object, {
+			equals(resultObject as object, {
 				hello: "world",
 				complex: 4,
-			})
+			}),
 		).to.equal(true);
 	});
 
