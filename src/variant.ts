@@ -64,8 +64,8 @@ type ScopedType<Scope extends string, Type extends string> = `${Scope}/${Type}`;
  */
 export const scopeType = <Scope extends string, Type extends string>(
 	scope: Scope,
-	type: Type,
-) => `${scope}/${type}` as ScopedType<Scope, Type>;
+	t: Type,
+) => `${scope}/${t}` as ScopedType<Scope, Type>;
 
 function descopeType<S extends string, T extends string>(
 	s: ScopedType<S, T>,
@@ -326,16 +326,14 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 	}
 
 	function variation<T extends string, F extends Func = () => {}>(
-		type: T,
+		t: T,
 		creator?: F,
 	) {
 		const maker = {
-			output: { key, type },
-			name: type,
+			output: { key, type: t },
+			name: t,
 			[VARIANT_CREATOR_BRAND]: true,
-			toString: function (this: Outputs<K, T>) {
-				return this.output.type;
-			},
+			toString: () => t,
 		};
 
 		setmetatable(maker, {
@@ -351,14 +349,14 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 						if (key in result) {
 							return result;
 						} else {
-							return assign(result ?? {}, { [key]: type });
+							return assign(result ?? {}, { [key]: t });
 						}
 					});
 				} else if (key in value) {
 					return value;
 				}
 
-				return assign(value, { [key]: type });
+				return assign(value, { [key]: t });
 			}) as any,
 		});
 

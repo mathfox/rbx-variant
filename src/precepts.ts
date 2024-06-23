@@ -141,7 +141,7 @@ export type TypeNames<T extends VariantModule<string>> = TypesOf<T> | undefined;
 /**
  * Simple internal helper to extract the variation types for each key of a `VariantModule`
  */
-type VariantTypeSpread<T extends VariantModule<string>> = {
+export type VariantTypeSpread<T extends VariantModule<string>> = {
 	[P in keyof T]: CreatorOutput<T[P]>;
 };
 

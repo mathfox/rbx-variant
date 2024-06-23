@@ -108,7 +108,7 @@ export interface Sequence<
 	 * Get some element by index.
 	 * @returns a tag constructor.
 	 */
-	get: (index: number) => T[keyof T];
+	get (index: number): T[keyof T];
 	/**
 	 * The number of elements.
 	 */
@@ -198,8 +198,8 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 				return diff === 0 ? diff : ((diff / math.abs(diff)) as CompareResult);
 			},
 			get(i: number) {
-				const type = this.types[i];
-				return (this.new as VariantModule<K>)[type] as any;
+				const t = this.types[i];
+				return (this.new as VariantModule<K>)[t] as any;
 			},
 			index: (a) => keyOrder.findIndex((i) => i === getType(a)),
 			types: keyOrder,
