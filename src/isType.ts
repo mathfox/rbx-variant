@@ -22,7 +22,7 @@ export interface IsTypeFunc<K extends string> {
 		O extends Record<K, string>,
 		T extends O[K] | VariantCreator<O[K], Func, K>,
 	>(
-		object: O | null | undefined,
+		object: O | undefined,
 		type: T,
 	): object is Extract<O, Record<K, TypeStr<T, K>>>;
 }
