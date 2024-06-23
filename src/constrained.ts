@@ -1,5 +1,5 @@
-import { Func } from "./precepts";
-import { Identity } from "./util";
+import type { Func } from "./precepts";
+import type { Identity } from "./util";
 
 /**
  * Constrained template.
