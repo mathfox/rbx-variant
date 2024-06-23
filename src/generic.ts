@@ -12,18 +12,17 @@ import type {
 } from "./precepts";
 import { variantImpl } from "./variant";
 
-type primitive = number | string | symbol | boolean ;
+type primitive = number | string | symbol | boolean;
 
 const GENERIC_BRAND: unique symbol = {
-    __brand: "VARIANT GENERIC TEMPLATE"
-} as any
-
+	__brand: "VARIANT GENERIC TEMPLATE",
+} as any;
 
 /**
  * Announce to the world (specifically `variant`/`variantModule`) that
  */
 export type GenericTemplate<T extends RawVariant> = T & {
-    // ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
+	// ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
 	[GENERIC_BRAND]: true;
 };
 /**
@@ -36,7 +35,7 @@ export function onTerms<T extends RawVariant>(
 ): GenericTemplate<T> {
 	return {
 		...func(Alpha),
-        // ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
+		// ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
 		[GENERIC_BRAND]: true,
 	};
 }
@@ -146,7 +145,7 @@ export type GP<T extends TypeNames<typeof GP> = undefined> = VariantOf<
 /**
  * Object with placeholders for generic terms.
  */
-export const Alpha = flags(Array.map(GP ,(f) => f()));
+export const Alpha = flags(Array.map(GP, (f) => f()));
 /**
  * Type with placeholders for generic terms.
  */
