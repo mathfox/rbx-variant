@@ -1,7 +1,13 @@
-import {variation} from './type';
-import {Func, PatchObjectOrPromise, RawVariant, VariantCreator, VariantOf} from './precepts';
-import {Identity} from './util';
-import {isVariantCreator, VariantRecord} from './variant';
+import { variation } from "./type";
+import {
+	Func,
+	PatchObjectOrPromise,
+	RawVariant,
+	VariantCreator,
+	VariantOf,
+} from "./precepts";
+import { Identity } from "./util";
+import { isVariantCreator, VariantRecord } from "./variant";
 
 /**
  * Augment an existing variant model with new or overridden fields.
@@ -22,48 +28,68 @@ import {isVariantCreator, VariantRecord} from './variant';
  * ));
  * ```
  */
-export function augment<T extends RawVariant, F extends (x: VariantOf<VariantRecord<T, string>>) => any>(variantDefinition: T, f: F) {
-    return Object.keys(variantDefinition).reduce((acc, key: keyof T) => {
-        let inputFunc = variantDefinition[key] as Func
+export function augment<
+	T extends RawVariant,
+	F extends (x: VariantOf<VariantRecord<T, string>>) => any,
+>(variantDefinition: T, f: F) {
+	return Object.keys(variantDefinition).reduce((acc, key: keyof T) => {
+		let inputFunc = variantDefinition[key] as Func;
 
-        let returnFunc = isVariantCreator(inputFunc)
-            ? variation(inputFunc.output.type, (...args: any[]) => {
-                let result = inputFunc(...args);
-                return {
-                    ...f(result),
-                    ...result,
-                }
-            })
-            : (...args: T[typeof key] extends (...args: infer TArgs) => any ? TArgs : []) => {
-                const branch = variantDefinition[key];
-                let item = typeof branch === 'function' ? branch(...args) : {};
-                return {
-                    ...f(item),
-                    ...item,
-                }
-            }
-        ;
+		let returnFunc = isVariantCreator(inputFunc)
+			? variation(inputFunc.output.type, (...args: any[]) => {
+					let result = inputFunc(...args);
+					return {
+						...f(result),
+						...result,
+					};
+				})
+			: (
+					...args: T[typeof key] extends (...args: infer TArgs) => any
+						? TArgs
+						: []
+				) => {
+					const branch = variantDefinition[key];
+					let item = typeof branch === "function" ? branch(...args) : {};
+					return {
+						...f(item),
+						...item,
+					};
+				};
 
-        return {
-            ...acc,
-            [key]: returnFunc,
-        }
-    }, {}) as AugmentedRawVariant<T, F>;
+		return {
+			...acc,
+			[key]: returnFunc,
+		};
+	}, {}) as AugmentedRawVariant<T, F>;
 }
 
-type CleanResult<T, U> = T extends undefined ? U : T extends Func ? T : T extends object ? U : T;
+type CleanResult<T, U> = T extends undefined
+	? U
+	: T extends Func
+		? T
+		: T extends object
+			? U
+			: T;
 
 type FullyFuncRawVariant<V extends RawVariant> = {
-    [P in keyof V & string]: CleanResult<V[P], () => {}>
-}
+	[P in keyof V & string]: CleanResult<V[P], () => {}>;
+};
 
-type PatchFunc<F, O extends object> = F extends (...args: infer TArgs) => infer TReturn ? (...args: TArgs) => PatchObjectOrPromise<TReturn, O> : never;
+type PatchFunc<F, O extends object> = F extends (
+	...args: infer TArgs
+) => infer TReturn
+	? (...args: TArgs) => PatchObjectOrPromise<TReturn, O>
+	: never;
 
 /**
  * A variant patched with an extra property.
  */
 export type AugmentedRawVariant<V extends RawVariant, F extends Func> = {
-    [P in keyof V]: V[P] extends VariantCreator<infer VT, infer VCF, infer VK>
-        ? VariantCreator<VT, PatchFunc<VCF, ReturnType<F>>, VK>
-        : (...args: Parameters<FullyFuncRawVariant<V>[P & string]>) => Identity<ReturnType<F> & ReturnType<FullyFuncRawVariant<V>[P & string]>>
-}
+	[P in keyof V]: V[P] extends VariantCreator<infer VT, infer VCF, infer VK>
+		? VariantCreator<VT, PatchFunc<VCF, ReturnType<F>>, VK>
+		: (
+				...args: Parameters<FullyFuncRawVariant<V>[P & string]>
+			) => Identity<
+				ReturnType<F> & ReturnType<FullyFuncRawVariant<V>[P & string]>
+			>;
+};
