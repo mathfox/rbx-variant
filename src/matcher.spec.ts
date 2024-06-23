@@ -205,11 +205,12 @@ export = () => {
 	});
 
 	it("matcher failure", () => {
-		const greetAnimal = (animal: Animal) =>
-			matcher(animal)
-				.when("snake", ({ name }) => `Hello ${name}`)
-				// @ts-expect-error
-				.complete();
+        expect(() => {
+            const greetAnimal = (animal: Animal) =>
+                matcher(animal)
+                    .when("snake", ({ name }) => `Hello ${name}`)
+                    .complete();
+        }).to.throw()
 	});
 
 	it("match enum", () => {
