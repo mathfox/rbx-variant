@@ -1,8 +1,10 @@
-import { Handler } from "./match";
+import { keys } from "@rbxts/phantom/src/Dictionary";
+import type { Handler } from "./match";
 import { just } from "./match.tools";
-import { Func, Limited, Splay, VariantCreator, VariantError } from "./precepts";
-import { TypeStr } from "./util";
+import type { Func, Limited, Splay, VariantCreator, VariantError } from "./precepts";
+import type { TypeStr } from "./util";
 import { isVariantCreator } from "./variant";
+import { isArray } from "@rbxts/phantom/src/Array";
 
 /**
  * From a lookup table to a handler record.
@@ -26,7 +28,7 @@ export function tableToHandler<
 	K extends string,
 	Table extends Record<T[K], unknown>,
 >(table: Table) {
-	return Object.keys(table).reduce(
+	return keys(table).reduce(
 		(acc, cur) => {
 			const key = cur as keyof Table;
 			return {
@@ -179,12 +181,12 @@ export class Matcher<
 	}
 
 	complete = ((options?: CompleteOptions) => {
-		if (this.target != undefined && this.target[this.key] in this.handler) {
+		if (this.target !== undefined && this.target[this.key] in this.handler) {
 			return this.handler[this.target[this.key]]?.(
 				this.target as Extract<T, Record<K, string>>,
 			);
 		} else {
-			if (options?.withFallback != undefined) {
+			if (options?.withFallback !== undefined) {
 				return options.withFallback(this.target);
 			}
 		}
@@ -312,17 +314,16 @@ export class Matcher<
 	) {
 		if (handler != undefined) {
 			// 2 param case
-			const list = Array.isArray(variations) ? variations : [variations];
+			const list = isArray(variations) ? variations : [variations];
 			const newCases = list.reduce(
 				(acc, cur) => {
-					const type =
-						typeof cur === "string"
+					const type = typeIs(cur, "string")
 							? cur
 							: isVariantCreator(cur)
 								? cur.output.type
 								: undefined;
 
-					return type != undefined ? { ...acc, [type]: handler } : acc;
+					return type !== undefined ? { ...acc, [type]: handler } : acc;
 				},
 				{} as Record<TypeStr<Variation1, K>, HandlerFunc>,
 			);
@@ -357,8 +358,7 @@ export function matcherImpl<K extends string>(key: K): MatcherFunc<K> {
 		T extends TType extends TType ? Record<K, TType> : never,
 		TType extends string,
 	>(target: T | TType) {
-		const actualTarget =
-			typeof target === "string" ? { [key]: target } : target;
+		const actualTarget = typeIs(target, "string") ? { [key]: target } : target;
 		return new Matcher(actualTarget as any, key, {});
 	}
 

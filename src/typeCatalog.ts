@@ -1,5 +1,6 @@
-import { TypeMap, TypesOf, VariantModule } from "./precepts";
-import { Identity } from "./util";
+import { keys, values } from "@rbxts/phantom/src/Dictionary";
+import type { TypeMap, TypesOf, VariantModule } from "./precepts";
+import type { Identity } from "./util";
 
 /**
  * A catalog object listing the types inherent to some `VariantModule`
@@ -22,7 +23,7 @@ export type TypeCatalog<T extends VariantModule<string>> = {
  * ```
  */
 export function typeCatalog<T extends VariantModule<string>>(variant: T) {
-	return Object.values(variant).reduce(
+	return values(variant).reduce(
 		(result, vc) => {
 			return {
 				...result,
@@ -56,7 +57,7 @@ export function typeCatalog<T extends VariantModule<string>>(variant: T) {
  * ```
  */
 export function typeMap<T extends VariantModule<string>>(variant: T) {
-	return Object.keys(variant).reduce(
+	return keys(variant).reduce(
 		(result, key) => {
 			return {
 				...result,

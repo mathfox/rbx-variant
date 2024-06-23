@@ -2,13 +2,13 @@ export { augment } from "./augment";
 export { constrained } from "./constrained";
 export { construct } from "./construct";
 export { variantCosmos } from "./cosmos";
-export { Flags, Matrix } from "./flags";
-export { onTerms, GVariantOf } from "./generic";
-export { TypeCatalog, typeMap, typeCatalog } from "./typeCatalog";
+export type { Flags, Matrix } from "./flags";
+export { onTerms, type GVariantOf } from "./generic";
+export { type TypeCatalog, typeMap, typeCatalog } from "./typeCatalog";
 export { catalog } from "./catalog";
 export { constant, just, unpack } from "./match.tools";
 export { patterned } from "./patterned";
-export {
+export type {
 	TypesOf,
 	TypeMap,
 	TypeNames,
@@ -17,5 +17,5 @@ export {
 	VariantModule,
 } from "./precepts";
 export { pass } from "./typed";
-export { HOI } from "./util";
+export type { HOI } from "./util";
 export { fields, nil, payload } from "./variant.tools";

@@ -80,7 +80,7 @@ export function typedImpl<K extends string>(_key: K): TypedFunc<K> {
 			| ExactDefinition<T, K>
 			| ((_: typeof pass) => ExactDefinition<T, K>),
 	) {
-		if (typeof defOrFactory === "function") {
+		if (typeIs(defOrFactory, "function") ) {
 			return defOrFactory(pass) as VoidEmpty<ExactDefinition<T, K>>;
 		} else {
 			return defOrFactory as VoidEmpty<ExactDefinition<T, K>>;

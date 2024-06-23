@@ -1,17 +1,19 @@
+import { isArray } from "@rbxts/phantom/src/Array";
 import { isTypeImpl } from "./isType";
-import { MatchFuncs, matchImpl } from "./match";
-import {
+import { type MatchFuncs, matchImpl } from "./match";
+import type {
 	Func,
 	TypesOf,
 	VariantCreator,
 	VariantModule,
 	VariantOf,
 } from "./precepts";
-import { variantImpl, VMFromVC } from "./variant";
+import { variantImpl, type VMFromVC } from "./variant";
+import { Dictionary } from "@rbxts/phantom";
 
 type IsFunctions<T extends VariantModule<K>, K extends string = "type"> = {
 	[P in keyof T]: <O extends Record<K, string>>(
-		object: O | {} | null | undefined,
+		object: O | {} | undefined,
 	) => object is VariantOf<T, P>;
 };
 
@@ -147,7 +149,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	const { variantList } = variantImpl(key);
 
 	function isFunctions<T extends VariantModule<K>>(vmod: T) {
-		const keys = Object.keys(vmod) as Array<string & keyof T>;
+		const keys = Dictionary.keys(vmod) as Array<string & keyof T>;
 		return keys.reduce((acc, key) => {
 			return {
 				...acc,
@@ -168,9 +170,10 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	function getType<T extends SequenceInput<K, U>, U extends string>(
 		input: T,
 	): U {
-		if (typeof input === "string") {
+		if (typeIs(input, "string")) {
 			return input as U;
-		} else if (typeof input === "function") {
+		} else if (typeIs(input, "function")) {
+            // TODO: fix
 			return (input as VariantCreator<string, Func, K>).output.type as U;
 		} else {
 			return (input as Record<K, string>)[key] as U;
@@ -186,12 +189,12 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		const keyOrder = order.map(getType);
 		return {
 			...result,
-			length: order.length,
+			length: order.size(),
 			compare: (a, b) => {
 				const ai = keyOrder.findIndex((i) => i === getType(a));
 				const bi = keyOrder.findIndex((i) => i === getType(b));
 				const diff = ai - bi;
-				return diff === 0 ? diff : ((diff / Math.abs(diff)) as CompareResult);
+				return diff === 0 ? diff : ((diff / math.abs(diff)) as CompareResult);
 			},
 			get(i: number) {
 				const type = this.types[i];
@@ -211,7 +214,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		module: T | CreativeSequenceInput<K>,
 		order?: O[],
 	) {
-		if (Array.isArray(module)) {
+		if (isArray(module)) {
 			return _sequenceOfList(module);
 		} else {
 			return _sequence(module as T, order!);
