@@ -99,6 +99,7 @@ export interface VariantFuncs<K extends string> {
 	 * ```
 	 */
 	descope<T extends Record<K, ScopedType<string, string>>>(
+		this: void,
 		target: T,
 	): T extends Record<K, ScopedType<string, infer TType>>
 		? Identity<Omit<T, K> & Record<K, TType>>
@@ -109,6 +110,7 @@ export interface VariantFuncs<K extends string> {
 	 * @param v
 	 */
 	scoped<T extends RawVariant, Scope extends string>(
+		this: void,
 		scope: Scope,
 		v: T,
 	): ScopedVariant<T, Scope>;
@@ -145,6 +147,7 @@ export interface VariantFuncs<K extends string> {
 	 * ```
 	 */
 	variantList<T extends ValidListType>(
+		this: void,
 		template: T[],
 	): Identity<VMFromVC<CreatorFromListType<T, K>>>;
 
@@ -172,6 +175,7 @@ export interface VariantFuncs<K extends string> {
 	 * ```
 	 */
 	variantModule<VM extends RawVariant>(
+		this: void,
 		template: VM,
 	): Identity<VariantRecord<VM, K>>;
 
@@ -193,6 +197,7 @@ export interface VariantFuncs<K extends string> {
 	 * Note the use of `GVariantOf` instead of `VariantOf`.
 	 */
 	variant<VM extends RawVariant>(
+		this: void,
 		template: GenericTemplate<VM>,
 	): Identity<GenericVariantRecord<VM, K>>;
 
@@ -218,7 +223,10 @@ export interface VariantFuncs<K extends string> {
 	 * });
 	 * ```
 	 */
-	variant<VM extends RawVariant>(template: VM): Identity<VariantRecord<VM, K>>;
+	variant<VM extends RawVariant>(
+		this: void,
+		template: VM,
+	): Identity<VariantRecord<VM, K>>;
 
 	/**
 	 * Create a **variant** from a list of elements. Each element may be a `string`
@@ -252,6 +260,7 @@ export interface VariantFuncs<K extends string> {
 	 * ```
 	 */
 	variant<T extends ValidListType>(
+		this: void,
 		template: T[],
 	): Identity<VMFromVC<CreatorFromListType<T, K>>>;
 
@@ -284,6 +293,7 @@ export interface VariantFuncs<K extends string> {
 	 *     ```
 	 */
 	variation<T extends string, F extends Func = () => {}>(
+		this: void,
 		type: T,
 		creator?: F,
 	): VariantCreator<T, F extends VariantCreator<string, infer VF> ? VF : F, K>;

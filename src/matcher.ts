@@ -356,7 +356,7 @@ export interface MatcherFunc<K extends string> {
 	matcher<
 		T extends TType extends TType ? Record<K, TType> : never,
 		TType extends string,
-	>(target: T | TType): Matcher<T, K, {}>;
+	>(this: void, target: T | TType): Matcher<T, K, {}>;
 }
 
 export function matcherImpl<K extends string>(key: K): MatcherFunc<K> {

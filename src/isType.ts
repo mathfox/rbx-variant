@@ -8,6 +8,7 @@ export interface IsTypeFunc<K extends string> {
 	 * @returns A user-defined type guard indicating if the instance is of a given type.
 	 */
 	isType<T extends string | VariantCreator<string, Func, K>>(
+		this: void,
 		type: T,
 	): <O extends Record<K, string>>(
 		object: O,
@@ -22,6 +23,7 @@ export interface IsTypeFunc<K extends string> {
 		O extends Record<K, string>,
 		T extends O[K] | VariantCreator<O[K], Func, K>,
 	>(
+		this: void,
 		object: O | undefined,
 		type: T,
 	): object is Extract<O, Record<K, TypeStr<T, K>>>;

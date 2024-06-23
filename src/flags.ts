@@ -29,6 +29,7 @@ export interface FlagsFunc<K extends string> {
 	 * @returns An object where each property's key is a type string and its value is the instance of that type.
 	 */
 	flags<T extends Record<K, string>>(
+		this: void,
 		flags: T[],
 	): { [P in T[K]]: Extract<T, Record<K, P>> };
 }

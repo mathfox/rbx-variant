@@ -11,7 +11,10 @@ export interface TypesFunc<K extends string> {
 	 * @template T target discriminated union
 	 * @returns list of string literal types.
 	 */
-	types<T extends VariantModule<K>>(content: T): Identity<TypesOf<T>>[];
+	types<T extends VariantModule<K>>(
+		this: void,
+		content: T,
+	): Identity<TypesOf<T>>[];
 	/**
 	 * Get the list of types from a list of variant creators.
 	 * @param content list of variant creators.
@@ -19,6 +22,7 @@ export interface TypesFunc<K extends string> {
 	 * @returns list of string literal types.
 	 */
 	types<C extends VariantCreator<string, Func, K>>(
+		this: void,
 		content: C[],
 	): C["output"]["type"][];
 	/**
@@ -27,7 +31,7 @@ export interface TypesFunc<K extends string> {
 	 * @template T target discriminated union
 	 * @returns list of string literal types.
 	 */
-	types<T extends Record<K, string>>(content: T[]): T[K][];
+	types<T extends Record<K, string>>(this: void, content: T[]): T[K][];
 }
 
 export function typesImpl<K extends string>(key: K): TypesFunc<K> {

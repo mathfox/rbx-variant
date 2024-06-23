@@ -62,6 +62,7 @@ export type MatchFuncs<K extends string> = {
 	 * @param instance
 	 */
 	ofLiteral<T extends string | number | symbol>(
+		this: void,
 		instance: T,
 	): LiteralToUnion<T, K>;
 
@@ -77,6 +78,7 @@ export type MatchFuncs<K extends string> = {
 		T extends Record<K, string>,
 		Else extends (remainder: Exclude<T, Record<K, keyof P>>) => any,
 	>(
+		this: void,
 		branches: P,
 		elseFunc: Else,
 	): (input: T) => HandlerFromPartial<P & { default: Else }, T[K]>;
@@ -92,6 +94,7 @@ export type MatchFuncs<K extends string> = {
 	 * @param handler
 	 */
 	lookup<H extends Record<T[K], any>, T extends Record<K, string>>(
+		this: void,
 		handler: H,
 	): (instance: T) => LookupTableToHandler<H>;
 
@@ -104,7 +107,11 @@ export type MatchFuncs<K extends string> = {
 		T extends Record<K, string>,
 		H extends Handler<T, K>,
 		F extends (instance: T) => any,
-	>(handler: H, fallback: F): (input: T) => ExplicitHandler<H, F, T[K]>;
+	>(
+		this: void,
+		handler: H,
+		fallback: F,
+	): (input: T) => ExplicitHandler<H, F, T[K]>;
 };
 
 /**
@@ -129,12 +136,14 @@ export interface PartialOverloads<K extends string> {
 	 * Handle some cases, use **`default:`** to handle the remainder.
 	 */
 	<H extends AdvertiseDefault<Handler<T, K>>, T extends Record<K, string>>(
+		this: void,
 		handler: H | ((t: T) => H),
 	): (input: T) => H;
 	/**
 	 * Handle some cases, use **`default:`** to handle the remainder (Active).
 	 */
 	<H extends WithDefault<Handler<T, K>, T>, T extends Record<K, string>>(
+		this: void,
 		handler: H | ((t: T) => H),
 	): (input: T) => HandlerFromPartial<H, T[K]>;
 }
@@ -150,6 +159,7 @@ export interface MatchOverloads<K extends string> {
 	 * @template H handler object
 	 */
 	<T extends Record<K, TType>, H extends Handler<T, K>, TType extends string>(
+		this: void,
 		handler: EnforceHandler<H> | ((t: T) => H),
 	): (instance: T | TType) => ReturnType<H[keyof H]>;
 
@@ -166,6 +176,7 @@ export interface MatchOverloads<K extends string> {
 		C extends VariantCreator<string, (...args: any[]) => {}, K>,
 		H extends CreatorHandler<C>,
 	>(
+		this: void,
 		handler: EnforceHandler<H> | ((t: C) => H),
 	): (instance: C) => ReturnType<H[keyof H]>;
 
@@ -179,6 +190,7 @@ export interface MatchOverloads<K extends string> {
 	 * @returns The result of the appropriate branch based on the instance type
 	 */
 	<T extends Record<K, TType>, H extends Handler<T, K>, TType extends string>(
+		this: void,
 		target: T | TType,
 		handler: H | ((t: T) => H),
 	): ReturnType<H[T[K]]>;
@@ -196,6 +208,7 @@ export interface MatchOverloads<K extends string> {
 		C extends VariantCreator<string, (...args: any[]) => {}, K>,
 		H extends CreatorHandler<C>,
 	>(
+		this: void,
 		target: C,
 		handler: H | ((t: C) => H),
 	): ReturnType<H[C["output"]["type"]]>;
@@ -218,6 +231,7 @@ export interface PrematchFunc<K extends string> {
 	 * @returns a function to handle an instance of that type.
 	 */
 	<T extends VariantModule<K>>(
+		this: void,
 		variant: T,
 	): TypedCurriedMatchFunc<VariantOf<T>, K>;
 	/**
@@ -226,7 +240,7 @@ export interface PrematchFunc<K extends string> {
 	 * @template T a discriminated union
 	 * @returns a function to handle an instance of that type.
 	 */
-	<T extends Record<K, string>>(): TypedCurriedMatchFunc<T, K>;
+	<T extends Record<K, string>>(this: void): TypedCurriedMatchFunc<T, K>;
 }
 
 /**

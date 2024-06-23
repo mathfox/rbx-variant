@@ -47,6 +47,7 @@ export interface TypedFunc<K extends string> {
 	 * ```
 	 */
 	typed<T extends Record<K, string>>(
+		this: void,
 		variant: ExactDefinition<T, K>,
 	): VoidEmpty<ExactDefinition<T, K>>;
 	/**
@@ -70,6 +71,7 @@ export interface TypedFunc<K extends string> {
 	 * ```
 	 */
 	typed<T extends Record<K, string>>(
+		this: void,
 		factory: (_: typeof pass) => ExactDefinition<T, K>,
 	): VoidEmpty<ExactDefinition<T, K>>;
 }

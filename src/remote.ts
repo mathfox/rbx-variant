@@ -124,13 +124,14 @@ export interface RemoteFuncs<K extends string> {
 	 * Create a "remote control" for a variant.
 	 * @param variant
 	 */
-	remote<T extends VariantModule<K>>(variant: T): Remote<T, K>;
+	remote<T extends VariantModule<K>>(this: void, variant: T): Remote<T, K>;
 	/**
 	 * Create a sequence based on a variant.
 	 * @param module the variant definition.
 	 * @param order the list of string literal types or variation creators.
 	 */
 	sequence<T extends VariantModule<K>, O extends SequenceInput<K>>(
+		this: void,
 		module: T,
 		order: O[],
 	): Sequence<Pick<T, SequenceInputType<O, K>>, O, K>;
@@ -139,6 +140,7 @@ export interface RemoteFuncs<K extends string> {
 	 * @param order the list of literal types or variation creators. Also the variant definition a la `variantList`.
 	 */
 	sequence<O extends CreativeSequenceInput<K>>(
+		this: void,
 		order: O[],
 	): Sequence<VMFromVC<CreatorFromSeqInput<O, K>>, O, K>;
 }

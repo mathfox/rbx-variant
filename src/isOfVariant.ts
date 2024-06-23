@@ -17,6 +17,7 @@ export interface IsOfVariantFunc<K extends string> {
 	 * @returns instance is variant
 	 */
 	isOfVariant<T extends VariantModule<K>>(
+		this: void,
 		instance: {} | undefined,
 		variant: T,
 	): instance is SumType<T>;
@@ -32,6 +33,7 @@ export interface IsOfVariantFunc<K extends string> {
 	 * @returns user-defined type guard.
 	 */
 	isOfVariant<T extends VariantModule<K>>(
+		this: void,
 		variant: T,
 	): (instance: {} | undefined) => instance is SumType<T>;
 }
