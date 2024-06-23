@@ -1,4 +1,4 @@
-import { Identity, IsNever } from "./util";
+import type { Identity, IsNever } from "./util";
 
 /**
  * Used in writing cases of a type-first variant.
