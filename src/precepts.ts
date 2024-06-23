@@ -29,7 +29,7 @@ export type PatchObjectOrPromise<
 	T extends {} | PromiseLike<{}>,
 	U extends {},
 > = T extends PromiseLike<infer R>
-	? PromiseLike<Identity<U & R>>
+	? Promise<Identity<U & R>>
 	: Identity<U & T>;
 
 /**

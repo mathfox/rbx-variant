@@ -22,7 +22,7 @@ export = () => {
 		const kerberos = dog();
 
 		expect(kerberos.type).to.equal("dog");
-		expect(keys(kerberos).length).to.equal(1);
+		expect(keys(kerberos).size()).to.equal(1);
 	});
 
 	it("variation (custom func, 0 param)", () => {
@@ -121,7 +121,7 @@ export = () => {
 
 	it("async variant", async () => {
 		// from issue #3 on github
-		const bla = () => "hello";
+		const bla = async () => "hello";
 
 		const TaskExtractMetadata = variation("extract_metadata", async () => {
 			// do async stuff

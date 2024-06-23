@@ -12,7 +12,7 @@ import type {
 } from "./precepts";
 import { variantImpl } from "./variant";
 
-type primitive = number | string | symbol | boolean;
+type primitive = number | string | boolean;
 
 const GENERIC_BRAND: unique symbol = {
 	__brand: "VARIANT GENERIC TEMPLATE",

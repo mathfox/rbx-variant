@@ -7,6 +7,7 @@
 export function fields<T extends {}>(defaults: Partial<T> = {}) {
 	return (...args: {} extends T ? [input: T] | [] : [input: T]) => {
 		const [arg] = args;
+
 		return {
 			...defaults,
 			...arg,

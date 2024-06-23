@@ -33,7 +33,7 @@ export function augment<
 	T extends RawVariant,
 	F extends (x: VariantOf<VariantRecord<T, string>>) => any,
 >(variantDefinition: T, f: F) {
-	return keys(variantDefinition).reduce((acc, key: keyof T) => {
+	return keys(variantDefinition).reduce((acc, key) => {
 		let inputFunc = variantDefinition[key] as Func;
 
 		let returnFunc = isVariantCreator(inputFunc)
