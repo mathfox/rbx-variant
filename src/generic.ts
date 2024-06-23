@@ -1,5 +1,6 @@
+import { Array } from "@rbxts/phantom";
 import { flagsImpl } from "./flags";
-import {
+import type {
 	Func,
 	TypesOf,
 	Outputs,
@@ -11,15 +12,19 @@ import {
 } from "./precepts";
 import { variantImpl } from "./variant";
 
-type primitive = number | string | symbol | boolean | bigint;
+type primitive = number | string | symbol | boolean ;
 
-const GENERIC_BRAND = Symbol("VARIANT GENERIC TEMPLATE");
+const GENERIC_BRAND: unique symbol = {
+    __brand: "VARIANT GENERIC TEMPLATE"
+} as any
+
 
 /**
  * Announce to the world (specifically `variant`/`variantModule`) that
  */
 export type GenericTemplate<T extends RawVariant> = T & {
-	[GENERIC_BRAND]: undefined;
+    // ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
+	[GENERIC_BRAND]: true;
 };
 /**
  * Define a generic variant
@@ -31,7 +36,8 @@ export function onTerms<T extends RawVariant>(
 ): GenericTemplate<T> {
 	return {
 		...func(Alpha),
-		[GENERIC_BRAND]: undefined,
+        // ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
+		[GENERIC_BRAND]: true,
 	};
 }
 const GTERM = "__term";
@@ -140,7 +146,7 @@ export type GP<T extends TypeNames<typeof GP> = undefined> = VariantOf<
 /**
  * Object with placeholders for generic terms.
  */
-export const Alpha = flags(Object.values(GP).map((f) => f()));
+export const Alpha = flags(Array.map(GP ,(f) => f()));
 /**
  * Type with placeholders for generic terms.
  */
