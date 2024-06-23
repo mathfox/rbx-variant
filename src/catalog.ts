@@ -1,3 +1,5 @@
+import { isArray } from "@rbxts/phantom/src/Array";
+
 /**
  * Yes, this is necessary. Otherwise, boolean becomes rewritten as `true | false` and my distribution fails.
  */
@@ -89,7 +91,7 @@ export function catalog<
 	T extends string[] | LiteralCatalog,
 	F extends LiteralFactory,
 >(catalog: T, factory?: F) {
-	if (Array.isArray(catalog)) {
+	if (isArray(catalog)) {
 		return catalog.reduce((result, current: string, index) => {
 			return {
 				...result,
@@ -100,9 +102,3 @@ export function catalog<
 		return catalog;
 	}
 }
-
-/**
- * Alias for compatibility
- * @deprecated - use `catalog`
- */
-export const literalist = catalog;
