@@ -1,10 +1,9 @@
-
 /**
  * Create a function that returns a value after being called.
  * @param x the value to be returned
  */
 export function constant<T>(x: T) {
-    return () => x;
+	return () => x;
 }
 export const just = constant;
 
@@ -19,4 +18,4 @@ export const just = constant;
  * })
  * ```
  */
-export const unpack = <T>(x: {payload: T}) => x.payload;
+export const unpack = <T>(x: { payload: T }) => x.payload;
