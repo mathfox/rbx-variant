@@ -1,6 +1,6 @@
 {
 	"name": "variant",
 	"tree": {
-		"$path": "src"
+		"$path": "out"
 	}
 }
