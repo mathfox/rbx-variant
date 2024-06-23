@@ -6,16 +6,16 @@ import { CompareResult } from "./remote";
 import { Animal, sample } from "./__test__/animal";
 
 export = () => {
-	const $Animal = remote(Animal);
+	const RemoteAnimal = remote(Animal);
 
 	it("remote", () => {
-		expect($Animal.is.cat(sample.cerberus)).never.to.be.ok();
-		expect($Animal.is.dog(sample.cerberus)).to.be.ok();
+		expect(RemoteAnimal.is.cat(sample.cerberus)).never.to.be.ok();
+		expect(RemoteAnimal.is.dog(sample.cerberus)).to.be.ok();
 	});
 
 	it("remote is narrows", () => {
 		const a = sample.cerberus as Animal;
-		if ($Animal.is.cat(a)) {
+		if (RemoteAnimal.is.cat(a)) {
 			const result = a.furnitureDamaged;
 			// this object doesn't have this type, but I can access it. Narrowing works.
 			expect(result).to.equal(undefined);
@@ -27,7 +27,7 @@ export = () => {
 
 	it("remote match", () => {
 		const test = (animal: Animal) =>
-			$Animal.match(animal, {
+			RemoteAnimal.match(animal, {
 				cat: just(4),
 				dog: just(5),
 				snake: just("jo"),
