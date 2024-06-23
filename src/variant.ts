@@ -74,7 +74,7 @@ function descopeType<S extends string, T extends string>(
 }
 
 const VARIANT_CREATOR_BRAND: unique symbol = {
-    __brand: "Variant Creator"
+	__brand: "Variant Creator",
 } as any;
 
 export interface CreatorBranded {
@@ -301,7 +301,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 					...acc,
 					[key]: variation(
 						scopeType(scope, key),
-						typeIs(v[key], "function")  ? (v[key] as any) : identityFunc,
+						typeIs(v[key], "function") ? (v[key] as any) : identityFunc,
 					),
 				};
 			},
@@ -320,40 +320,39 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		type: T,
 		creator?: F,
 	) {
-        let maker = {
-            name: { value: type, writable: false }
-        }
+		let maker = {
+			name: { value: type, writable: false },
+		};
 
-        setmetatable(maker, {
-            __call: (_self, ...args: Parameters<F>) => {
-                const returned = (creator ?? identityFunc)(...args);
-                if (isPromise(returned)) {
-                    return returned.then((result) => {
-                        if (key in (result ?? {})) {
-                            return result;
-                        } else {
-                            return assign(result ?? {}, { [key]: type });
-                        }
-                    });
-                } else {
-                    if (key in (returned ?? {})) {
-                        return returned;
-                    } else {
-                        return assign(returned ?? {}, { [key]: type });
-                    }
-                }
-            }
-        })
-
+		setmetatable(maker, {
+			__call: (_self, ...args: Parameters<F>) => {
+				const returned = (creator ?? identityFunc)(...args);
+				if (isPromise(returned)) {
+					return returned.then((result) => {
+						if (key in (result ?? {})) {
+							return result;
+						} else {
+							return assign(result ?? {}, { [key]: type });
+						}
+					});
+				} else {
+					if (key in (returned ?? {})) {
+						return returned;
+					} else {
+						return assign(returned ?? {}, { [key]: type });
+					}
+				}
+			},
+		});
 
 		const outputs: Outputs<K, T> = { output: { key, type } };
 
-        maker[outputs] = {
+		maker[outputs] = {
 			[VARIANT_CREATOR_BRAND]: VARIANT_CREATOR_BRAND,
 			toString: function (this: Outputs<K, T>) {
 				return this.output.type;
 			},
-		}
+		};
 
 		return maker as VariantCreator<
 			T,
@@ -368,12 +367,11 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		return entries(template).reduce(
 			(result, [vmKey, vmVal]) => {
 				// whether to use the existing value (pass-through variations), or create a new variation.
-				const creator =
-					typeIs(vmVal, "function")
-						? isVariantCreator(vmVal)
-							? vmVal
-							: variation(vmKey, vmVal as Func)
-						: variation(vmKey, identityFunc);
+				const creator = typeIs(vmVal, "function")
+					? isVariantCreator(vmVal)
+						? vmVal
+						: variation(vmKey, vmVal as Func)
+					: variation(vmKey, identityFunc);
 				return {
 					...result,
 					[vmKey]: creator,
@@ -388,9 +386,9 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 	): Identity<VMFromVC<CreatorFromListType<T, K>>> {
 		return template
 			.map((t) => {
-				if (typeIs(t, "string") ) {
+				if (typeIs(t, "string")) {
 					return variation(t);
-				} else if (typeIs(t, "function") ) {
+				} else if (typeIs(t, "function")) {
 					return t;
 				}
 				return t;

@@ -1,7 +1,13 @@
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { Handler } from "./match";
 import { just } from "./match.tools";
-import type { Func, Limited, Splay, VariantCreator, VariantError } from "./precepts";
+import type {
+	Func,
+	Limited,
+	Splay,
+	VariantCreator,
+	VariantError,
+} from "./precepts";
 import type { TypeStr } from "./util";
 import { isVariantCreator } from "./variant";
 import { isArray } from "@rbxts/phantom/src/Array";
@@ -318,10 +324,10 @@ export class Matcher<
 			const newCases = list.reduce(
 				(acc, cur) => {
 					const type = typeIs(cur, "string")
-							? cur
-							: isVariantCreator(cur)
-								? cur.output.type
-								: undefined;
+						? cur
+						: isVariantCreator(cur)
+							? cur.output.type
+							: undefined;
 
 					return type !== undefined ? { ...acc, [type]: handler } : acc;
 				},

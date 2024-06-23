@@ -173,7 +173,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		if (typeIs(input, "string")) {
 			return input as U;
 		} else if (typeIs(input, "function")) {
-            // TODO: fix
+			// TODO: fix
 			return (input as VariantCreator<string, Func, K>).output.type as U;
 		} else {
 			return (input as Record<K, string>)[key] as U;

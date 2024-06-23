@@ -25,10 +25,7 @@ export const identityFunc = <T>(x = {} as T) => x as T extends unknown ? {} : T;
  * @param x potential promise.
  */
 export function isPromise<T>(x: T | PromiseLike<T>): x is PromiseLike<T> {
-    return (typeIs(x, "table") &&
-		"then" in x &&
-		typeIs(x.then, "function")
-	);
+	return typeIs(x, "table") && "then" in x && typeIs(x.then, "function");
 }
 
 /**

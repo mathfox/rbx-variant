@@ -1,2 +1,2 @@
-export * from './slim';
-export * from './type';
+export * from "./slim";
+export * from "./type";
