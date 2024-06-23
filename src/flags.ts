@@ -1,4 +1,4 @@
-import {
+import type {
 	CreatorOutput,
 	GetTypeLabel,
 	TypesOf,
@@ -46,7 +46,7 @@ export function flagsImpl<K extends string>(key: K): FlagsFunc<K> {
 				...o,
 				[v[key]]: v,
 			}),
-			Object.create(null),
+			{},
 		);
 	}
 
