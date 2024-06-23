@@ -1,3 +1,4 @@
+import { values } from "@rbxts/phantom/src/Dictionary";
 import type { SumType, VariantModule } from "./precepts";
 
 export interface IsOfVariantFunc<K extends string> {
@@ -47,18 +48,17 @@ export function isOfVariantImpl<K extends string>(key: K): IsOfVariantFunc<K> {
 		...args: [T] | [{} | undefined, T]
 	) {
 		if (args.size() === 1) {
-			const [variant] = args;
-
+			const [variant] = args as [T];
 			return (instance: {} | undefined) =>
 				instance !== undefined &&
 				values(variant).some(
 					(vc) => vc.output.type === (instance as Record<K, string>)[key],
 				);
 		} else if (args.size() === 2) {
-			const [instance, variant] = args;
+			const [instance, variant] = args as [{} | undefined, T];
 			return (
 				instance !== undefined &&
-				Object.values(variant).some(
+				values(variant).some(
 					(vc) => vc.output.type === (instance as Record<K, string>)[key],
 				)
 			);

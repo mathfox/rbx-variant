@@ -297,15 +297,6 @@ export class Matcher<
 		handler: Handler,
 	): Matcher<T, K, H & Record<TypeStr<Variation, K>, Handler>>;
 
-	/**
-	 * Handle one or more cases, object-style.
-	 * @deprecated - use with
-	 * @param variations
-	 */
-	when<Variations extends Splay<Handler<T, K>>>(
-		variations: Limited<Variations, T[K]> & Variations,
-	): Matcher<T, K, H & Variations>;
-
 	// actual implementation
 	when<
 		Variation1 extends T[K],

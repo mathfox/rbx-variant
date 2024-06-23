@@ -1,15 +1,15 @@
-import { LookupTableToHandler } from "./matcher";
+import type { LookupTableToHandler } from "./matcher";
 import { isVariantCreator } from "./variant";
 import {
 	DEFAULT_KEY,
-	Limited,
-	Message,
-	Func,
-	VariantCreator,
-	VariantModule,
-	VariantOf,
-	VariantError,
+	type Message,
+	type Func,
+	type VariantCreator,
+	type VariantModule,
+	type VariantOf,
+	type VariantError,
 } from "./precepts";
+import { keys } from "@rbxts/phantom/src/Dictionary";
 
 /**
  * A set of functions meant to handle the variations of an object.
@@ -62,15 +62,6 @@ export type MatchFuncs<K extends string> = {
 	 * @param instance
 	 */
 	ofLiteral<T extends string | number | symbol>(
-		instance: T,
-	): LiteralToUnion<T, K>;
-
-	/**
-	 * Elevate a literal `A | B | C` to a type union `{type: A} | {type: B} | {type: C}`
-	 * @deprecated use `ofLiteral`
-	 * @param instance
-	 */
-	onLiteral<T extends string | number | symbol>(
 		instance: T,
 	): LiteralToUnion<T, K>;
 
@@ -255,9 +246,7 @@ export interface TypedCurriedMatchFunc<
 
 export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 	// curryable wrapper around match.
-	const prematch =
-		(_?: {}) =>
-		(
+	const prematch = (_?: {}) => (
 			handler:
 				| Handler<Record<K, string>, K>
 				| ((t: {}) => Handler<Record<K, string>, K>),
@@ -270,36 +259,34 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		H extends Handler<T, K> | ((t: T) => Handler<T, K>),
 		TType extends string,
 	>(...args: any[]) {
-		if (args.length === 1) {
+		if (args.size() === 1) {
 			// inline match
 			const [handler] = args as [H];
 			return (instance: T | TType) => match(instance, handler);
-		} else if (args.length === 2) {
+		} else if (args.size() === 2) {
 			// regular match
 			const [instanceOrTypeOrCreator, handlerParam] = args as [
 				T | TType | VariantCreator<string, (...args: any[]) => {}, K>,
 				H,
 			];
 
-			const instanceOrCreator =
-				typeof instanceOrTypeOrCreator === "string"
+			const instanceOrCreator = typeIs(instanceOrTypeOrCreator, "string")
 					? (ofLiteral(instanceOrTypeOrCreator) as T)
 					: instanceOrTypeOrCreator;
 			// unpack handler from function if necessary.
-			const handler: WithDefault<Handler<T, K>, T> = typeof handlerParam ===
-			"function"
+			const handler: WithDefault<Handler<T, K>, T> = typeIs(handlerParam, "function")
 				? (handlerParam as Extract<H, Func>)(instanceOrCreator as any)
 				: handlerParam;
 
 			const tType =
-				instanceOrCreator == undefined
+				instanceOrCreator === undefined
 					? undefined
 					: isVariantCreator(instanceOrCreator)
 						? (instanceOrCreator.output.type as keyof typeof handler)
 						: (instanceOrCreator as T)[key];
 
 			if (
-				instanceOrCreator != undefined &&
+				instanceOrCreator !== undefined &&
 				tType !== undefined &&
 				tType in handler
 			) {
@@ -315,8 +302,6 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		() =>
 			h;
 
-	const onLiteral = ofLiteral;
-
 	function ofLiteral<T extends string | number | symbol>(instance: T) {
 		return {
 			[key]: instance,
@@ -326,7 +311,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 	function lookup<H extends Record<T[K], any>, T extends Record<K, string>>(
 		handler: H,
 	): (instance: T) => LookupTableToHandler<H> {
-		const handlerWithFuncs = Object.keys(handler).reduce(
+		const handlerWithFuncs = keys(handler).reduce(
 			(acc, cur) => {
 				return { ...acc, [cur]: () => handler[cur as keyof H] };
 			},
@@ -357,7 +342,6 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 	return {
 		match,
 		ofLiteral,
-		onLiteral,
 		otherwise,
 		partial,
 		prematch,
