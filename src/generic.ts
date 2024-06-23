@@ -69,7 +69,9 @@ export type GenericVariantCreator<
 	{ [gp: string]: T }
 >) &
 	Outputs<K, Type> &
-	Stringable<Type>;
+	Stringable<Type> & {
+        name: Type
+    };
 
 /**
  * Generic equivalent of `VariantTypeSpread`.

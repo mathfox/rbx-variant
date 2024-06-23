@@ -3,13 +3,11 @@
 import { equals } from "@rbxts/phantom/src/Dictionary";
 import {
 	Generify,
-	GP,
 	Alpha,
 	onTerms,
 	GVariantOf,
-	GenericVariantTypeSpread,
 } from "./generic";
-import { just, match, TypeNames, Variant, variant, VariantOf } from "./index";
+import { just, match, TypeNames, Variant, variant } from "./index";
 import { fields, payload } from "./variant.tools";
 
 export = () => {
@@ -20,12 +18,13 @@ export = () => {
 				None: {},
 			})),
 		);
+        type test = typeof Option
 		type Option<
 			T,
 			TType extends TypeNames<typeof Option> = undefined,
 		> = GVariantOf<typeof Option, TType, { T: T }>;
 
-		const num = Option.Some(4);
+		const num = Option.Some(4)
 		const name = Option.Some("Steve");
 		const none = Option.None();
 

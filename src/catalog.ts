@@ -95,7 +95,7 @@ export function catalog<
 		return catalog.reduce((result, current: string, index) => {
 			return {
 				...result,
-				[current]: factory != undefined ? factory(current, index) : current,
+				[current]: factory !== undefined ? factory(current, index) : current,
 			};
 		}, {});
 	} else {

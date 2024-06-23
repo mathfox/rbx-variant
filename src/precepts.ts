@@ -64,7 +64,7 @@ export type Stringable<ReturnType extends string> = {
  */
 export type VariantCreator<
 	T extends string,
-	F extends (...args: Array<any>) => {} = () => {},
+	F extends (...args: any[]) => {} = (...args: any[]) => {},
 	K extends string = "type",
 > = ((
 	...args: Parameters<F>

@@ -46,7 +46,7 @@ export function flagsImpl<K extends string>(key: K): FlagsFunc<K> {
 				...o,
 				[v[key]]: v,
 			}),
-			{},
+			{} as { [P in T[K]]: Extract<T, Record<K, P>> },
 		);
 	}
 

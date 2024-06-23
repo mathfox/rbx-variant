@@ -322,7 +322,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		const maker = {
             output: { key, type },
             name: type,
-            [VARIANT_CREATOR_BRAND]: VARIANT_CREATOR_BRAND,
+            [VARIANT_CREATOR_BRAND]: true,
 			toString: function (this: Outputs<K, T>) {
 				return this.output.type;
 			},

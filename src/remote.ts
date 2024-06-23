@@ -8,8 +8,8 @@ import type {
 	VariantModule,
 	VariantOf,
 } from "./precepts";
-import { variantImpl, type VMFromVC } from "./variant";
-import { Dictionary } from "@rbxts/phantom";
+import { isVariantCreator, variantImpl, type VMFromVC } from "./variant";
+import { keys } from "@rbxts/phantom/src/Dictionary";
 
 type IsFunctions<T extends VariantModule<K>, K extends string = "type"> = {
 	[P in keyof T]: <O extends Record<K, string>>(
@@ -149,8 +149,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	const { variantList } = variantImpl(key);
 
 	function isFunctions<T extends VariantModule<K>>(vmod: T) {
-		const keys = Dictionary.keys(vmod) as Array<string & keyof T>;
-		return keys.reduce((acc, key) => {
+		return (keys(vmod) as Array<string & keyof T>).reduce((acc, key) => {
 			return {
 				...acc,
 				[key]: isType(key),
@@ -172,9 +171,8 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	): U {
 		if (typeIs(input, "string")) {
 			return input as U;
-		} else if (typeIs(input, "function")) {
-			// TODO: fix
-			return (input as VariantCreator<string, Func, K>).output.type as U;
+		} else if (isVariantCreator(input)) {
+			return input.output.type as U;
 		} else {
 			return (input as Record<K, string>)[key] as U;
 		}
@@ -187,6 +185,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		const miniModule: Pick<T, SequenceInputType<O, K>> = module;
 		const result = remote(miniModule);
 		const keyOrder = order.map(getType);
+
 		return {
 			...result,
 			length: order.size(),
@@ -215,7 +214,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		order?: O[],
 	) {
 		if (isArray(module)) {
-			return _sequenceOfList(module);
+			return _sequenceOfList(module as CreativeSequenceInput<K, string>[]);
 		} else {
 			return _sequence(module as T, order!);
 		}
