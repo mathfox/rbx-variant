@@ -193,8 +193,8 @@ export = () => {
 	});
 
 	it("matcher (ofLiteral)", () => {
-		const rate = (type: Animal["type"]) =>
-			matcher(ofLiteral(type)).lookup({
+		const rate = (t: Animal["type"]) =>
+			matcher(ofLiteral(t)).lookup({
 				cat: 1,
 				dog: 2,
 				snake: 3,
@@ -208,7 +208,9 @@ export = () => {
 		expect(() => {
 			const greetAnimal = (animal: Animal) => {
 				(
-					matcher(animal).when("snake", ({ name }) => `Hello ${name}`) as any
+					matcher(animal).when("snake", ({ name }) => `Hello ${name}`)  as unknown as {
+                        complete: Callback
+                    }
 				).complete();
 			};
 		}).to.throw();
@@ -231,8 +233,8 @@ export = () => {
 	});
 
 	it("matcher (of literal directly)", () => {
-		const rate = (type: Animal["type"]) =>
-			matcher(type).lookup({
+		const rate = (t: Animal["type"]) =>
+			matcher(t).lookup({
 				cat: 1,
 				dog: 2,
 				snake: 3,
