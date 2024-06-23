@@ -417,7 +417,6 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		}
 	}
 
-
 	return {
 		descope,
 		scoped: scope,

@@ -70,7 +70,9 @@ export type VariantCreator<
 	...args: Parameters<F>
 ) => PatchObjectOrPromise<ReturnType<F>, Record<K, T>>) &
 	Outputs<K, T> &
-	Stringable<T>;
+	Stringable<T> & {
+        name: T
+    };
 
 /**
  * Given a VariantCreator, extract the output type. Unpack it
