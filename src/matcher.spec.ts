@@ -206,10 +206,11 @@ export = () => {
 
 	it("matcher failure", () => {
         expect(() => {
-            const greetAnimal = (animal: Animal) =>
-                matcher(animal)
-                    .when("snake", ({ name }) => `Hello ${name}`)
-                    .complete();
+            const greetAnimal = (animal: Animal) => {
+                (matcher(animal)
+                .when("snake", ({ name }) => `Hello ${name}`) as any)
+                .complete();
+            }
         }).to.throw()
 	});
 

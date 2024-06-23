@@ -81,10 +81,13 @@ export interface CreatorBranded {
 	[VARIANT_CREATOR_BRAND]: typeof VARIANT_CREATOR_BRAND;
 }
 
+/**
+ * Checks whether the provided value is a table with branded member
+ */
 export function isVariantCreator(
-	func: Func | object,
-): func is VariantCreator<string> {
-	return VARIANT_CREATOR_BRAND in func;
+	value: object,
+): value is VariantCreator<string> {
+	return VARIANT_CREATOR_BRAND in value;
 }
 
 export interface VariantFuncs<K extends string> {

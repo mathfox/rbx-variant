@@ -294,11 +294,12 @@ export = () => {
 			);
 
 		expect(result(sample.cerberus)).to.equal(2);
+        const resultObject = result(Animal.snake("Test"))
 		expect(
-			equals(result(Animal.snake("Test")), {
+			equals( resultObject as object, {
 				hello: "world",
 				complex: 4,
-			}),
+			})
 		).to.equal(true);
 	});
 

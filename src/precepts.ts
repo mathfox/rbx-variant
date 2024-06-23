@@ -176,7 +176,9 @@ export type VariantOf<
 /**
  * The input type for `variant`/`variantModule`.
  */
-export type RawVariant = { [type: string]: Func | {} };
+export type RawVariant = {
+    [type: string]: Func | {}
+};
 
 /**
  * Express some type error.
