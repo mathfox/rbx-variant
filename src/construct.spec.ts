@@ -28,10 +28,6 @@ export = () => {
 						private color: string,
 						private isStriped: boolean = false,
 					) {}
-
-					get skin() {
-						return `${this.isStriped && "striped "}${this.color}`;
-					}
 				},
 			),
 		});
