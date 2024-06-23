@@ -155,7 +155,7 @@ export interface VariantFuncs<K extends string> {
 	 * Create a **variant** from some template.
 	 * @param template an object where each property represents a possible variation.
 	 * The **key** is the string literal used as the type and the **value** is a function
-	 * that handles the creation logic for that shape. This may be `{}` or `nil` for an
+	 * that handles the creation logic for that shape. This may be `{}` or `none` for an
 	 * empty-bodied variant (`{type: 'someType'}`).
 	 * @returns a variant module.
 	 * @example

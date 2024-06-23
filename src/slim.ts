@@ -18,4 +18,4 @@ export type {
 } from "./precepts";
 export { pass } from "./typed";
 export type { HOI } from "./util";
-export { fields, nil, payload } from "./variant.tools";
+export { fields, none, payload } from "./variant.tools";

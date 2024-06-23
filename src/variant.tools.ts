@@ -25,4 +25,4 @@ export function payload<T>(_example?: T) {
 /**
  * Create an empty variation (`{type: 'literal'}`).
  */
-export const nil = () => ({});
+export const none = () => ({});
