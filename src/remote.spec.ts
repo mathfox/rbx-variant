@@ -9,8 +9,8 @@ export = () => {
 	const RemoteAnimal = remote(Animal);
 
 	it("remote", () => {
-		expect(RemoteAnimal.is.cat(sample.cerberus)).never.to.be.ok();
-		expect(RemoteAnimal.is.dog(sample.cerberus)).to.be.ok();
+		expect(RemoteAnimal.is.cat(sample.cerberus)).to.equal(false);
+		expect(RemoteAnimal.is.dog(sample.cerberus)).to.equal(true);
 	});
 
 	it("remote is narrows", () => {
