@@ -340,28 +340,38 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 			__call: ((_: typeof maker, ...args: unknown[]) => {
 				const value = (creator ?? identityFunc)(...args);
 
-				assert(typeIs(value, "table"));
+				if (!typeIs(value, "table")) {
+					return {
+						[key]: t,
+					};
+				}
+				// assert(typeIs(value, "table"));
 
 				if ("then" in value && typeIs(value.then, "function")) {
 					return (value as Promise<any>).then((result) => {
-						assert(typeIs(result, "table"));
+						if (!typeIs(result, "table")) {
+							return {
+								[key]: t,
+							};
+						}
+						// assert(typeIs(result, "table"));
 
 						if (key in result) {
 							return result;
 						} else {
-                            (result as any)[key] = t
+							(result as any)[key] = t;
 
-                            return result
+							return result;
 						}
 					});
 				} else if (key in value) {
 					return value;
 				}
 
-                // ROBLOX DEVIATION: we have to preserve the metatable for "instanceOf" operator to work properly.
-                (value as any)[key] =  t
+				// ROBLOX DEVIATION: we have to preserve the metatable for "instanceOf" operator to work properly.
+				(value as any)[key] = t;
 
-                return value
+				return value;
 			}) as any,
 		});
 
