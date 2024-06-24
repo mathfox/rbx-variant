@@ -1,14 +1,14 @@
 {
 	"compilerOptions": {
 		// required
-        "noLib": true,
-        "strict": true,
+		"noLib": true,
+		"strict": true,
 		"downlevelIteration": true,
-        "forceConsistentCasingInFileNames": true,
-        "allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"allowSyntheticDefaultImports": true,
 		"module": "CommonJS",
 		"moduleResolution": "Node",
-        "target": "ESNext",
+		"target": "ESNext",
 		"moduleDetection": "force",
 		"typeRoots": ["node_modules/@rbxts"],
 		// configurable
