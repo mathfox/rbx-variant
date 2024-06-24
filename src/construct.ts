@@ -15,8 +15,8 @@ export function construct<T extends Constructable>(
 	cls: T,
 ): ConstructableToFactory<T> {
 	return ((...args: unknown[]) => {
-        const instance = new cls(...args)
+		const instance = new cls(...args);
 
-        return instance
-    }) as ConstructableToFactory<T>;
+		return instance;
+	}) as ConstructableToFactory<T>;
 }
