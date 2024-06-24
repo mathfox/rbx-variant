@@ -1,33 +1,33 @@
 {
 	"compilerOptions": {
 		// required
-        "strict": true,
+		"strict": true,
 		"allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
-        "jsx": "react",
+		"jsx": "react",
 		"jsxFactory": "React.createElement",
 		"jsxFragmentFactory": "React.Fragment",
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"noLib": true,
-        "experimentalDecorators": true,
+		"experimentalDecorators": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleDetection": "force",
 		"target": "ESNext",
 		"typeRoots": ["node_modules/@rbxts"],
 		// configurable
-        "resolveJsonModule": true,
+		"resolveJsonModule": true,
 		"rootDir": "src",
-        "outDir": "out",
+		"outDir": "out",
 		"baseUrl": "src",
 		"incremental": true,
 		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
-		// "declaration": true,
+		"declaration": true,
 		"plugins": [
 			{
 				"transform": "rbxts-transformer-services"
 			}
 		]
 	},
-    "include": ["src/**/*"]
+	"include": ["src/**/*"]
 }
