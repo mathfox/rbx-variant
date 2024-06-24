@@ -2,8 +2,7 @@
 
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import { isVariantCreator, variantImpl } from "./variant";
-import { fields, payload } from "./variant.tools";
-import { variant } from "./type";
+import { payload, fields } from "./variant.tools";
 
 export = () => {
 	const str = {
