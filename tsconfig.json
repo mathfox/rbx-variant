@@ -14,11 +14,11 @@
 		// configurable
 		"outDir": "out",
 		"rootDir": "src",
-        "baseUrl": "src",
+		"baseUrl": "src",
 		"incremental": true,
 		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
 		"declaration": true,
-        "plugins": [
+		"plugins": [
 			{
 				"transform": "rbxts-transformer-services"
 			}

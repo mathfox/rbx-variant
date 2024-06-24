@@ -151,9 +151,13 @@ export = () => {
 		expect(AsyncTask.output.type).to.equal("A_TASK");
 		expect(AsyncTask.output.key).to.equal("type");
 
-		expect((result as unknown as {
-            four?: number
-        }) .four).to.equal(undefined);
+		expect(
+			(
+				result as unknown as {
+					four?: number;
+				}
+			).four,
+		).to.equal(undefined);
 		expect((await result).four).to.equal(4);
 	});
 

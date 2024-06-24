@@ -13,9 +13,9 @@
 					}
 				}
 			},
-            "Variant": {
-                "$path": "out"
-            }
+			"Variant": {
+				"$path": "out"
+			}
 		}
 	}
 }

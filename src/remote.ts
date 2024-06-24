@@ -108,7 +108,7 @@ export interface Sequence<
 	 * Get some element by index.
 	 * @returns a tag constructor.
 	 */
-	get (index: number): T[keyof T];
+	get(index: number): T[keyof T];
 	/**
 	 * The number of elements.
 	 */

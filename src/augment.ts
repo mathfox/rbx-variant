@@ -5,7 +5,7 @@ import type {
 	RawVariant,
 	VariantCreator,
 	VariantOf,
-    VariantTypeSpread,
+	VariantTypeSpread,
 } from "./precepts";
 import type { Identity } from "./util";
 import { isVariantCreator, type VariantRecord } from "./variant";
@@ -39,7 +39,9 @@ export function augment<
 
 		let returnFunc = isVariantCreator(inputObject)
 			? variation(inputObject.output.type, (...args: unknown[]) => {
-					let result = inputObject(...args) as Identity<VariantTypeSpread<VariantRecord<T, string>>[keyof T]>
+					let result = inputObject(...args) as Identity<
+						VariantTypeSpread<VariantRecord<T, string>>[keyof T]
+					>;
 
 					return {
 						...f(result),
