@@ -3,6 +3,7 @@
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import { isVariantCreator, variantImpl } from "./variant";
 import { payload, fields } from "./variant.tools";
+import { Identity } from "./util";
 
 export = () => {
 	const str = {
@@ -71,9 +72,13 @@ export = () => {
 	});
 
 	it("variation (fields, empty)", () => {
-		const dog = variation("dog", fields());
+		const dog = variation("dog", fields<{
+        }>());
 
-		const kerberos = dog();
+		const kerberos = dog({
+        }) ;
+
+        type test = typeof kerberos
 
 		expect(kerberos.type).to.equal("dog");
 		expect(keys(kerberos).size()).to.equal(1);
