@@ -31,7 +31,7 @@
 		"roblox-ts": "^2.3.0-dev-66cb146"
 	},
 	"scripts": {
-		"build": "rbxtsc --rojo serve.project.json",
-		"serve": "rojo serve serve.project.json"
+		"build": "rbxtsc --rojo default.project.json",
+		"serve": "rojo serve default.project.json"
 	}
 }
