@@ -31,6 +31,8 @@
 	},
 	"scripts": {
 		"build": "rbxtsc --rojo default.project.json",
-		"serve": "rojo serve default.project.json"
+		"build:d": "rbxtsc --type game --rojo test.project.json",
+		"serve": "rojo serve default.project.json",
+		"prepublishOnly": "bun run build"
 	}
 }
