@@ -5,6 +5,7 @@
         "strict": true,
 		"downlevelIteration": true,
         "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
 		"module": "CommonJS",
 		"moduleResolution": "Node",
         "target": "ESNext",
