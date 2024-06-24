@@ -1,38 +1,38 @@
 {
-	"name": "@rbxts/better-variant",
-	"description": "Upstream of the variant library for Roblox.",
-	"version": "0.0.1",
-	"main": "out/init.luau",
-	"typings": "out/index.d.ts",
-	"files": ["out", "!**/*.spec.luau"],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/mathfox/rbx-variant.git"
-	},
-	"keywords": ["variant", "roblox"],
-	"author": {
-		"name": "Ivan Leontev",
-		"url": "https://github.com/mathfox"
-	},
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/mathfox/rbx-variant/issues"
-	},
-	"homepage": "https://github.com/mathfox/rbx-variant#readme",
-	"publishConfig": {
-		"access": "public"
-	},
-	"devDependencies": {
-		"@rbxts/compiler-types": "^2.3.0-types.1",
-		"@rbxts/phantom": "0.0.4",
-		"@rbxts/testez": "^0.4.2-ts.0",
-		"@rbxts/types": "^1.0.771",
-		"rbxts-transformer-services": "^1.1.1",
-		"roblox-ts": "^2.3.0-dev-66cb146",
-		"typescript": "^5.6.0-dev.20240623"
-	},
-	"scripts": {
-		"build": "rbxtsc",
-		"serve": "rojo serve  --serve.project.json"
-	}
+  "name": "@rbxts/better-variant",
+  "description": "Upstream of the variant library for Roblox.",
+  "version": "0.0.1",
+  "main": "out/init.luau",
+  "typings": "out/index.d.ts",
+  "files": ["out", "!**/*.spec.luau"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathfox/rbx-variant.git"
+  },
+  "keywords": ["variant", "roblox"],
+  "author": {
+    "name": "Ivan Leontev",
+    "url": "https://github.com/mathfox"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mathfox/rbx-variant/issues"
+  },
+  "homepage": "https://github.com/mathfox/rbx-variant#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "^2.3.0-types.1",
+    "@rbxts/phantom": "0.0.4",
+    "@rbxts/testez": "^0.4.2-ts.0",
+    "@rbxts/types": "1.0.783",
+    "rbxts-transformer-services": "^1.1.1",
+    "roblox-ts": "^2.3.0-dev-66cb146",
+    "typescript": "^5.6.0-dev.20240623"
+  },
+  "scripts": {
+    "build": "rbxtsc",
+    "serve": "rojo serve  --serve.project.json"
+  }
 }
