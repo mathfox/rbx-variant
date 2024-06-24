@@ -16,7 +16,7 @@ export = () => {
 		expect(isPromise(test)).to.equal(true);
 	});
 
-	it("isPromise (positive)", () => {
+	it("isPromise (negative)", () => {
 		const test = {};
 
 		expect(isPromise(test)).to.equal(false);
