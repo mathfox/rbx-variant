@@ -27,7 +27,13 @@ export const identityFunc = <T>(x = {} as T) => x as T extends unknown ? {} : T;
 export function isPromise<T>(x: T | PromiseLike<T>): x is PromiseLike<T> {
 	if (!typeIs(x, "table")) return false;
 
-	return x["then"] !== undefined;
+	return (
+		(
+			x as unknown as {
+				andThen?: Callback;
+			}
+		)["andThen"] !== undefined
+	);
 }
 
 /**
