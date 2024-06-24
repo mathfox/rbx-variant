@@ -1,8 +1,10 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { equals } from "@rbxts/phantom/src/Dictionary";
-import { Generify, Alpha, onTerms, GVariantOf } from "./generic";
-import { just, match, TypeNames, Variant, variant } from "./index";
+import { equals } from "@rbxts/phantom/src/Array";
+import { type Alpha, type GVariantOf, type Generify, onTerms } from "./generic";
+import { just } from "./match.tools";
+import type { TypeNames, Variant } from "./precepts";
+import { match, variant } from "./type";
 import { fields, payload } from "./variant.tools";
 
 export = () => {

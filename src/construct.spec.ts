@@ -1,6 +1,8 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { construct, variant, VariantOf, variation } from ".";
+import { construct } from "./construct";
+import type { VariantOf } from "./precepts";
+import { variant, variation } from "./type";
 
 export = () => {
 	it("variant w/ classes", () => {
@@ -26,7 +28,7 @@ export = () => {
 				class {
 					constructor(
 						private color: string,
-						private isStriped: boolean = false,
+						private isStriped = false,
 					) {}
 				},
 			),

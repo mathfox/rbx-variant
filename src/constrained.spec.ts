@@ -1,6 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { constrained, just, TypeNames, variant, VariantOf } from ".";
+import { constrained } from "./constrained";
+import { just } from "./match.tools";
+import type { TypeNames, VariantOf } from "./precepts";
+import { variant } from "./type";
 
 export = () => {
 	it("constrained (simple)", () => {
@@ -22,12 +25,12 @@ export = () => {
 
 	it("constrained (hair example, optional properties)", () => {
 		enum HairLength {
-			Bald,
-			Buzzed,
-			Short,
-			Medium,
-			Long,
-			BackLength,
+			Bald = 0,
+			Buzzed = 1,
+			Short = 2,
+			Medium = 3,
+			Long = 4,
+			BackLength = 5,
 		}
 
 		const HairStyle = variant(

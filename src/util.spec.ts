@@ -1,6 +1,6 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { equals } from "@rbxts/phantom/src/Dictionary";
+import { equals } from "@rbxts/phantom/src/Array";
 import { identityFunc, isPromise } from "./util";
 
 export = () => {

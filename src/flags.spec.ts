@@ -1,9 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
+import { values } from "@rbxts/phantom/src/Dictionary";
+import { Animal, sample } from "./__test__/animal";
 import { catalog } from "./catalog";
 import { flags, ofLiteral } from "./type";
-import { Animal, sample } from "./__test__/animal";
-import { values } from "@rbxts/phantom/src/Dictionary";
 
 export = () => {
 	it("flags (basic)", () => {

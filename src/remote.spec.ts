@@ -1,9 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { remote, sequence } from "./type";
+import { Animal, sample } from "./__test__/animal";
 import { just } from "./match.tools";
 import { CompareResult } from "./remote";
-import { Animal, sample } from "./__test__/animal";
+import { remote, sequence } from "./type";
 
 export = () => {
 	const RemoteAnimal = remote(Animal);

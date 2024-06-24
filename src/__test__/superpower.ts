@@ -1,9 +1,7 @@
-import { TypeNames, VariantOf } from "..";
 import { catalog } from "../catalog";
+import type { TypeNames, VariantOf } from "../precepts";
 import { variant } from "../type";
-import { Identity } from "../util";
 import { fields } from "../variant.tools";
-import { Animal } from "./animal";
 
 export const Superpower = variant({
 	/**

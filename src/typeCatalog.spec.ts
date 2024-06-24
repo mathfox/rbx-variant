@@ -1,9 +1,7 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { variant, fields } from ".";
-import { Flags } from "./flags";
-import { typeMap, typeCatalog } from "./typeCatalog";
 import { CapsAnimal } from "./__test__/animal";
+import { typeCatalog, typeMap } from "./typeCatalog";
 
 export = () => {
 	it("typeCatalog", () => {

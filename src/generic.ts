@@ -2,12 +2,12 @@ import { map } from "@rbxts/phantom/src/Array";
 import { flagsImpl } from "./flags";
 import type {
 	Func,
-	TypesOf,
 	Outputs,
 	PatchObjectOrPromise,
 	RawVariant,
 	Stringable,
 	TypeNames,
+	TypesOf,
 	VariantOf,
 } from "./precepts";
 import { variantImpl } from "./variant";

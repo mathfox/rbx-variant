@@ -1,9 +1,10 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { fields, match, TypeNames, variant, VariantOf } from ".";
-import { augment } from "./augment";
-import { payload } from "./variant.tools";
 import { Animal, CapsAnimal } from "./__test__/animal";
+import { augment } from "./augment";
+import type { TypeNames, VariantOf } from "./precepts";
+import { match, variant } from "./type";
+import { fields } from "./variant.tools";
 
 export = () => {
 	it("augment (inline)", () => {

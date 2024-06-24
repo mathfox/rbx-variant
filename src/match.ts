@@ -1,15 +1,15 @@
+import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { LookupTableToHandler } from "./matcher";
-import { isVariantCreator } from "./variant";
 import {
 	DEFAULT_KEY,
-	type Message,
 	type Func,
+	type Message,
 	type VariantCreator,
+	type VariantError,
 	type VariantModule,
 	type VariantOf,
-	type VariantError,
 } from "./precepts";
-import { keys } from "@rbxts/phantom/src/Dictionary";
+import { isVariantCreator } from "./variant";
 
 /**
  * A set of functions meant to handle the variations of an object.

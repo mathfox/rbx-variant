@@ -1,15 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
 import { keys } from "@rbxts/phantom/src/Dictionary";
-import {
-	fields,
-	payload,
-	scoped,
-	TypeNames,
-	variant,
-	VariantOf,
-	variation,
-} from ".";
+import type { TypeNames, VariantOf } from "./precepts";
+import { scoped, variant, variation } from "./type";
+import { fields, payload } from "./variant.tools";
 
 export = () => {
 	it("Simple module", () => {

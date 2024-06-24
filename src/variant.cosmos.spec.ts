@@ -1,9 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
 import { variantCosmos } from "./cosmos";
-import { Matrix } from "./flags";
-import { constant, just } from "./match.tools";
-import { GetTypeLabel, TypeNames, VariantOf } from "./precepts";
+import type { Matrix } from "./flags";
+import { constant } from "./match.tools";
+import type { GetTypeLabel, TypeNames, VariantOf } from "./precepts";
 import { fields, payload } from "./variant.tools";
 
 export = () => {
@@ -27,7 +27,7 @@ export = () => {
 			name: string;
 			favoriteBall?: string;
 		}>(),
-		snake: (name: string, pattern: string = "striped") => ({
+		snake: (name: string, pattern = "striped") => ({
 			name,
 			pattern,
 		}),

@@ -1,8 +1,8 @@
+import { isArray } from "@rbxts/phantom/src/Array";
 import { assign, entries, keys } from "@rbxts/phantom/src/Dictionary";
-import { GenericTemplate, GenericVariantRecord } from "./generic";
+import type { GenericTemplate, GenericVariantRecord } from "./generic";
 import type { Func, RawVariant, VariantCreator } from "./precepts";
 import { type Identity, identityFunc } from "./util";
-import { isArray } from "@rbxts/phantom/src/Array";
 
 /**
  * A variant rendered as an object.
@@ -404,7 +404,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 			.reduce(
 				(result, value) => {
 					// TODO: investigate the purpose of double check
-					let creator = (
+					const creator = (
 						typeIs(value, "string") ? variation(value) : value
 					) as VariantCreator<string, Func, K>;
 

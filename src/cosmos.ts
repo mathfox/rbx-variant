@@ -1,12 +1,12 @@
-import { type IsTypeFunc, isTypeImpl } from "./isType";
-import { type MatchFuncs, matchImpl } from "./match";
-import { type VariantFuncs, variantImpl } from "./variant";
-import { type TypesFunc, typesImpl } from "./types";
 import { type FlagsFunc, flagsImpl } from "./flags";
 import { type IsOfVariantFunc, isOfVariantImpl } from "./isOfVariant";
+import { type IsTypeFunc, isTypeImpl } from "./isType";
+import { type MatchFuncs, matchImpl } from "./match";
+import { type MatcherFunc, matcherImpl } from "./matcher";
 import { type RemoteFuncs, remoteImpl } from "./remote";
 import { type TypedFunc, typedImpl } from "./typed";
-import { type MatcherFunc, matcherImpl } from "./matcher";
+import { type TypesFunc, typesImpl } from "./types";
+import { type VariantFuncs, variantImpl } from "./variant";
 
 /**
  * All the functions in the library that pivot on a certain discriminant.

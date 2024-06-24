@@ -1,7 +1,7 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { isType } from "./type";
 import { Animal, sample } from "./__test__/animal";
+import { isType } from "./type";
 
 export = () => {
 	it("isType (curried)", () => {

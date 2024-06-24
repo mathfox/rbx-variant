@@ -1,9 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { match, matcher, ofLiteral, types } from "./type";
-import { constant } from "./match.tools";
+import { equals } from "@rbxts/phantom/src/Array";
 import { Animal, sample } from "./__test__/animal";
-import { equals } from "@rbxts/phantom/src/Dictionary";
+import { constant } from "./match.tools";
+import { match, matcher, ofLiteral, types } from "./type";
 
 export = () => {
 	it("matcher creation", () => {

@@ -1,3 +1,4 @@
+import { isArray } from "@rbxts/phantom/src/Array";
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { Handler } from "./match";
 import { just } from "./match.tools";
@@ -10,7 +11,6 @@ import type {
 } from "./precepts";
 import type { TypeStr } from "./util";
 import { isVariantCreator } from "./variant";
-import { isArray } from "@rbxts/phantom/src/Array";
 
 /**
  * From a lookup table to a handler record.

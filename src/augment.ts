@@ -1,4 +1,4 @@
-import { variation } from "./type";
+import { keys } from "@rbxts/phantom/src/Dictionary";
 import type {
 	Func,
 	PatchObjectOrPromise,
@@ -7,9 +7,9 @@ import type {
 	VariantOf,
 	VariantTypeSpread,
 } from "./precepts";
+import { variation } from "./type";
 import type { Identity } from "./util";
-import { isVariantCreator, type VariantRecord } from "./variant";
-import { keys } from "@rbxts/phantom/src/Dictionary";
+import { type VariantRecord, isVariantCreator } from "./variant";
 
 /**
  * Augment an existing variant model with new or overridden fields.
@@ -35,9 +35,9 @@ export function augment<
 	F extends (x: VariantOf<VariantRecord<T, string>>) => any,
 >(variantDefinition: T, f: F) {
 	return keys(variantDefinition).reduce((acc, key) => {
-		let inputObject = variantDefinition[key];
+		const inputObject = variantDefinition[key];
 
-		let returnFunc = isVariantCreator(inputObject)
+		const returnFunc = isVariantCreator(inputObject)
 			? variation(inputObject.output.type, (...args: unknown[]) => {
 					const result = (inputObject as Func)(...args) as Identity<
 						VariantTypeSpread<VariantRecord<T, string>>[keyof T]
@@ -53,7 +53,7 @@ export function augment<
 						? TArgs
 						: []
 				) => {
-					let item = typeIs(inputObject, "function")
+					const item = typeIs(inputObject, "function")
 						? inputObject(...args)
 						: {};
 

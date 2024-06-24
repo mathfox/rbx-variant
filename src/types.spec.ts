@@ -1,8 +1,8 @@
 /// <reference types="@rbxts/testez/globals" />
 
 import { values } from "@rbxts/phantom/src/Dictionary";
-import { types } from ".";
 import { Animal, sample } from "./__test__/animal";
+import { types } from "./type";
 
 export = () => {
 	it("types (on variant)", () => {

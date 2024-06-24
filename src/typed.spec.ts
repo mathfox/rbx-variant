@@ -1,7 +1,9 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { pass, variant, Variant, typed, TypeNames, VariantOf, match } from ".";
-import { Animal } from "./__test__/animal";
+import type { Animal } from "./__test__/animal";
+import type { TypeNames, Variant, VariantOf } from "./precepts";
+import { match, typed, variant } from "./type";
+import { pass } from "./typed";
 
 export = () => {
 	it("typed (basic)", () => {

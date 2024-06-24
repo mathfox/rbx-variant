@@ -1,20 +1,23 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { fields, match, payload, scoped, TypeNames, VariantOf } from ".";
+import { equals } from "@rbxts/phantom/src/Array";
+import { Animal, CapsAnimal, sample } from "./__test__/animal";
 import { variantCosmos } from "./cosmos";
+import { constant, just, unload } from "./match.tools";
+import type { TypeNames, VariantOf } from "./precepts";
 import {
 	lookup,
+	match,
 	ofLiteral,
 	otherwise,
 	partial,
 	prematch,
+	scoped,
 	variant,
 	withFallback,
 } from "./type";
 import { typeMap } from "./typeCatalog";
-import { constant, just, unload } from "./match.tools";
-import { Animal, CapsAnimal, sample } from "./__test__/animal";
-import { equals } from "@rbxts/phantom/src/Dictionary";
+import { fields, payload } from "./variant.tools";
 
 export = () => {
 	it("match (basic)", () => {
@@ -490,7 +493,7 @@ export = () => {
 				name: string;
 				favoriteBall?: string;
 			}>(),
-			snake: (name: string, pattern: string = "striped") => ({ name, pattern }),
+			snake: (name: string, pattern = "striped") => ({ name, pattern }),
 		});
 
 		const makeInstance = (

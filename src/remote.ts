@@ -1,4 +1,5 @@
 import { isArray } from "@rbxts/phantom/src/Array";
+import { keys } from "@rbxts/phantom/src/Dictionary";
 import { isTypeImpl } from "./isType";
 import { type MatchFuncs, matchImpl } from "./match";
 import type {
@@ -8,8 +9,7 @@ import type {
 	VariantModule,
 	VariantOf,
 } from "./precepts";
-import { isVariantCreator, variantImpl, type VMFromVC } from "./variant";
-import { keys } from "@rbxts/phantom/src/Dictionary";
+import { type VMFromVC, isVariantCreator, variantImpl } from "./variant";
 
 type IsFunctions<T extends VariantModule<K>, K extends string = "type"> = {
 	[P in keyof T]: <O extends Record<K, string>>(

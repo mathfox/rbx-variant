@@ -1,9 +1,8 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { isOfVariant, match } from ".";
-import { just } from "./match.tools";
-import { partial, variant } from "./type";
 import { Animal, sample } from "./__test__/animal";
+import { just } from "./match.tools";
+import { isOfVariant, match, partial, variant } from "./type";
 
 export = () => {
 	it("isOfVariant", () => {
