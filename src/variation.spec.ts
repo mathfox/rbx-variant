@@ -72,13 +72,9 @@ export = () => {
 	});
 
 	it("variation (fields, empty)", () => {
-		const dog = variation("dog", fields<{
-        }>());
+		const dog = variation("dog", fields());
 
-		const kerberos = dog({
-        }) ;
-
-        type test = typeof kerberos
+		const kerberos = dog();
 
 		expect(kerberos.type).to.equal("dog");
 		expect(keys(kerberos).size()).to.equal(1);

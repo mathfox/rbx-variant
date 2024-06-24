@@ -5,7 +5,7 @@
  * @param defaults set some default values for the object. Note this does *not* adjust the return type.
  */
 export function fields<T extends {}>(defaults: Partial<T> = {}) {
-	return (...args: {} extends T ? [input: T] | [] : [input: T]) => {
+	return (...args: {} extends T ? [input?: T] : [input: T]) => {
 		const [arg] = args;
 
 		return {
