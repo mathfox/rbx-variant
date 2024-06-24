@@ -1,6 +1,6 @@
 /// <reference types="@rbxts/testez/globals" />
 
-import { values } from "@rbxts/phantom/src/Dictionary";
+import { equals, values } from "@rbxts/phantom/src/Dictionary";
 import { catalog } from "./catalog";
 
 export = () => {
@@ -20,7 +20,7 @@ export = () => {
 		const Item = catalog([]);
 		type Item = keyof typeof Item;
 
-		expect(Item).to.equal({});
+		expect(equals(Item, {})).to.equal(true);
 	});
 
 	it("catalog - count items", () => {
