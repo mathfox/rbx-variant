@@ -349,7 +349,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 						if (key in result) {
 							return result;
 						} else {
-							return assign(result ?? {}, { [key]: t });
+							return assign(result, { [key]: t });
 						}
 					});
 				} else if (key in value) {
