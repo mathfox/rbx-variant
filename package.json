@@ -32,6 +32,6 @@
 	},
 	"scripts": {
 		"build": "rbxtsc",
-		"serve": "rojo serve  --serve.project.json"
+		"serve": "rojo serve serve.project.json"
 	}
 }
