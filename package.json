@@ -27,7 +27,6 @@
 		"@rbxts/phantom": "0.0.4",
 		"@rbxts/testez": "^0.4.2-ts.0",
 		"@rbxts/types": "1.0.783",
-		"rbxts-transformer-services": "^1.1.1",
 		"roblox-ts": "^2.3.0-dev-66cb146"
 	},
 	"scripts": {

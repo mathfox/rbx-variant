@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		// required
-		"strict": true,
-		"allowSyntheticDefaultImports": true,
+        "allowSyntheticDefaultImports": true,
 		"downlevelIteration": true,
+		"strict": true,
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"noLib": true,
@@ -14,10 +14,6 @@
 		// configurable
 		"rootDir": "src",
 		"outDir": "out",
-		"plugins": [
-			{
-				"transform": "rbxts-transformer-services"
-			}
-		]
+        "declaration": true
 	}
 }
