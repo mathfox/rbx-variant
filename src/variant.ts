@@ -349,14 +349,19 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 						if (key in result) {
 							return result;
 						} else {
-							return assign(result, { [key]: t });
+                            (result as any)[key] = t
+
+                            return result
 						}
 					});
 				} else if (key in value) {
 					return value;
 				}
 
-				return assign(value, { [key]: t });
+                // ROBLOX DEVIATION: we have to preserve the metatable for "instanceOf" operator to work properly.
+                (value as any)[key] =  t
+
+                return value
 			}) as any,
 		});
 
