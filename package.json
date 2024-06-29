@@ -1,7 +1,7 @@
 {
 	"name": "@rbxts/better-variant",
 	"description": "Upstream of the variant library for Roblox.",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"main": "out/init.lua",
 	"typings": "out/index.d.ts",
 	"files": ["out", "!**/*.spec.*"],
@@ -22,11 +22,13 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"devDependencies": {
+	"dependencies": {
 		"@rbxts/compiler-types": "^2.3.0-types.1",
-		"@rbxts/phantom": "0.0.4",
+		"@rbxts/phantom": "0.0.5",
+		"@rbxts/types": "1.0.787"
+	},
+	"devDependencies": {
 		"@rbxts/testez": "^0.4.2-ts.0",
-		"@rbxts/types": "1.0.787",
 		"roblox-ts": "^2.3.0-dev-8137656"
 	},
 	"scripts": {
