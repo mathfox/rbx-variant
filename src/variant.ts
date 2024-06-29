@@ -1,5 +1,5 @@
 import { isArray } from "@rbxts/phantom/src/Array";
-import { assign, entries, keys } from "@rbxts/phantom/src/Dictionary";
+import { entries, keys } from "@rbxts/phantom/src/Dictionary";
 import type { GenericTemplate, GenericVariantRecord } from "./generic";
 import type { Func, RawVariant, VariantCreator } from "./precepts";
 import { type Identity, identityFunc } from "./util";
