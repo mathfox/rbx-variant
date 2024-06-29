@@ -1,7 +1,7 @@
 {
 	"name": "@rbxts/better-variant",
 	"description": "Upstream of the variant library for Roblox.",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"main": "out/init.lua",
 	"typings": "out/index.d.ts",
 	"files": ["out", "!**/*.spec.*"],
