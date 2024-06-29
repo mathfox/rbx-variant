@@ -337,9 +337,9 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		};
 
 		setmetatable(maker, {
-            __tostring: () => {
-                return t
-            },
+			__tostring: () => {
+				return t;
+			},
 			__call: ((_: typeof maker, ...args: unknown[]) => {
 				const value = (creator ?? identityFunc)(...args);
 
