@@ -1,7 +1,7 @@
 {
 	"name": "@rbxts/better-variant",
 	"description": "Upstream of the variant library for Roblox.",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"main": "out/init.lua",
 	"typings": "out/index.d.ts",
 	"files": ["out", "!**/*.spec.*"],
@@ -26,13 +26,14 @@
 		"@rbxts/compiler-types": "^2.3.0-types.1",
 		"@rbxts/phantom": "0.0.4",
 		"@rbxts/testez": "^0.4.2-ts.0",
-		"@rbxts/types": "1.0.783",
-		"roblox-ts": "^2.3.0-dev-66cb146"
+		"@rbxts/types": "1.0.787",
+		"roblox-ts": "^2.3.0-dev-8137656"
 	},
 	"scripts": {
 		"build": "rbxtsc --rojo default.project.json",
 		"build:d": "rbxtsc --type game --rojo test.project.json",
 		"serve": "rojo serve test.project.json",
-		"prepublishOnly": "bun run build"
+		"prepublishOnly": "bun run build",
+		"fmt": "bunx @biomejs/biome format --write"
 	}
 }
