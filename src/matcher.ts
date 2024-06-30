@@ -186,7 +186,10 @@ export class Matcher<
 		});
 	}
 
-	complete = function (this: any, options?: CompleteOptions) {
+	complete = function (
+		this: InstanceType<typeof Matcher<T, K, H>>,
+		options?: CompleteOptions,
+	) {
 		if (this.target !== undefined && this.target[this.key] in this.handler) {
 			return this.handler[this.target[this.key]]?.(
 				this.target as Extract<T, Record<K, string>>,
