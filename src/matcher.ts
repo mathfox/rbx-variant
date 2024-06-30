@@ -54,7 +54,7 @@ type CompleteFunc<RemainingKeys, Return> = {
 	/**
 	 * Execute the matcher with all cases and retrieve the result.
 	 */
-	complete(options?: CompleteOptions): Return;
+	complete(this: unknown, options?: CompleteOptions): Return;
 	/**
 	 * The **incomplete** complete function.
 	 *
