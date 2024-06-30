@@ -31,7 +31,10 @@ export interface TypesFunc<K extends string> {
 	 * @template T target discriminated union
 	 * @returns list of string literal types.
 	 */
-	types<T extends Record<K, string>>(this: void, content: Array<T>): Array<T[K]>;
+	types<T extends Record<K, string>>(
+		this: void,
+		content: Array<T>,
+	): Array<T[K]>;
 }
 
 export function typesImpl<K extends string>(key: K): TypesFunc<K> {

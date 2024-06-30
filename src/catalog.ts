@@ -38,7 +38,9 @@ export type IsLiteral<T extends LiteralBase> = LiteralBase extends T
  * ```
  * `Suit` is now available as both value (`return Suit.Spades`) and type (`function(cardSuit: Suit) { ... }`)
  */
-export function catalog<T extends string>(strings: ReadonlyArray<T>): { [P in T]: P };
+export function catalog<T extends string>(
+	strings: ReadonlyArray<T>,
+): { [P in T]: P };
 
 /**
  * Create a catalog object based on some calculation

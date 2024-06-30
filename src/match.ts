@@ -282,7 +282,11 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		} else if (args.size() === 2) {
 			// regular match
 			const [instanceOrTypeOrCreator, handlerParam] = args as [
-				T | TType | VariantCreator<string, (...args: ReadonlyArray<any>) => {}, K>,
+				(
+					| T
+					| TType
+					| VariantCreator<string, (...args: ReadonlyArray<any>) => {}, K>
+				),
 				H,
 			];
 

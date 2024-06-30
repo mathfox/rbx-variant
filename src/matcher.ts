@@ -186,7 +186,7 @@ export class Matcher<
 		});
 	}
 
-	complete = ((options?: CompleteOptions) => {
+	complete = function (this: any, options?: CompleteOptions) {
 		if (this.target !== undefined && this.target[this.key] in this.handler) {
 			return this.handler[this.target[this.key]]?.(
 				this.target as Extract<T, Record<K, string>>,
@@ -196,7 +196,7 @@ export class Matcher<
 				return options.withFallback(this.target);
 			}
 		}
-	}) as RemainingKeys<T, K, H> extends never
+	} as RemainingKeys<T, K, H> extends never
 		? CompleteFunc<
 				RemainingKeys<T, K, H>,
 				ReturnType<EnsureFunc<H[keyof H]>>

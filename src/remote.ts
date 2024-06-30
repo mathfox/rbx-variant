@@ -151,12 +151,15 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	const { variantList } = variantImpl(key);
 
 	function isFunctions<T extends VariantModule<K>>(vmod: T) {
-		return (keys(vmod) as ReadonlyArray<string & keyof T>).reduce((acc, key) => {
-			return {
-				...acc,
-				[key]: isType(key),
-			};
-		}, {}) as IsFunctions<T, K>;
+		return (keys(vmod) as ReadonlyArray<string & keyof T>).reduce(
+			(acc, key) => {
+				return {
+					...acc,
+					[key]: isType(key),
+				};
+			},
+			{},
+		) as IsFunctions<T, K>;
 	}
 
 	function remote<T extends VariantModule<K>>(vmod: T): Remote<T, K> {
