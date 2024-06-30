@@ -148,7 +148,7 @@ export interface VariantFuncs<K extends string> {
 	 */
 	variantList<T extends ValidListType>(
 		this: void,
-		template: T[],
+		template: ReadonlyArray<T>,
 	): Identity<VMFromVC<CreatorFromListType<T, K>>>;
 
 	/**
@@ -261,7 +261,7 @@ export interface VariantFuncs<K extends string> {
 	 */
 	variant<T extends ValidListType>(
 		this: void,
-		template: T[],
+		template: ReadonlyArray<T>,
 	): Identity<VMFromVC<CreatorFromListType<T, K>>>;
 
 	/**
@@ -407,7 +407,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 	}
 
 	function variantList<T extends ValidListType>(
-		template: T[],
+		template: ReadonlyArray<T>,
 	): Identity<VMFromVC<CreatorFromListType<T, K>>> {
 		return template
 			.map((value) => {

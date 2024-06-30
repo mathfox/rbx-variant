@@ -116,7 +116,7 @@ export interface Sequence<
 	/**
 	 * A list of types ordered as the sequence.
 	 */
-	readonly types: TypesOf<T>[];
+	readonly types: Array<TypesOf<T>>;
 }
 
 export interface RemoteFuncs<K extends string> {
@@ -133,7 +133,7 @@ export interface RemoteFuncs<K extends string> {
 	sequence<T extends VariantModule<K>, O extends SequenceInput<K>>(
 		this: void,
 		module: T,
-		order: O[],
+		order: ReadonlyArray<O>,
 	): Sequence<Pick<T, SequenceInputType<O, K>>, O, K>;
 	/**
 	 * Create a sequenced variant.
@@ -141,7 +141,7 @@ export interface RemoteFuncs<K extends string> {
 	 */
 	sequence<O extends CreativeSequenceInput<K>>(
 		this: void,
-		order: O[],
+		order: ReadonlyArray<O>,
 	): Sequence<VMFromVC<CreatorFromSeqInput<O, K>>, O, K>;
 }
 
@@ -151,7 +151,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	const { variantList } = variantImpl(key);
 
 	function isFunctions<T extends VariantModule<K>>(vmod: T) {
-		return (keys(vmod) as Array<string & keyof T>).reduce((acc, key) => {
+		return (keys(vmod) as ReadonlyArray<string & keyof T>).reduce((acc, key) => {
 			return {
 				...acc,
 				[key]: isType(key),
@@ -182,7 +182,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 
 	function _sequence<T extends VariantModule<K>, O extends SequenceInput<K>>(
 		module: T,
-		order: O[],
+		order: ReadonlyArray<O>,
 	): Sequence<T, O, K> {
 		const miniModule: Pick<T, SequenceInputType<O, K>> = module;
 		const result = remote(miniModule);
@@ -206,14 +206,14 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		};
 	}
 	function _sequenceOfList<O extends CreativeSequenceInput<K>>(
-		order: O[],
+		order: ReadonlyArray<O>,
 	): Sequence<VMFromVC<CreatorFromSeqInput<O, K>>, O, K> {
 		const module: VMFromVC<CreatorFromSeqInput<O, K>> = variantList(order);
 		return _sequence(module, order);
 	}
 	function sequence<T extends VariantModule<K>, O extends SequenceInput<K>>(
 		module: T | CreativeSequenceInput<K>,
-		order?: O[],
+		order?: ReadonlyArray<O>,
 	) {
 		if (isArray(module)) {
 			return _sequenceOfList(module as CreativeSequenceInput<K, string>[]);

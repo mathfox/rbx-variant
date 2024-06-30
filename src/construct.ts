@@ -1,4 +1,4 @@
-type Constructable = { new (...args: any[]): any };
+type Constructable = { new (...args: Array<any>): any };
 
 type ConstructableToFactory<T extends Constructable> = T extends {
 	new (...args: infer Args): infer Return;
@@ -14,7 +14,7 @@ type ConstructableToFactory<T extends Constructable> = T extends {
 export function construct<T extends Constructable>(
 	cls: T,
 ): ConstructableToFactory<T> {
-	return ((...args: unknown[]) => {
+	return ((...args: Array<unknown>) => {
 		const instance = new cls(...args);
 
 		return instance;

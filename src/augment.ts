@@ -38,7 +38,7 @@ export function augment<
 		const inputObject = variantDefinition[key];
 
 		const returnFunc = isVariantCreator(inputObject)
-			? variation(inputObject.output.type, (...args: unknown[]) => {
+			? variation(inputObject.output.type, (...args: Array<unknown>) => {
 					const result = (inputObject as Func)(...args) as Identity<
 						VariantTypeSpread<VariantRecord<T, string>>[keyof T]
 					>;

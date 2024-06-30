@@ -60,7 +60,7 @@ export interface GenericTerm<Label extends string> {
  */
 export type GenericVariantCreator<
 	Type extends string,
-	F extends (...args: any[]) => {} = () => {},
+	F extends (...args: Array<any>) => {} = () => {},
 	K extends string = "type",
 > = (<T>(
 	...args: Generify<Parameters<F>, { [gp: string]: T }>

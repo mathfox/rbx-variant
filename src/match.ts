@@ -22,7 +22,7 @@ export type Handler<T extends Record<K, string>, K extends string> = {
  * A set of functions meant to handle the _constructors_ of a variant type
  */
 export type CreatorHandler<
-	C extends VariantCreator<string, (...args: any[]) => {}, string>,
+	C extends VariantCreator<string, (...args: Array<any>) => {}, string>,
 > = {
 	[P in C["output"]["type"]]: (
 		instance: Extract<C, { output: { type: P } }>,
@@ -173,7 +173,7 @@ export interface MatchOverloads<K extends string> {
 	 * @template H handler object
 	 */
 	<
-		C extends VariantCreator<string, (...args: any[]) => {}, K>,
+		C extends VariantCreator<string, (...args: Array<any>) => {}, K>,
 		H extends CreatorHandler<C>,
 	>(
 		this: void,
@@ -205,7 +205,7 @@ export interface MatchOverloads<K extends string> {
 	 * @returns The result of the appropriate branch based on the creator type
 	 */
 	<
-		C extends VariantCreator<string, (...args: any[]) => {}, K>,
+		C extends VariantCreator<string, (...args: Array<any>) => {}, K>,
 		H extends CreatorHandler<C>,
 	>(
 		this: void,
@@ -274,7 +274,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		T extends Record<K, TType>,
 		H extends Handler<T, K> | ((t: T) => Handler<T, K>),
 		TType extends string,
-	>(...args: unknown[]) {
+	>(...args: ReadonlyArray<unknown>) {
 		if (args.size() === 1) {
 			// inline match
 			const [handler] = args as [H];
@@ -282,7 +282,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		} else if (args.size() === 2) {
 			// regular match
 			const [instanceOrTypeOrCreator, handlerParam] = args as [
-				T | TType | VariantCreator<string, (...args: any[]) => {}, K>,
+				T | TType | VariantCreator<string, (...args: ReadonlyArray<any>) => {}, K>,
 				H,
 			];
 

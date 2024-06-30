@@ -30,7 +30,7 @@ export interface FlagsFunc<K extends string> {
 	 */
 	flags<T extends Record<K, string>>(
 		this: void,
-		flags: T[],
+		flags: Array<T>,
 	): { [P in T[K]]: Extract<T, Record<K, P>> };
 }
 
@@ -40,7 +40,7 @@ export interface FlagsFunc<K extends string> {
  */
 export function flagsImpl<K extends string>(key: K): FlagsFunc<K> {
 	function flags<T extends Record<K, string>>(
-		flags: T[],
+		flags: Array<T>,
 	): { [P in T[K]]: Extract<T, Record<K, P>> } {
 		return flags.reduce(
 			(o, v) => ({

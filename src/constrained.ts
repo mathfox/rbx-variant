@@ -5,7 +5,7 @@ import type { Identity } from "./util";
  * Constrained template.
  */
 export type ConstrainedTemplate<F extends Func> = {
-	[type: string]: (...args: [...Parameters<F>, ...any[]]) => ReturnType<F>;
+	[type: string]: (...args: [...Parameters<F>, ...Array<any>]) => ReturnType<F>;
 };
 
 /**

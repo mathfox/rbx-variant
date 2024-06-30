@@ -38,7 +38,8 @@ export type IsLiteral<T extends LiteralBase> = LiteralBase extends T
  * ```
  * `Suit` is now available as both value (`return Suit.Spades`) and type (`function(cardSuit: Suit) { ... }`)
  */
-export function catalog<T extends string>(strings: T[]): { [P in T]: P };
+export function catalog<T extends string>(strings: ReadonlyArray<T>): { [P in T]: P };
+
 /**
  * Create a catalog object based on some calculation
  * @param strings list of string literals.
@@ -68,7 +69,7 @@ export function catalog<T extends string>(strings: T[]): { [P in T]: P };
  * between existing values.
  */
 export function catalog<T extends string, F extends LiteralFactory<T>>(
-	strings: T[],
+	strings: ReadonlyArray<T>,
 	factory: F,
 ): { [P in T]: ReturnType<F> };
 /**
@@ -88,7 +89,7 @@ export function catalog<T extends string, F extends LiteralFactory<T>>(
  */
 export function catalog<T extends LiteralCatalog>(catalog: T): T;
 export function catalog<
-	T extends string[] | LiteralCatalog,
+	T extends Array<string> | LiteralCatalog,
 	F extends LiteralFactory,
 >(catalog: T, factory?: F) {
 	if (isArray(catalog)) {
