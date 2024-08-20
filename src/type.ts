@@ -1,4 +1,4 @@
-import { variantCosmos } from "../cosmos";
+import { variantCosmos } from "./cosmos";
 
 export const {
 	descope,
