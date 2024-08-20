@@ -7,6 +7,7 @@ type LiteralCatalog =
 	| Record<string, string>
 	| Record<string, number>
 	| Record<string, boolean>;
+
 /**
  * See `LiteralCatalog`
  */
