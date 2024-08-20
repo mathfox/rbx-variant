@@ -8,7 +8,7 @@
 		"serve": "rojo serve test.project.json",
 		"prepublishOnly": "bun run build",
 		"fmt": "bunx @biomejs/biome format --write",
-		"bench": "( npx tsc --noEmit --generateTrace tstrace || true ) && npx @amcasey/ts-analyze-trace tstrace"
+		"bench": "( bunx tsc --noEmit --generateTrace tstrace || true ) && bunx @amcasey/ts-analyze-trace tstrace"
 	},
 	"main": "out/init.lua",
 	"typings": "out/index.d.ts",
