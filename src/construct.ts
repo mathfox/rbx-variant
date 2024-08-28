@@ -11,9 +11,7 @@ type ConstructableToFactory<T extends Constructable> = T extends {
  * @param cls class definition / constructor
  * @returns a variant creator that wraps the class constructor into a factory function.
  */
-export function construct<T extends Constructable>(
-	cls: T,
-): ConstructableToFactory<T> {
+export function construct<T extends Constructable>(cls: T): ConstructableToFactory<T> {
 	return ((...args: Array<unknown>) => {
 		const instance = new cls(...args);
 

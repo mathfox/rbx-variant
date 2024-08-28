@@ -12,10 +12,7 @@ export = () => {
 				Yo: (_x: string, min: number) => ({ min }),
 			}),
 		);
-		type Test1<T extends TypeNames<typeof Test1> = undefined> = VariantOf<
-			typeof Test1,
-			T
-		>;
+		type Test1<T extends TypeNames<typeof Test1> = undefined> = VariantOf<typeof Test1, T>;
 
 		const instance = Test1.Yo("hello", 4);
 
@@ -41,8 +38,7 @@ export = () => {
 				Waves: just({ min: HairLength.Medium }),
 			}),
 		);
-		type HairStyle<T extends TypeNames<typeof HairStyle> = undefined> =
-			VariantOf<typeof HairStyle, T>;
+		type HairStyle<T extends TypeNames<typeof HairStyle> = undefined> = VariantOf<typeof HairStyle, T>;
 
 		const baldie = HairStyle.Bald() as HairStyle;
 

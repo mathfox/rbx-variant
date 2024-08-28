@@ -2,13 +2,7 @@ import { isArray } from "@rbxts/phantom/src/Array";
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { Handler } from "./match";
 import { just } from "./match.tools";
-import type {
-	Func,
-	Limited,
-	Splay,
-	VariantCreator,
-	VariantError,
-} from "./precepts";
+import type { Func, Limited, Splay, VariantCreator, VariantError } from "./precepts";
 import type { TypeStr } from "./util";
 import { isVariantCreator } from "./variant";
 
@@ -29,11 +23,9 @@ type EnsureFunc<T> = T extends Func ? T : never;
  * @param table
  * @returns
  */
-export function tableToHandler<
-	T extends Record<K, string>,
-	K extends string,
-	Table extends Record<T[K], unknown>,
->(tbl: Table) {
+export function tableToHandler<T extends Record<K, string>, K extends string, Table extends Record<T[K], unknown>>(
+	tbl: Table,
+) {
 	return keys(tbl).reduce(
 		(acc, cur) => {
 			const key = cur as keyof Table;
@@ -60,9 +52,7 @@ type CompleteFunc<RemainingKeys, Return> = {
 	 *
 	 * > This is not callable.
 	 */
-	incomplete: VariantError<
-		["The handler has not been fully completed. Expected key(s)", RemainingKeys]
-	>;
+	incomplete: VariantError<["The handler has not been fully completed. Expected key(s)", RemainingKeys]>;
 };
 
 export type RegisterLookup<T extends Record<K, string>, K extends string> = {
@@ -77,9 +67,7 @@ type ComplementaryHandler<
 	T extends Record<K, string>,
 	K extends string,
 	H extends Partial<Handler<T, K>>,
-> = RemainingKeys<T, K, H> extends never
-	? never
-	: Handler<Extract<T, Record<K, RemainingKeys<T, K, H>>>, K>;
+> = RemainingKeys<T, K, H> extends never ? never : Handler<Extract<T, Record<K, RemainingKeys<T, K, H>>>, K>;
 /**
  * Retrieve keys not yet handled.
  */
@@ -93,9 +81,7 @@ type ComplementaryLookup<
 	T extends Record<K, string>,
 	K extends string,
 	H extends Partial<Handler<T, K>>,
-> = RemainingKeys<T, K, H> extends never
-	? never
-	: RegisterLookup<Extract<T, Record<K, RemainingKeys<T, K, H>>>, K>;
+> = RemainingKeys<T, K, H> extends never ? never : RegisterLookup<Extract<T, Record<K, RemainingKeys<T, K, H>>>, K>;
 /**
  * The matcher, a builder-pattern form of `match()`
  *
@@ -112,11 +98,7 @@ type ComplementaryLookup<
  *     * `.execute()` immediately runs the matcher, whether or not all cases are handled.
  *     * `.else(_ => {...})` immediately runs the matcher, resolving unhandled cases with a function.
  */
-export class Matcher<
-	T extends Record<K, string>,
-	K extends string,
-	H extends Partial<Handler<T, K>>,
-> {
+export class Matcher<T extends Record<K, string>, K extends string, H extends Partial<Handler<T, K>>> {
 	/**
 	 * Create a new matcher from the target
 	 * @param target the
@@ -144,9 +126,7 @@ export class Matcher<
 	 * This is a **terminal** and resolves the matcher.
 	 */
 	execute() {
-		const chosenHandler: (target: T) => unknown = this.handler[
-			this.target[this.key]
-		] as Func;
+		const chosenHandler: (target: T) => unknown = this.handler[this.target[this.key]] as Func;
 
 		return chosenHandler?.(this.target) as RemainingKeys<T, K, H> extends never
 			? ReturnType<EnsureFunc<H[keyof H]>>
@@ -162,9 +142,7 @@ export class Matcher<
 	 * @param remainingCases an object wiht a method to handle every remaining case.
 	 * @returns the result of executing the handler, given these final additions.
 	 */
-	exhaust<R extends ComplementaryHandler<T, K, H>>(
-		remainingCases: R,
-	): ReturnType<(H & R)[T[K]]> {
+	exhaust<R extends ComplementaryHandler<T, K, H>>(remainingCases: R): ReturnType<(H & R)[T[K]]> {
 		const combinedHandler = {
 			...this.handler,
 			...remainingCases,
@@ -177,37 +155,24 @@ export class Matcher<
 	 * @param remainingCases
 	 * @returns
 	 */
-	remaining<R extends ComplementaryHandler<T, K, H>>(
-		remainingCases: R,
-	): Matcher<T, K, H & R> {
+	remaining<R extends ComplementaryHandler<T, K, H>>(remainingCases: R): Matcher<T, K, H & R> {
 		return new Matcher(this.target, this.key, {
 			...this.handler,
 			...remainingCases,
 		});
 	}
 
-	complete = function (
-		this: InstanceType<typeof Matcher<T, K, H>>,
-		options?: CompleteOptions,
-	) {
+	complete = function (this: InstanceType<typeof Matcher<T, K, H>>, options?: CompleteOptions) {
 		if (this.target !== undefined && this.target[this.key] in this.handler) {
-			return this.handler[this.target[this.key]]?.(
-				this.target as Extract<T, Record<K, string>>,
-			);
+			return this.handler[this.target[this.key]]?.(this.target as Extract<T, Record<K, string>>);
 		} else {
 			if (options?.withFallback !== undefined) {
 				return options.withFallback(this.target);
 			}
 		}
 	} as RemainingKeys<T, K, H> extends never
-		? CompleteFunc<
-				RemainingKeys<T, K, H>,
-				ReturnType<EnsureFunc<H[keyof H]>>
-			>["complete"]
-		: CompleteFunc<
-				RemainingKeys<T, K, H>,
-				ReturnType<EnsureFunc<H[keyof H]>>
-			>["incomplete"];
+		? CompleteFunc<RemainingKeys<T, K, H>, ReturnType<EnsureFunc<H[keyof H]>>>["complete"]
+		: CompleteFunc<RemainingKeys<T, K, H>, ReturnType<EnsureFunc<H[keyof H]>>>["incomplete"];
 
 	/**
 	 * Execute the match. If the target type has been explicitly handled, use that logic.
@@ -221,9 +186,7 @@ export class Matcher<
 		func: ElseFunc,
 	): ReturnType<EnsureFunc<H[keyof H]> | ElseFunc> {
 		if (this.target[this.key] in this.handler) {
-			return this.handler[this.target[this.key]]?.(
-				this.target as Extract<T, Record<K, string>>,
-			);
+			return this.handler[this.target[this.key]]?.(this.target as Extract<T, Record<K, string>>);
 		} else {
 			return func(this.target as Exclude<T, Record<K, keyof H>>);
 		}
@@ -303,10 +266,7 @@ export class Matcher<
 	when<
 		Variation extends T[K] | VariantCreator<T[K], Func, K>,
 		Handler extends (x: Extract<T, Record<K, TypeStr<Variation, K>>>) => any,
-	>(
-		variations: Variation | Variation[],
-		handler: Handler,
-	): Matcher<T, K, H & Record<TypeStr<Variation, K>, Handler>>;
+	>(variations: Variation | Variation[], handler: Handler): Matcher<T, K, H & Record<TypeStr<Variation, K>, Handler>>;
 
 	// actual implementation
 	when<
@@ -314,23 +274,14 @@ export class Matcher<
 		Variation2 extends VariantCreator<T[K], Func, K>,
 		Variation3 extends Array<Variation1 | Variation2>,
 		Variation4 extends Splay<Handler<T, K>>,
-		HandlerFunc extends (
-			x: Extract<T, Record<K, TypeStr<Variation1, K>>>,
-		) => any,
-	>(
-		variations: Variation1 | Variation2 | Variation3 | Variation4,
-		handler?: HandlerFunc,
-	) {
+		HandlerFunc extends (x: Extract<T, Record<K, TypeStr<Variation1, K>>>) => any,
+	>(variations: Variation1 | Variation2 | Variation3 | Variation4, handler?: HandlerFunc) {
 		if (handler !== undefined) {
 			// 2 param case
 			const list = isArray(variations) ? variations : [variations];
 			const newCases = list.reduce(
 				(acc, cur) => {
-					const t = typeIs(cur, "string")
-						? cur
-						: isVariantCreator(cur)
-							? cur.output.type
-							: undefined;
+					const t = typeIs(cur, "string") ? cur : isVariantCreator(cur) ? cur.output.type : undefined;
 
 					return t !== undefined ? { ...acc, [t]: handler } : acc;
 				},
@@ -356,17 +307,14 @@ export interface MatcherFunc<K extends string> {
 	 * Create a matcher on some target variant instance.
 	 * @param target
 	 */
-	matcher<
-		T extends TType extends TType ? Record<K, TType> : never,
-		TType extends string,
-	>(this: void, target: T | TType): Matcher<T, K, {}>;
+	matcher<T extends TType extends TType ? Record<K, TType> : never, TType extends string>(
+		this: void,
+		target: T | TType,
+	): Matcher<T, K, {}>;
 }
 
 export function matcherImpl<K extends string>(key: K): MatcherFunc<K> {
-	function matcher<
-		T extends TType extends TType ? Record<K, TType> : never,
-		TType extends string,
-	>(target: T | TType) {
+	function matcher<T extends TType extends TType ? Record<K, TType> : never, TType extends string>(target: T | TType) {
 		const actualTarget = typeIs(target, "string") ? { [key]: target } : target;
 		return new Matcher(actualTarget as any, key, {});
 	}

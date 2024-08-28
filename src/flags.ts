@@ -1,9 +1,4 @@
-import type {
-	CreatorOutput,
-	GetTypeLabel,
-	TypesOf,
-	VariantModule,
-} from "./precepts";
+import type { CreatorOutput, GetTypeLabel, TypesOf, VariantModule } from "./precepts";
 
 /**
  * Transform a sum type (a variant) into a product type.
@@ -28,10 +23,7 @@ export interface FlagsFunc<K extends string> {
 	 * @template T The discriminated union
 	 * @returns An object where each property's key is a type string and its value is the instance of that type.
 	 */
-	flags<T extends Record<K, string>>(
-		this: void,
-		flags: Array<T>,
-	): { [P in T[K]]: Extract<T, Record<K, P>> };
+	flags<T extends Record<K, string>>(this: void, flags: Array<T>): { [P in T[K]]: Extract<T, Record<K, P>> };
 }
 
 /**
@@ -39,9 +31,7 @@ export interface FlagsFunc<K extends string> {
  * @param key
  */
 export function flagsImpl<K extends string>(key: K): FlagsFunc<K> {
-	function flags<T extends Record<K, string>>(
-		flags: Array<T>,
-	): { [P in T[K]]: Extract<T, Record<K, P>> } {
+	function flags<T extends Record<K, string>>(flags: Array<T>): { [P in T[K]]: Extract<T, Record<K, P>> } {
 		return flags.reduce(
 			(o, v) => ({
 				...o,

@@ -7,10 +7,7 @@ import { flags, ofLiteral } from "./type";
 
 export = () => {
 	it("flags (basic)", () => {
-		const housePets = flags([
-			sample.cerberus,
-			Animal.cat({ name: "Perseus", furnitureDamaged: 0 }),
-		]);
+		const housePets = flags([sample.cerberus, Animal.cat({ name: "Perseus", furnitureDamaged: 0 })]);
 
 		expect(housePets.cat.name).to.equal("Perseus");
 		expect(housePets.dog.favoriteBall).never.to.be.ok();

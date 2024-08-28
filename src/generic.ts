@@ -30,9 +30,7 @@ export type GenericTemplate<T extends RawVariant> = T & {
  * @param func a template factory. Receives 26 generic placeholders (A-Z) in an object, returns a variant template
  * @returns A variant with generic creators
  */
-export function onTerms<T extends RawVariant>(
-	func: (alpha: Alpha) => T,
-): GenericTemplate<T> {
+export function onTerms<T extends RawVariant>(func: (alpha: Alpha) => T): GenericTemplate<T> {
 	return {
 		...func(Alpha),
 		// ROBLOX DEVIATION: undefined will be omiited, so we have to use boolean
@@ -64,10 +62,7 @@ export type GenericVariantCreator<
 	K extends string = "type",
 > = (<T>(
 	...args: Generify<Parameters<F>, { [gp: string]: T }>
-) => Generify<
-	PatchObjectOrPromise<ReturnType<F>, Record<K, Type>>,
-	{ [gp: string]: T }
->) &
+) => Generify<PatchObjectOrPromise<ReturnType<F>, Record<K, Type>>, { [gp: string]: T }>) &
 	Outputs<K, Type> &
 	Stringable<Type> & {
 		name: Type;
@@ -78,14 +73,8 @@ export type GenericVariantCreator<
  *
  * Mapped type of keys to the variant creator's return type.
  */
-export type GenericVariantTypeSpread<
-	VM extends GenericVariantRecord<{}, string>,
-> = {
-	[P in keyof VM]: VM[P] extends GenericVariantCreator<
-		infer Type,
-		infer Creator,
-		infer K
-	>
+export type GenericVariantTypeSpread<VM extends GenericVariantRecord<{}, string>> = {
+	[P in keyof VM]: VM[P] extends GenericVariantCreator<infer Type, infer Creator, infer K>
 		? PatchObjectOrPromise<ReturnType<Creator>, Record<K, Type>>
 		: never;
 };
@@ -104,11 +93,7 @@ export type GVariantOf<
  * The money.
  */
 export type GenericVariantRecord<VM extends RawVariant, K extends string> = {
-	[P in keyof VM]: GenericVariantCreator<
-		P & string,
-		VM[P] extends Func ? VM[P] : () => {},
-		K
-	>;
+	[P in keyof VM]: GenericVariantCreator<P & string, VM[P] extends Func ? VM[P] : () => {}, K>;
 };
 
 const GP = genericTerms([
@@ -139,10 +124,7 @@ const GP = genericTerms([
 	"Y",
 	"Z",
 ]);
-export type GP<T extends TypeNames<typeof GP> = undefined> = VariantOf<
-	typeof GP,
-	T
->;
+export type GP<T extends TypeNames<typeof GP> = undefined> = VariantOf<typeof GP, T>;
 
 /**
  * Object with placeholders for generic terms.
@@ -163,9 +145,7 @@ interface TermMap {
  * Transform some type containing a `GenericTerm` into the concrete type from
  * the term map.
  */
-export type Generify<T, Map extends TermMap> = T extends GenericTerm<
-	infer Label
->
+export type Generify<T, Map extends TermMap> = T extends GenericTerm<infer Label>
 	? Map[Label]
 	: T extends primitive
 		? T

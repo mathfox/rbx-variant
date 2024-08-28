@@ -3,7 +3,6 @@
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import { isVariantCreator, variantImpl } from "./variant";
 import { payload, fields } from "./variant.tools";
-import { Identity } from "./util";
 
 export = () => {
 	const str = {

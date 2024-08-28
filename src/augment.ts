@@ -1,12 +1,5 @@
 import { keys } from "@rbxts/phantom/src/Dictionary";
-import type {
-	Func,
-	PatchObjectOrPromise,
-	RawVariant,
-	VariantCreator,
-	VariantOf,
-	VariantTypeSpread,
-} from "./precepts";
+import type { Func, PatchObjectOrPromise, RawVariant, VariantCreator, VariantOf, VariantTypeSpread } from "./precepts";
 import { variation } from "./type";
 import type { Identity } from "./util";
 import { type VariantRecord, isVariantCreator } from "./variant";
@@ -30,11 +23,13 @@ import { type VariantRecord, isVariantCreator } from "./variant";
  * ));
  * ```
  */
-export function augment<
-	T extends RawVariant,
-	F extends (x: VariantOf<VariantRecord<T, string>>) => any,
->(variantDefinition: T, f: F) {
-	return keys(variantDefinition).reduce((acc, key) => {
+export function augment<T extends RawVariant, F extends (x: VariantOf<VariantRecord<T, string>>) => any>(
+	variantDefinition: T,
+	f: F,
+): AugmentedRawVariant<T, F> {
+	const augmentedRawVariant: AugmentedRawVariant<T, F> = {};
+
+	for (const key of variantDefinition as unknown as Set<keyof T>) {
 		const inputObject = variantDefinition[key];
 
 		const returnFunc = isVariantCreator(inputObject)
@@ -48,14 +43,8 @@ export function augment<
 						...result,
 					};
 				})
-			: (
-					...args: T[typeof key] extends (...args: infer TArgs) => any
-						? TArgs
-						: []
-				) => {
-					const item = typeIs(inputObject, "function")
-						? inputObject(...args)
-						: {};
+			: (...args: T[typeof key] extends (...args: infer TArgs) => any ? TArgs : []) => {
+					const item = typeIs(inputObject, "function") ? inputObject(...args) : {};
 
 					return {
 						...f(item),
@@ -63,28 +52,19 @@ export function augment<
 					};
 				};
 
-		return {
-			...acc,
-			[key]: returnFunc,
-		};
-	}, {}) as AugmentedRawVariant<T, F>;
+		augmentedRawVariant[key] = returnFunc;
+	}
+
+	return augmentedRawVariant;
 }
 
-type CleanResult<T, U> = T extends undefined
-	? U
-	: T extends Func
-		? T
-		: T extends object
-			? U
-			: T;
+type CleanResult<T, U> = T extends undefined ? U : T extends Func ? T : T extends object ? U : T;
 
 type FullyFuncRawVariant<V extends RawVariant> = {
 	[P in keyof V & string]: CleanResult<V[P], () => {}>;
 };
 
-type PatchFunc<F, O extends object> = F extends (
-	...args: infer TArgs
-) => infer TReturn
+type PatchFunc<F, O extends object> = F extends (...args: infer TArgs) => infer TReturn
 	? TReturn extends {} | PromiseLike<{}>
 		? (...args: TArgs) => PatchObjectOrPromise<TReturn, O>
 		: never
@@ -98,7 +78,5 @@ export type AugmentedRawVariant<V extends RawVariant, F extends Func> = {
 		? VariantCreator<VT, PatchFunc<VCF, ReturnType<F>>, VK>
 		: (
 				...args: Parameters<FullyFuncRawVariant<V>[P & string]>
-			) => Identity<
-				ReturnType<F> & ReturnType<FullyFuncRawVariant<V>[P & string]>
-			>;
+			) => Identity<ReturnType<F> & ReturnType<FullyFuncRawVariant<V>[P & string]>>;
 };

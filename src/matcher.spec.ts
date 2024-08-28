@@ -208,10 +208,7 @@ export = () => {
 		expect(() => {
 			const greetAnimal = (animal: Animal) => {
 				(
-					matcher(animal).when(
-						"snake",
-						({ name }) => `Hello ${name}`,
-					) as unknown as {
+					matcher(animal).when("snake", ({ name }) => `Hello ${name}`) as unknown as {
 						complete: Callback;
 					}
 				).complete();

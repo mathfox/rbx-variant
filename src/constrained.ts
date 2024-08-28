@@ -12,9 +12,7 @@ export type ConstrainedTemplate<F extends Func> = {
  * Patched Template helper.
  */
 type PatchedTemplate<T extends ConstrainedTemplate<F>, F extends Func> = {
-	[P in keyof T]: (
-		...args: Parameters<T[P]>
-	) => Identity<ReturnType<T[P]> & ReturnType<F>>;
+	[P in keyof T]: (...args: Parameters<T[P]>) => Identity<ReturnType<T[P]> & ReturnType<F>>;
 };
 
 /**
@@ -26,9 +24,6 @@ type PatchedTemplate<T extends ConstrainedTemplate<F>, F extends Func> = {
  * @param v
  * @returns
  */
-export function constrained<T extends ConstrainedTemplate<F>, F extends Func>(
-	_constraint_: F,
-	v: T,
-) {
+export function constrained<T extends ConstrainedTemplate<F>, F extends Func>(_constraint_: F, v: T) {
 	return v as PatchedTemplate<T, F>;
 }

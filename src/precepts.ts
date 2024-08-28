@@ -9,11 +9,8 @@ import type { Identity, IsNever } from "./util";
  * You may write the literals directly, using this is recommended
  * if you'd like to update the literal as this library updates.
  */
-export type Variant<
-	Type extends string,
-	Fields extends {} = {},
-	Key extends string = "type",
-> = Record<Key, Type> & Fields;
+export type Variant<Type extends string, Fields extends {} = {}, Key extends string = "type"> = Record<Key, Type> &
+	Fields;
 
 /**
  * Given an object or a promise containing an object, patch it to
@@ -25,10 +22,9 @@ export type Variant<
  * Note: Places items at the top of the resulting object - this helps clearly
  * identify the discriminant in a union.
  */
-export type PatchObjectOrPromise<
-	T extends {} | PromiseLike<{}>,
-	U extends {},
-> = T extends PromiseLike<infer R> ? Promise<Identity<U & R>> : Identity<U & T>;
+export type PatchObjectOrPromise<T extends {} | PromiseLike<{}>, U extends {}> = T extends PromiseLike<infer R>
+	? Promise<Identity<U & R>>
+	: Identity<U & T>;
 
 /**
  * The type marking metadata.
@@ -64,9 +60,7 @@ export type VariantCreator<
 	T extends string,
 	F extends (...args: Array<any>) => {} = (...args: Array<any>) => {},
 	K extends string = "type",
-> = ((
-	...args: Parameters<F>
-) => PatchObjectOrPromise<ReturnType<F>, Record<K, T>>) &
+> = ((...args: Parameters<F>) => PatchObjectOrPromise<ReturnType<F>, Record<K, T>>) &
 	Outputs<K, T> &
 	Stringable<T> & {
 		name: T;
@@ -76,12 +70,11 @@ export type VariantCreator<
  * Given a VariantCreator, extract the output type. Unpack it
  * from a promise if it is inside one.
  */
-export type CreatorOutput<VC extends VariantCreator<string, Func, string>> =
-	ReturnType<VC> extends PromiseLike<infer R>
-		? R extends Record<VC["output"]["key"], string>
-			? R
-			: never
-		: ReturnType<VC>;
+export type CreatorOutput<VC extends VariantCreator<string, Func, string>> = ReturnType<VC> extends PromiseLike<infer R>
+	? R extends Record<VC["output"]["key"], string>
+		? R
+		: never
+	: ReturnType<VC>;
 
 /**
  * Basic building block, the loose function signature.
@@ -111,10 +104,7 @@ export type TypeMap<T extends VariantModule<string>> = {
 /**
  * Reverse lookup - get the label from the literal type.
  */
-export type GetTypeLabel<
-	T extends VariantModule<string>,
-	Key extends TypesOf<T>,
-> = {
+export type GetTypeLabel<T extends VariantModule<string>, Key extends TypesOf<T>> = {
 	[P in keyof T]: T[P]["output"]["type"] extends Key ? P : never;
 }[keyof T];
 
@@ -148,9 +138,7 @@ export type VariantTypeSpread<T extends VariantModule<string>> = {
 /**
  * A union of variation types from any arbitrary `VariantModule`
  */
-export type SumType<T extends VariantModule<string>> = Identity<
-	VariantTypeSpread<T>[keyof T]
->;
+export type SumType<T extends VariantModule<string>> = Identity<VariantTypeSpread<T>[keyof T]>;
 
 /**
  * **Create a variant type**.
@@ -164,10 +152,7 @@ export type SumType<T extends VariantModule<string>> = Identity<
  * export type SomeVariant = VariantOf<typeof SomeVariant>;
  * ```
  */
-export type VariantOf<
-	T extends VariantModule<string>,
-	TType = undefined,
-> = TType extends undefined
+export type VariantOf<T extends VariantModule<string>, TType = undefined> = TType extends undefined
 	? SumType<T>
 	: TType extends TypesOf<T>
 		? Extract<SumType<T>, Record<T[keyof T]["output"]["key"], TType>>
@@ -201,9 +186,7 @@ export interface Message<T> {
  */
 export type Limited<T, U> = IsNever<Exclude<keyof T, U>> extends true
 	? T
-	: VariantError<
-			["Expected keys of handler", keyof T, "to be limited to possible keys", U]
-		>;
+	: VariantError<["Expected keys of handler", keyof T, "to be limited to possible keys", U]>;
 
 /**
  * The key used to indicate the default handler.

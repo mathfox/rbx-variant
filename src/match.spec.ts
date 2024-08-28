@@ -5,17 +5,7 @@ import { Animal, CapsAnimal, sample } from "./__test__/animal";
 import { variantCosmos } from "./cosmos";
 import { constant, just, unload } from "./match.tools";
 import type { TypeNames, VariantOf } from "./precepts";
-import {
-	lookup,
-	match,
-	ofLiteral,
-	otherwise,
-	partial,
-	prematch,
-	scoped,
-	variant,
-	withFallback,
-} from "./type";
+import { lookup, match, ofLiteral, otherwise, partial, prematch, scoped, variant, withFallback } from "./type";
 import { typeMap } from "./typeCatalog";
 import { fields, payload } from "./variant.tools";
 
@@ -29,9 +19,7 @@ export = () => {
 			});
 
 		expect(rate(sample.cerberus)).to.equal(4);
-		expect(rate(Animal.cat({ name: "Yellow", furnitureDamaged: 2 }))).to.equal(
-			2,
-		);
+		expect(rate(Animal.cat({ name: "Yellow", furnitureDamaged: 2 }))).to.equal(2);
 		expect(rate(Animal.snake("Paleos"))).to.equal(5);
 	});
 
@@ -149,9 +137,7 @@ export = () => {
 				}),
 			);
 
-		expect(rate(Animal.cat({ name: "Yellow", furnitureDamaged: 2 }))).to.equal(
-			2,
-		);
+		expect(rate(Animal.cat({ name: "Yellow", furnitureDamaged: 2 }))).to.equal(2);
 		expect(rate(sample.cerberus)).to.equal(5);
 	});
 
@@ -207,10 +193,7 @@ export = () => {
 			Cat: fields<{ name: string }>(),
 			Dog: fields<{ name: string; toy?: string }>(),
 		});
-		type Animal2<T extends TypeNames<typeof Animal2> = undefined> = VariantOf<
-			typeof Animal2,
-			T
-		>;
+		type Animal2<T extends TypeNames<typeof Animal2> = undefined> = VariantOf<typeof Animal2, T>;
 
 		const cat = Animal2.Cat({ name: "Perseus" });
 
@@ -247,10 +230,7 @@ export = () => {
 		Beta: fields<{ prop: string }>(),
 		Gamma: {},
 	});
-	type Test1<T extends TypeNames<typeof Test1> = undefined> = VariantOf<
-		typeof Test1,
-		T
-	>;
+	type Test1<T extends TypeNames<typeof Test1> = undefined> = VariantOf<typeof Test1, T>;
 
 	const test1Result = (thing: Test1) =>
 		match(thing, {
@@ -496,9 +476,7 @@ export = () => {
 			snake: (name: string, pattern = "striped") => ({ name, pattern }),
 		});
 
-		const makeInstance = (
-			creator: (typeof TagAnimal)[keyof typeof TagAnimal],
-		) => {
+		const makeInstance = (creator: (typeof TagAnimal)[keyof typeof TagAnimal]) => {
 			return tagMatch(creator, {
 				cat: (c) => c({ name: "Snookums", furnitureDamaged: 10 }),
 				dog: (d) => d({ name: "Fido" }),

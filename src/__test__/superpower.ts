@@ -43,8 +43,7 @@ export const Superpower = variant({
 		range: number;
 	}>(),
 });
-export type Superpower<T extends TypeNames<typeof Superpower> = undefined> =
-	VariantOf<typeof Superpower, T>;
+export type Superpower<T extends TypeNames<typeof Superpower> = undefined> = VariantOf<typeof Superpower, T>;
 
 export const Element = catalog(["fire", "air", "water", "earth"]);
 export type Element = keyof typeof Element;

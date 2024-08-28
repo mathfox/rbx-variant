@@ -55,10 +55,7 @@ export = () => {
 		}) as Animal;
 
 		expect(() => {
-			assert(
-				!isType(kerb, Animal.snake),
-				"isType did not register kerb as a dog",
-			);
+			assert(!isType(kerb, Animal.snake), "isType did not register kerb as a dog");
 			assert(kerb.type === "dog");
 		}).to.never.throw();
 	});

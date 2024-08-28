@@ -18,8 +18,7 @@ export = () => {
 				() => ({ better: 4 }),
 			),
 		);
-		type BetterAnimal<T extends TypeNames<typeof BetterAnimal> = undefined> =
-			VariantOf<typeof BetterAnimal, T>;
+		type BetterAnimal<T extends TypeNames<typeof BetterAnimal> = undefined> = VariantOf<typeof BetterAnimal, T>;
 
 		const snek = BetterAnimal.snake("steve");
 		expect(snek.name).to.equal("steve");
@@ -45,8 +44,7 @@ export = () => {
 
 	it("augment (referencing pre-existing module)", () => {
 		const BetterAnimal = variant(augment(Animal, () => ({ better: true })));
-		type BetterAnimal<T extends TypeNames<typeof BetterAnimal> = undefined> =
-			VariantOf<typeof BetterAnimal, T>;
+		type BetterAnimal<T extends TypeNames<typeof BetterAnimal> = undefined> = VariantOf<typeof BetterAnimal, T>;
 
 		const snek = BetterAnimal.snake("steve");
 		expect(snek.name).to.equal("steve");
@@ -55,9 +53,7 @@ export = () => {
 	});
 
 	it("augment (referencing mismatched module)", () => {
-		const BetterCapsAnimal = variant(
-			augment(CapsAnimal, () => ({ better: true })),
-		);
+		const BetterCapsAnimal = variant(augment(CapsAnimal, () => ({ better: true })));
 		const test = BetterCapsAnimal.cat({ name: "Test", furnitureDamaged: 0 });
 
 		const snek = BetterCapsAnimal.snake("steve");
@@ -67,9 +63,7 @@ export = () => {
 	});
 
 	it("augment (variable augment)", () => {
-		const BetterAnimal = variant(
-			augment(Animal, ({ name }) => ({ nameLength: name.size() })),
-		);
+		const BetterAnimal = variant(augment(Animal, ({ name }) => ({ nameLength: name.size() })));
 
 		const snek = BetterAnimal.snake("steve");
 		expect(snek.name).to.equal("steve");
@@ -81,10 +75,8 @@ export = () => {
 		const BetterAnimal = variant(
 			augment(Animal, (animal) => ({
 				epithet: match(animal, {
-					cat: ({ furnitureDamaged }) =>
-						furnitureDamaged > 5 ? "dangerous" : "safe",
-					dog: ({ favoriteBall }) =>
-						favoriteBall === "yellow" ? "bad" : "good",
+					cat: ({ furnitureDamaged }) => (furnitureDamaged > 5 ? "dangerous" : "safe"),
+					dog: ({ favoriteBall }) => (favoriteBall === "yellow" ? "bad" : "good"),
 					snake: ({ pattern }) => pattern,
 				}),
 			})),
@@ -103,10 +95,8 @@ export = () => {
 		const BetterAnimal = variant(
 			augment(Animal, (animal) => ({
 				epithet: match(animal, {
-					cat: ({ furnitureDamaged }) =>
-						furnitureDamaged > 5 ? "dangerous" : "safe",
-					dog: ({ favoriteBall }) =>
-						favoriteBall === "yellow" ? "bad" : "good",
+					cat: ({ furnitureDamaged }) => (furnitureDamaged > 5 ? "dangerous" : "safe"),
+					dog: ({ favoriteBall }) => (favoriteBall === "yellow" ? "bad" : "good"),
 					snake: ({ pattern }) => pattern,
 				}),
 			})),

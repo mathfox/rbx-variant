@@ -46,8 +46,7 @@ export = () => {
 				snake: pass,
 			}),
 		);
-		type AnimClone<T extends TypeNames<typeof AnimClone> = undefined> =
-			VariantOf<typeof AnimClone, T>;
+		type AnimClone<T extends TypeNames<typeof AnimClone> = undefined> = VariantOf<typeof AnimClone, T>;
 
 		const dog = AnimClone.dog({ name: "Twix" });
 

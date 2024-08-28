@@ -7,10 +7,7 @@ export const Animal = variant({
 	dog: fields<{ name: string; favoriteBall?: string }>(),
 	snake: (name: string, pattern = "striped") => ({ name, pattern }),
 });
-export type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-	typeof Animal,
-	T
->;
+export type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 export const CapsAnimal = {
 	cat: variation("CAT", fields<{ name: string; furnitureDamaged: number }>()),
@@ -20,8 +17,7 @@ export const CapsAnimal = {
 		pattern: patternName ?? "striped",
 	})),
 };
-export type CapsAnimal<T extends TypeNames<typeof CapsAnimal> = undefined> =
-	VariantOf<typeof CapsAnimal, T>;
+export type CapsAnimal<T extends TypeNames<typeof CapsAnimal> = undefined> = VariantOf<typeof CapsAnimal, T>;
 
 export const sample = {
 	cerberus: Animal.dog({ name: "Cerberus" }),

@@ -10,18 +10,11 @@ import { type Identity, identityFunc } from "./util";
 export type VariantRecord<T extends RawVariant, K extends string> = {
 	[P in keyof T]: T[P] extends VariantCreator<string, Func, string>
 		? T[P]
-		: VariantCreator<
-				`${Exclude<P, symbol>}`,
-				T[P] extends Func ? T[P] : () => {},
-				K
-			>;
+		: VariantCreator<`${Exclude<P, symbol>}`, T[P] extends Func ? T[P] : () => {}, K>;
 };
 
 type ValidListType = string | VariantCreator<string, Func, string>;
-type CreatorFromListType<
-	T extends ValidListType,
-	K extends string,
-> = T extends VariantCreator<string, Func, string>
+type CreatorFromListType<T extends ValidListType, K extends string> = T extends VariantCreator<string, Func, string>
 	? T
 	: T extends string
 		? VariantCreator<T, () => {}, K>
@@ -36,19 +29,10 @@ export type VMFromVC<T extends VariantCreator<string, Func, string>> = {
 	[P in T["output"]["type"]]: Extract<T, Record<"output", Record<"type", P>>>;
 };
 
-type CleanResult<T, U> = T extends undefined
-	? U
-	: T extends Func
-		? T
-		: T extends object
-			? U
-			: T;
+type CleanResult<T, U> = T extends undefined ? U : T extends Func ? T : T extends object ? U : T;
 
 type ScopedVariant<T extends RawVariant, Scope extends string> = {
-	[P in keyof T & string]: VariantCreator<
-		ScopedType<Scope, P>,
-		CleanResult<T[P], () => {}>
-	>;
+	[P in keyof T & string]: VariantCreator<ScopedType<Scope, P>, CleanResult<T[P], () => {}>>;
 };
 
 /**
@@ -62,14 +46,10 @@ type ScopedType<Scope extends string, Type extends string> = `${Scope}/${Type}`;
  * @param type
  * @returns
  */
-export const scopeType = <Scope extends string, Type extends string>(
-	scope: Scope,
-	t: Type,
-) => `${scope}/${t}` as ScopedType<Scope, Type>;
+export const scopeType = <Scope extends string, Type extends string>(scope: Scope, t: Type) =>
+	`${scope}/${t}` as ScopedType<Scope, Type>;
 
-function descopeType<S extends string, T extends string>(
-	s: ScopedType<S, T>,
-): T {
+function descopeType<S extends string, T extends string>(s: ScopedType<S, T>): T {
 	return (s.split("/")[1] ?? s) as T;
 }
 
@@ -80,9 +60,7 @@ const VARIANT_CREATOR_BRAND: unique symbol = {
 /**
  * Checks whether the provided value is a table with branded member
  */
-export function isVariantCreator(
-	value: unknown,
-): value is VariantCreator<string> {
+export function isVariantCreator(value: unknown): value is VariantCreator<string> {
 	return typeIs(value, "table") && VARIANT_CREATOR_BRAND in value;
 }
 
@@ -101,19 +79,13 @@ export interface VariantFuncs<K extends string> {
 	descope<T extends Record<K, ScopedType<string, string>>>(
 		this: void,
 		target: T,
-	): T extends Record<K, ScopedType<string, infer TType>>
-		? Identity<Omit<T, K> & Record<K, TType>>
-		: T;
+	): T extends Record<K, ScopedType<string, infer TType>> ? Identity<Omit<T, K> & Record<K, TType>> : T;
 	/**
 	 *
 	 * @param scope
 	 * @param v
 	 */
-	scoped<T extends RawVariant, Scope extends string>(
-		this: void,
-		scope: Scope,
-		v: T,
-	): ScopedVariant<T, Scope>;
+	scoped<T extends RawVariant, Scope extends string>(this: void, scope: Scope, v: T): ScopedVariant<T, Scope>;
 
 	/**
 	 * Create a **variant** from a list of elements. Each element may be a `string`
@@ -174,10 +146,7 @@ export interface VariantFuncs<K extends string> {
 	 * });
 	 * ```
 	 */
-	variantModule<VM extends RawVariant>(
-		this: void,
-		template: VM,
-	): Identity<VariantRecord<VM, K>>;
+	variantModule<VM extends RawVariant>(this: void, template: VM): Identity<VariantRecord<VM, K>>;
 
 	/**
 	 * Create a *generic* **variant** from some template. Use with `onTerms()`.
@@ -196,10 +165,7 @@ export interface VariantFuncs<K extends string> {
 	 * ```
 	 * Note the use of `GVariantOf` instead of `VariantOf`.
 	 */
-	variant<VM extends RawVariant>(
-		this: void,
-		template: GenericTemplate<VM>,
-	): Identity<GenericVariantRecord<VM, K>>;
+	variant<VM extends RawVariant>(this: void, template: GenericTemplate<VM>): Identity<GenericVariantRecord<VM, K>>;
 
 	/**
 	 * Create a **variant** from some template.
@@ -223,10 +189,7 @@ export interface VariantFuncs<K extends string> {
 	 * });
 	 * ```
 	 */
-	variant<VM extends RawVariant>(
-		this: void,
-		template: VM,
-	): Identity<VariantRecord<VM, K>>;
+	variant<VM extends RawVariant>(this: void, template: VM): Identity<VariantRecord<VM, K>>;
 
 	/**
 	 * Create a **variant** from a list of elements. Each element may be a `string`
@@ -300,10 +263,7 @@ export interface VariantFuncs<K extends string> {
 }
 
 export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
-	function scope<T extends RawVariant, Scope extends string>(
-		scope: Scope,
-		v: T,
-	): Identity<ScopedVariant<T, Scope>> {
+	function scope<T extends RawVariant, Scope extends string>(scope: Scope, v: T): Identity<ScopedVariant<T, Scope>> {
 		return keys(v).reduce(
 			(acc, key) => {
 				return {
@@ -325,10 +285,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		} as any;
 	}
 
-	function variation<T extends string, F extends Func = () => {}>(
-		t: T,
-		creator?: F,
-	) {
+	function variation<T extends string, F extends Func = () => {}>(t: T, creator?: F) {
 		const maker = {
 			output: { key, type: t },
 			name: t,
@@ -378,16 +335,10 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 			}) as any,
 		});
 
-		return maker as unknown as VariantCreator<
-			T,
-			F extends VariantCreator<string, infer VF> ? VF : F,
-			K
-		>;
+		return maker as unknown as VariantCreator<T, F extends VariantCreator<string, infer VF> ? VF : F, K>;
 	}
 
-	function variantModule<VM extends RawVariant>(
-		template: VM,
-	): Identity<VariantRecord<VM, K>> {
+	function variantModule<VM extends RawVariant>(template: VM): Identity<VariantRecord<VM, K>> {
 		return entries(template).reduce(
 			(result, [vmKey, vmVal]) => {
 				// whether to use the existing value (pass-through variations), or create a new variation.
@@ -422,9 +373,7 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 			.reduce(
 				(result, value) => {
 					// TODO: investigate the purpose of double check
-					const creator = (
-						typeIs(value, "string") ? variation(value) : value
-					) as VariantCreator<string, Func, K>;
+					const creator = (typeIs(value, "string") ? variation(value) : value) as VariantCreator<string, Func, K>;
 
 					return {
 						...result,

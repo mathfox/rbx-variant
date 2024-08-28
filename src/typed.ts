@@ -1,10 +1,7 @@
 /**
  * Helper to retrieve the fields of a variation.
  */
-export type VariationFields<T, TType extends string, K extends string> = Omit<
-	Extract<T, Record<K, TType>>,
-	K
->;
+export type VariationFields<T, TType extends string, K extends string> = Omit<Extract<T, Record<K, TType>>, K>;
 /**
  * Enforce the expectation of a module that meets the contract.
  */
@@ -46,10 +43,7 @@ export interface TypedFunc<K extends string> {
 	 * // `pass` is just the identity function. Any function `(input: T) => T` is valid.
 	 * ```
 	 */
-	typed<T extends Record<K, string>>(
-		this: void,
-		variant: ExactDefinition<T, K>,
-	): VoidEmpty<ExactDefinition<T, K>>;
+	typed<T extends Record<K, string>>(this: void, variant: ExactDefinition<T, K>): VoidEmpty<ExactDefinition<T, K>>;
 	/**
 	 * Enforce a variant following a pre-defined type.
 	 *
@@ -78,9 +72,7 @@ export interface TypedFunc<K extends string> {
 
 export function typedImpl<K extends string>(_key: K): TypedFunc<K> {
 	function typed<T extends Record<K, string>>(
-		defOrFactory:
-			| ExactDefinition<T, K>
-			| ((_: typeof pass) => ExactDefinition<T, K>),
+		defOrFactory: ExactDefinition<T, K> | ((_: typeof pass) => ExactDefinition<T, K>),
 	) {
 		if (typeIs(defOrFactory, "function")) {
 			return defOrFactory(pass) as VoidEmpty<ExactDefinition<T, K>>;

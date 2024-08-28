@@ -15,50 +15,35 @@ export = () => {
 				pattern: patternName ?? "striped",
 			}),
 		});
-		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-			typeof Animal,
-			T
-		>;
+		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 		expect(Animal.cat.output.type).to.equal("cat");
 	});
 
 	it("Renamed module", () => {
 		const Animal = {
-			cat: variation(
-				"CAT",
-				fields<{ name: string; furnitureDamaged: number }>(),
-			),
+			cat: variation("CAT", fields<{ name: string; furnitureDamaged: number }>()),
 			dog: variation("DOG", fields<{ name: string; favoriteBall?: string }>()),
 			snake: variation("SNAKE", (name: string, patternName?: string) => ({
 				name,
 				pattern: patternName ?? "striped",
 			})),
 		};
-		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-			typeof Animal,
-			T
-		>;
+		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 		expect(Animal.cat.output.type).to.equal("CAT");
 	});
 
 	it("variant with variations", () => {
 		const Animal = variant({
-			cat: variation(
-				"CAT",
-				fields<{ name: string; furnitureDamaged: number }>(),
-			),
+			cat: variation("CAT", fields<{ name: string; furnitureDamaged: number }>()),
 			dog: variation("DOG", fields<{ name: string; favoriteBall?: string }>()),
 			snake: variation("SNAKE", (name: string, patternName?: string) => ({
 				name,
 				pattern: patternName ?? "striped",
 			})),
 		});
-		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-			typeof Animal,
-			T
-		>;
+		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 		const snek = Animal.snake("Steve");
 		expect(Animal.cat.output.type).to.equal("CAT");
@@ -74,10 +59,7 @@ export = () => {
 				pattern: patternName ?? "striped",
 			}),
 		});
-		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-			typeof Animal,
-			T
-		>;
+		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 		const snek = Animal.snake("Steve");
 		expect(Animal.cat.output.type).to.equal("cat");
@@ -106,10 +88,7 @@ export = () => {
 				};
 			},
 		});
-		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-			typeof Animal,
-			T
-		>;
+		type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 		const cerberus = Animal.dog("cerberus");
 
@@ -118,10 +97,7 @@ export = () => {
 	});
 
 	it("better variantList", () => {
-		const Animal = variant([
-			variation("dog", fields<{ name: string }>()),
-			"bird",
-		]);
+		const Animal = variant([variation("dog", fields<{ name: string }>()), "bird"]);
 
 		expect(Animal.bird().type).to.equal("bird");
 	});
@@ -140,10 +116,7 @@ export = () => {
 				Dog: fields<{ name: string; toy?: string }>(),
 			}),
 		);
-		type Animal2<T extends TypeNames<typeof Animal2> = undefined> = VariantOf<
-			typeof Animal2,
-			T
-		>;
+		type Animal2<T extends TypeNames<typeof Animal2> = undefined> = VariantOf<typeof Animal2, T>;
 
 		const cat = Animal2.Cat({ name: "Perseus" });
 
@@ -181,10 +154,7 @@ export = () => {
 			Cat: fields<{ name: string }>(),
 			Dog: fields<{ name: string; toy?: string }>(),
 		});
-		type Animal2<T extends TypeNames<typeof Animal2> = undefined> = VariantOf<
-			typeof Animal2,
-			T
-		>;
+		type Animal2<T extends TypeNames<typeof Animal2> = undefined> = VariantOf<typeof Animal2, T>;
 
 		const Animal3 = variant(Animal2);
 

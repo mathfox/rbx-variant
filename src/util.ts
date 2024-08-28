@@ -21,32 +21,12 @@ export type IsNever<T> = [T] extends [never] ? true : false;
 export const identityFunc = <T>(x = {} as T) => x as T extends unknown ? {} : T;
 
 /**
- * Determine whether or not a variable is a promise.
- * @param x potential promise.
- */
-export function isPromise<T>(x: T | PromiseLike<T>): x is PromiseLike<T> {
-	if (!typeIs(x, "table")) return false;
-
-	return (
-		(
-			x as unknown as {
-				andThen?: Callback;
-			}
-		)["andThen"] !== undefined
-	);
-}
-
-/**
  * Extract a type string from either a string or `VariantCreator`
  */
 export type TypeStr<
 	T extends string | VariantCreator<string, Func, K>,
 	K extends string = "type",
-> = T extends VariantCreator<infer R, Func, K>
-	? R
-	: T extends string
-		? T
-		: never;
+> = T extends VariantCreator<infer R, Func, K> ? R : T extends string ? T : never;
 
 /**
  * **H**igher-**O**rder **I**dentity.

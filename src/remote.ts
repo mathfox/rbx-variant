@@ -2,19 +2,11 @@ import { isArray } from "@rbxts/phantom/src/Array";
 import { keys } from "@rbxts/phantom/src/Dictionary";
 import { isTypeImpl } from "./isType";
 import { type MatchFuncs, matchImpl } from "./match";
-import type {
-	Func,
-	TypesOf,
-	VariantCreator,
-	VariantModule,
-	VariantOf,
-} from "./precepts";
+import type { Func, TypesOf, VariantCreator, VariantModule, VariantOf } from "./precepts";
 import { type VMFromVC, isVariantCreator, variantImpl } from "./variant";
 
 type IsFunctions<T extends VariantModule<K>, K extends string = "type"> = {
-	[P in keyof T]: <O extends Record<K, string>>(
-		object: O | {} | undefined,
-	) => object is VariantOf<T, P>;
+	[P in keyof T]: <O extends Record<K, string>>(object: O | {} | undefined) => object is VariantOf<T, P>;
 };
 
 /**
@@ -46,14 +38,13 @@ export enum CompareResult {
 	Greater,
 }
 
-type CreativeSequenceInput<K extends string, Type extends string = string> =
-	| Type
-	| VariantCreator<Type, Func, K>;
+type CreativeSequenceInput<K extends string, Type extends string = string> = Type | VariantCreator<Type, Func, K>;
 
-export type CreatorFromSeqInput<
-	T extends CreativeSequenceInput<K>,
-	K extends string,
-> = T extends VariantCreator<string, Func, string>
+export type CreatorFromSeqInput<T extends CreativeSequenceInput<K>, K extends string> = T extends VariantCreator<
+	string,
+	Func,
+	string
+>
 	? T
 	: T extends string
 		? VariantCreator<T, () => {}, K>
@@ -62,17 +53,12 @@ export type CreatorFromSeqInput<
 /**
  * A valid input to a sequence element.
  */
-type SequenceInput<K extends string, Type extends string = string> =
-	| CreativeSequenceInput<K, Type>
-	| Record<K, Type>;
+type SequenceInput<K extends string, Type extends string = string> = CreativeSequenceInput<K, Type> | Record<K, Type>;
 
 /**
  * Extract the underlying type from some given valid `SequenceInput`
  */
-type SequenceInputType<
-	T extends SequenceInput<K>,
-	K extends string,
-> = T extends string
+type SequenceInputType<T extends SequenceInput<K>, K extends string> = T extends string
 	? T
 	: T extends VariantCreator<string, Func, K>
 		? T["output"]["type"]
@@ -87,19 +73,13 @@ export interface Sequence<
 	T extends VariantModule<K>,
 	O extends SequenceInput<K, TypesOf<T>>,
 	K extends string,
-	RT extends Pick<T, SequenceInputType<O, K>> = Pick<
-		T,
-		SequenceInputType<O, K>
-	>,
+	RT extends Pick<T, SequenceInputType<O, K>> = Pick<T, SequenceInputType<O, K>>,
 > extends Remote<RT, K> {
 	/**
 	 * Compare two elements to discover whether `a` is greater, equal,
 	 * or lesser than `b`.
 	 */
-	compare: (
-		a: SequenceInput<K, TypesOf<RT>>,
-		b: SequenceInput<K, TypesOf<RT>>,
-	) => CompareResult;
+	compare: (a: SequenceInput<K, TypesOf<RT>>, b: SequenceInput<K, TypesOf<RT>>) => CompareResult;
 	/**
 	 * Get the index of some type in the sequence.
 	 */
@@ -151,15 +131,12 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 	const { variantList } = variantImpl(key);
 
 	function isFunctions<T extends VariantModule<K>>(vmod: T) {
-		return (keys(vmod) as ReadonlyArray<string & keyof T>).reduce(
-			(acc, key) => {
-				return {
-					...acc,
-					[key]: isType(key),
-				};
-			},
-			{},
-		) as IsFunctions<T, K>;
+		return (keys(vmod) as ReadonlyArray<string & keyof T>).reduce((acc, key) => {
+			return {
+				...acc,
+				[key]: isType(key),
+			};
+		}, {}) as IsFunctions<T, K>;
 	}
 
 	function remote<T extends VariantModule<K>>(vmod: T): Remote<T, K> {
@@ -171,9 +148,7 @@ export function remoteImpl<K extends string>(key: K): RemoteFuncs<K> {
 		};
 	}
 
-	function getType<T extends SequenceInput<K, U>, U extends string>(
-		input: T,
-	): U {
+	function getType<T extends SequenceInput<K, U>, U extends string>(input: T): U {
 		if (typeIs(input, "string")) {
 			return input as U;
 		} else if (isVariantCreator(input)) {

@@ -7,16 +7,9 @@ import type { GetTypeLabel, TypeNames, VariantOf } from "./precepts";
 import { fields, payload } from "./variant.tools";
 
 export = () => {
-	const {
-		isType,
-		match,
-		otherwise,
-		ofLiteral,
-		partial,
-		variantList,
-		variation,
-		variant,
-	} = variantCosmos({ key: "tag" });
+	const { isType, match, otherwise, ofLiteral, partial, variantList, variation, variant } = variantCosmos({
+		key: "tag",
+	});
 
 	const Animal = variant({
 		cat: fields<{
@@ -32,10 +25,7 @@ export = () => {
 			pattern,
 		}),
 	});
-	type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<
-		typeof Animal,
-		T
-	>;
+	type Animal<T extends TypeNames<typeof Animal> = undefined> = VariantOf<typeof Animal, T>;
 
 	it("", () => {
 		const thing = variant({
@@ -77,10 +67,7 @@ export = () => {
 		}) as Animal;
 
 		expect(() => {
-			assert(
-				!isType(kerb, Animal.snake),
-				"isType did not register kerb as a dog",
-			);
+			assert(!isType(kerb, Animal.snake), "isType did not register kerb as a dog");
 			assert(kerb.tag === "dog");
 		}).to.never.throw();
 	});
@@ -157,10 +144,7 @@ export = () => {
 				a: number;
 			}>(),
 		});
-		type Test<T extends TypeNames<typeof Test> = undefined> = VariantOf<
-			typeof Test,
-			T
-		>;
+		type Test<T extends TypeNames<typeof Test> = undefined> = VariantOf<typeof Test, T>;
 
 		Test.One();
 		Test.Two({ a: 5 });
@@ -170,14 +154,8 @@ export = () => {
 	});
 
 	it("variant list", () => {
-		const Ani = variantList([
-			"a",
-			variation("b", () => ({ timestamp: DateTime.now() })),
-		]);
-		type Ani<T extends TypeNames<typeof Ani> = undefined> = VariantOf<
-			typeof Ani,
-			T
-		>;
+		const Ani = variantList(["a", variation("b", () => ({ timestamp: DateTime.now() }))]);
+		type Ani<T extends TypeNames<typeof Ani> = undefined> = VariantOf<typeof Ani, T>;
 
 		const thing = Ani.a();
 		const thing2 = Ani.b();

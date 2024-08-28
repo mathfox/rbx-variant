@@ -1,4 +1,3 @@
-import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { LookupTableToHandler } from "./matcher";
 import {
 	DEFAULT_KEY,
@@ -21,12 +20,8 @@ export type Handler<T extends Record<K, string>, K extends string> = {
 /**
  * A set of functions meant to handle the _constructors_ of a variant type
  */
-export type CreatorHandler<
-	C extends VariantCreator<string, (...args: Array<any>) => {}, string>,
-> = {
-	[P in C["output"]["type"]]: (
-		instance: Extract<C, { output: { type: P } }>,
-	) => any;
+export type CreatorHandler<C extends VariantCreator<string, (...args: Array<any>) => {}, string>> = {
+	[P in C["output"]["type"]]: (instance: Extract<C, { output: { type: P } }>) => any;
 };
 
 type AdvertiseDefault<T> = T & {
@@ -48,10 +43,7 @@ type FuncsOnly<T> = {
 	[P in keyof T]: T[P] extends Func ? T[P] : never;
 };
 
-export type LiteralToUnion<
-	T extends string | number | symbol,
-	K extends string,
-> = { [P in T]: Record<K, P> }[T];
+export type LiteralToUnion<T extends string | number | symbol, K extends string> = { [P in T]: Record<K, P> }[T];
 
 export type MatchFuncs<K extends string> = {
 	match: MatchOverloads<K>;
@@ -61,10 +53,7 @@ export type MatchFuncs<K extends string> = {
 	 * elevate a literal `A | B | C` to a type union `{type: A} | {type: B} | {type: C}`
 	 * @param instance
 	 */
-	ofLiteral<T extends string | number | symbol>(
-		this: void,
-		instance: T,
-	): LiteralToUnion<T, K>;
+	ofLiteral<T extends string | number | symbol>(this: void, instance: T): LiteralToUnion<T, K>;
 
 	/**
 	 * Handle some cases, deal with the rest in a  well-typed function. If the discriminated union
@@ -77,11 +66,7 @@ export type MatchFuncs<K extends string> = {
 		P extends Partial<Handler<T, K>>,
 		T extends Record<K, string>,
 		Else extends (remainder: Exclude<T, Record<K, keyof P>>) => any,
-	>(
-		this: void,
-		branches: P,
-		elseFunc: Else,
-	): (input: T) => HandlerFromPartial<P & { default: Else }, T[K]>;
+	>(this: void, branches: P, elseFunc: Else): (input: T) => HandlerFromPartial<P & { default: Else }, T[K]>;
 
 	// partial helper function.
 	partial: PartialOverloads<K>;
@@ -103,11 +88,7 @@ export type MatchFuncs<K extends string> = {
 	 * @param handler
 	 * @param fallback
 	 */
-	withFallback<
-		T extends Record<K, string>,
-		H extends Handler<T, K>,
-		F extends (instance: T) => any,
-	>(
+	withFallback<T extends Record<K, string>, H extends Handler<T, K>, F extends (instance: T) => any>(
 		this: void,
 		handler: H,
 		fallback: F,
@@ -124,10 +105,7 @@ type ExplicitHandler<H extends Record<Keys, Func>, F, Keys extends string> = {
 	[K in Keys]: H[K];
 } & { [DEFAULT_KEY]: F };
 
-type HandlerFromPartial<
-	H extends Record<"default", unknown>,
-	Keys extends string,
-> = {
+type HandlerFromPartial<H extends Record<"default", unknown>, Keys extends string> = {
 	[K in Keys]: H extends Record<K, any> ? H[K] : H["default"];
 };
 
@@ -172,10 +150,7 @@ export interface MatchOverloads<K extends string> {
 	 * @template T instance of a variant
 	 * @template H handler object
 	 */
-	<
-		C extends VariantCreator<string, (...args: Array<any>) => {}, K>,
-		H extends CreatorHandler<C>,
-	>(
+	<C extends VariantCreator<string, (...args: Array<any>) => {}, K>, H extends CreatorHandler<C>>(
 		this: void,
 		handler: EnforceHandler<H> | ((t: C) => H),
 	): (instance: C) => ReturnType<H[keyof H]>;
@@ -204,10 +179,7 @@ export interface MatchOverloads<K extends string> {
 	 * @param handler an object with a function corresponding to each case
 	 * @returns The result of the appropriate branch based on the creator type
 	 */
-	<
-		C extends VariantCreator<string, (...args: Array<any>) => {}, K>,
-		H extends CreatorHandler<C>,
-	>(
+	<C extends VariantCreator<string, (...args: Array<any>) => {}, K>, H extends CreatorHandler<C>>(
 		this: void,
 		target: C,
 		handler: H | ((t: C) => H),
@@ -218,9 +190,7 @@ export interface MatchOverloads<K extends string> {
  * Ensure that the handler object is not empty.
  */
 export type EnforceHandler<T> = {} extends T
-	? VariantError<
-			["Handler cannot be empty", "Are you sure you are using this inline?"]
-		>
+	? VariantError<["Handler cannot be empty", "Are you sure you are using this inline?"]>
 	: T;
 
 export interface PrematchFunc<K extends string> {
@@ -230,10 +200,7 @@ export interface PrematchFunc<K extends string> {
 	 * @param variant an object containing variant creators.
 	 * @returns a function to handle an instance of that type.
 	 */
-	<T extends VariantModule<K>>(
-		this: void,
-		variant: T,
-	): TypedCurriedMatchFunc<VariantOf<T>, K>;
+	<T extends VariantModule<K>>(this: void, variant: T): TypedCurriedMatchFunc<VariantOf<T>, K>;
 	/**
 	 * Match against a variant by type
 	 *
@@ -246,35 +213,24 @@ export interface PrematchFunc<K extends string> {
 /**
  * Curried match func set to a specific type from `prematch`.
  */
-export interface TypedCurriedMatchFunc<
-	T extends Record<K, string>,
-	K extends string,
-> {
+export interface TypedCurriedMatchFunc<T extends Record<K, string>, K extends string> {
 	/**
 	 * Resolve the predefined matcher.
 	 */
-	<H extends Handler<T, K>>(
-		handler: H | ((t: T) => H),
-	): (instance: T) => ReturnType<H[keyof H]>;
+	<H extends Handler<T, K>>(handler: H | ((t: T) => H)): (instance: T) => ReturnType<H[keyof H]>;
 }
 
 export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 	// curryable wrapper around match.
 	const prematch =
 		(_?: {}) =>
-		(
-			handler:
-				| Handler<Record<K, string>, K>
-				| ((t: {}) => Handler<Record<K, string>, K>),
-		) =>
+		(handler: Handler<Record<K, string>, K> | ((t: {}) => Handler<Record<K, string>, K>)) =>
 		(instance: Record<K, string>) =>
 			match(instance, handler);
 
-	function match<
-		T extends Record<K, TType>,
-		H extends Handler<T, K> | ((t: T) => Handler<T, K>),
-		TType extends string,
-	>(...args: ReadonlyArray<unknown>) {
+	function match<T extends Record<K, TType>, H extends Handler<T, K> | ((t: T) => Handler<T, K>), TType extends string>(
+		...args: ReadonlyArray<unknown>
+	) {
 		if (args.size() === 1) {
 			// inline match
 			const [handler] = args as [H];
@@ -282,11 +238,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		} else if (args.size() === 2) {
 			// regular match
 			const [instanceOrTypeOrCreator, handlerParam] = args as [
-				(
-					| T
-					| TType
-					| VariantCreator<string, (...args: ReadonlyArray<any>) => {}, K>
-				),
+				T | TType | VariantCreator<string, (...args: ReadonlyArray<any>) => {}, K>,
 				H,
 			];
 
@@ -294,10 +246,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 				? (ofLiteral(instanceOrTypeOrCreator) as T)
 				: instanceOrTypeOrCreator;
 			// unpack handler from function if necessary.
-			const handler: WithDefault<Handler<T, K>, T> = typeIs(
-				handlerParam,
-				"function",
-			)
+			const handler: WithDefault<Handler<T, K>, T> = typeIs(handlerParam, "function")
 				? (handlerParam as Extract<H, Func>)(instanceOrCreator as any)
 				: handlerParam;
 
@@ -308,11 +257,7 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 						? (instanceOrCreator.output.type as keyof typeof handler)
 						: (instanceOrCreator as T)[key];
 
-			if (
-				instanceOrCreator !== undefined &&
-				tType !== undefined &&
-				tType in handler
-			) {
+			if (instanceOrCreator !== undefined && tType !== undefined && tType in handler) {
 				return handler[tType]?.(instanceOrCreator as any);
 			} else if (DEFAULT_KEY in handler) {
 				return handler[DEFAULT_KEY]?.(instanceOrCreator as any);
@@ -347,22 +292,14 @@ export function matchImpl<K extends string>(key: K): MatchFuncs<K> {
 		P extends Partial<Handler<T, K>>,
 		T extends Record<K, string>,
 		Else extends (remainder: Exclude<T, Record<K, keyof P>>) => any,
-	>(
-		branches: P,
-		elseFunc: Else,
-	): (input: T) => HandlerFromPartial<P & { default: Else }, T[K]> {
-		return (_) =>
-			({ ...branches, default: elseFunc }) as unknown as HandlerFromPartial<
-				P & { default: Else },
-				T[K]
-			>;
+	>(branches: P, elseFunc: Else): (input: T) => HandlerFromPartial<P & { default: Else }, T[K]> {
+		return (_) => ({ ...branches, default: elseFunc }) as unknown as HandlerFromPartial<P & { default: Else }, T[K]>;
 	}
 
-	function withFallback<
-		T extends Record<K, string>,
-		H extends Handler<T, K>,
-		F extends (instance: T) => any,
-	>(handler: H, fallback: F): (input: T) => ExplicitHandler<H, F, T[K]> {
+	function withFallback<T extends Record<K, string>, H extends Handler<T, K>, F extends (instance: T) => any>(
+		handler: H,
+		fallback: F,
+	): (input: T) => ExplicitHandler<H, F, T[K]> {
 		return (_) => ({ ...handler, default: fallback });
 	}
 

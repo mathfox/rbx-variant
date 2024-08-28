@@ -37,9 +37,7 @@ export interface VariantCosmosConfig<K extends string> {
  * @template K discriminant as string literal.
  * @returns `VariantCosmos<K>`
  */
-export function variantCosmos<K extends string>({
-	key,
-}: VariantCosmosConfig<K>): VariantCosmos<K> {
+export function variantCosmos<K extends string>({ key }: VariantCosmosConfig<K>): VariantCosmos<K> {
 	const { isType } = isTypeImpl(key);
 	const { flags } = flagsImpl(key);
 

@@ -48,15 +48,11 @@ export = () => {
 	});
 
 	it("order compare", () => {
-		expect(rank.compare(perseus, sample.cerberus)).to.equal(
-			CompareResult.Greater,
-		);
+		expect(rank.compare(perseus, sample.cerberus)).to.equal(CompareResult.Greater);
 	});
 
 	it("order compare", () => {
-		expect(rank.compare(Animal.cat, sample.cerberus)).to.equal(
-			CompareResult.Greater,
-		);
+		expect(rank.compare(Animal.cat, sample.cerberus)).to.equal(CompareResult.Greater);
 	});
 
 	it("order index", () => {

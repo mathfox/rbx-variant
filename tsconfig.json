@@ -13,7 +13,10 @@
 		"typeRoots": ["node_modules/@rbxts"],
 		// configurable
 		"rootDir": "src",
+		"rootDirs": ["src", "examples"],
 		"outDir": "out",
 		"declaration": true
-	}
+	},
+	"include": ["src", "examples"],
+	"exclude": ["**/node_modules", "**/.*/"]
 }

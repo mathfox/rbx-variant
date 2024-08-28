@@ -16,10 +16,7 @@ export = () => {
 			})),
 		);
 		type test = typeof Option;
-		type Option<
-			T,
-			TType extends TypeNames<typeof Option> = undefined,
-		> = GVariantOf<typeof Option, TType, { T: T }>;
+		type Option<T, TType extends TypeNames<typeof Option> = undefined> = GVariantOf<typeof Option, TType, { T: T }>;
 
 		const num = Option.Some(4);
 		const name = Option.Some("Steve");
@@ -57,11 +54,7 @@ export = () => {
 				};
 			}),
 		);
-		type Tree<T, TType extends TypeNames<typeof Tree> = undefined> = GVariantOf<
-			typeof Tree,
-			TType,
-			{ T: T }
-		>;
+		type Tree<T, TType extends TypeNames<typeof Tree> = undefined> = GVariantOf<typeof Tree, TType, { T: T }>;
 
 		const binTree = Tree.Branch({
 			payload: 1,

@@ -30,10 +30,7 @@ export = () => {
 	});
 
 	it("types func (on instance list)", () => {
-		const dogAndCat = [
-			sample.cerberus,
-			Animal.cat({ name: "Zagreus", furnitureDamaged: 2 }),
-		];
+		const dogAndCat = [sample.cerberus, Animal.cat({ name: "Zagreus", furnitureDamaged: 2 })];
 		const animalTypes = types(dogAndCat);
 
 		expect(animalTypes.includes("cat")).to.equal(true);
