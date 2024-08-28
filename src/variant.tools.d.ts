@@ -5,7 +5,9 @@
  *
  * @param defaults set some default values for the object. Note this does *not* adjust the return type.
  */
-export function fields<T extends {}>(defaults?: Partial<T>): (...args: {} extends T ? [input?: T] : [input: T]) => T;
+export function fields<T extends Record<string, defined>>(): (
+	...args: Record<string, never> extends T ? [input?: T] : [input: T]
+) => T;
 
 /**
  * Take a single variable of type T and store as 'payload'

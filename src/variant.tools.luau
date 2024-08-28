@@ -1,18 +1,14 @@
 --!native
+--!strict
+--!optimize 2
 
-local function fields(defaults)
+local function fields()
 	return function(input)
 		if not input then
 			return {}
 		end
 
-		local variant = table.clone(defaults)
-
-		for key, value in input do
-			variant[key] = value
-		end
-
-		return variant
+		return table.clone(input)
 	end
 end
 
