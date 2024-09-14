@@ -12,13 +12,13 @@ export type Identity<T> = T extends object
 /**
  * https://github.com/microsoft/TypeScript/issues/31751#issuecomment-498526919
  */
-export type IsNever<T> = [T] extends [never] ? true : false;
+export type IsNever<TInput> = [TInput] extends [never] ? true : false;
 
 /**
  * Identity function. Doubles as the noop func.
  * @param x
  */
-export const identityFunc = <T>(x = {} as T) => x as T extends unknown ? {} : T;
+export const identityFunc = <TInpu>(x = {} as TInpu) => x as TInpu extends unknown ? {} : TInpu;
 
 /**
  * Extract a type string from either a string or `VariantCreator`

@@ -1,5 +1,5 @@
-export type Catalog<in T extends string = string> = {
-	readonly [Key in T]: Key;
+export type Catalog<TInput extends string = string> = {
+	readonly [TKey in TInput]: TKey;
 };
 
 /**
@@ -15,7 +15,7 @@ export type Catalog<in T extends string = string> = {
  * ```
  * `Suit` is now available as both value (`return Suit.Spades`) and type (`function(cardSuit: Suit) { ... }`)
  */
-export function catalog<T extends string>(strings: ReadonlyArray<T>): Catalog<T> {
+export function catalog<TInput extends string>(strings: ReadonlyArray<TInput>): Catalog<TInput> {
 	const catalog: Record<string, unknown> = {};
 
 	for (const key of strings) {
