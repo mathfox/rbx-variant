@@ -1,5 +1,3 @@
-/// <reference types="@rbxts/testez/globals" />
-
 import { catalog } from "./catalog";
 
 export = () => {
