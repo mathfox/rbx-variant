@@ -1,4 +1,4 @@
-import { fields } from "./variant.tools";
+import { fields } from "../variant.tools";
 
 // Basic usage
 const value_1 = fields<{
