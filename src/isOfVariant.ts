@@ -1,4 +1,3 @@
-import { values } from "@rbxts/phantom/src/Dictionary";
 import type { SumType, VariantModule } from "./precepts";
 
 export interface IsOfVariantFunc<K extends string> {
@@ -17,6 +16,7 @@ export interface IsOfVariantFunc<K extends string> {
 	 * @returns instance is variant
 	 */
 	isOfVariant<T extends VariantModule<K>>(this: void, instance: {} | undefined, variant: T): instance is SumType<T>;
+
 	/**
 	 * Checks if an object was created from one of a set of variants. This function is a
 	 * [user-defined type guard](https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards)
