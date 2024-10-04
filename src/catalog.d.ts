@@ -1,6 +1,4 @@
-export type Catalog<TInput extends string = string> = {
-	readonly [TKey in TInput]: TKey;
-};
+import type { Catalog } from "./types2";
 
 /**
  * Create a catalog object from a set of strings.
@@ -15,12 +13,6 @@ export type Catalog<TInput extends string = string> = {
  * ```
  * `Suit` is now available as both value (`return Suit.Spades`) and type (`function(cardSuit: Suit) { ... }`)
  */
-export function catalog<TInput extends string>(strings: ReadonlyArray<TInput>): Catalog<TInput> {
-	const catalog: Record<string, unknown> = {};
+declare function catalog<TInput extends string>(strings: ReadonlyArray<TInput>): Catalog<TInput>;
 
-	for (const key of strings) {
-		catalog[key] = key;
-	}
-
-	return catalog as Catalog;
-}
+export = catalog;
