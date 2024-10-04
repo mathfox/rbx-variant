@@ -1,4 +1,4 @@
-import type { Constructable, ConstructableToFactory } from "./types2";
+import type { Constructable, ConstructableToFactory } from "./types";
 
 /**
  * Create a variant based on a class.

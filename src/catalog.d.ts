@@ -1,4 +1,4 @@
-import type { Catalog } from "./types2";
+import type { Catalog } from "./types";
 
 /**
  * Create a catalog object from a set of strings.
