@@ -20,8 +20,6 @@ const test_2 = value_2();
 // These ones should error,
 // as we are not using the record.
 
-// @ts-expect-error
 const error_1 = fields<Workspace>();
 
-// @ts-expect-error
 const error_2 = fields<object>();

@@ -30,7 +30,7 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@rbxts/phantom": "^0.2.0"
+		"@rbxts/phantom": "^0.6.0"
 	},
 	"devDependencies": {
 		"@rbxts/compiler-types": "^3.0.0-types.0",
