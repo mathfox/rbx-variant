@@ -78,6 +78,6 @@ export type VariantModule<TType extends string> = {
  * Extract a type string from either a string or `VariantCreator`
  */
 export type TypeStr<
-	T extends string | VariantCreator<string, Callback, K>,
-	K extends string = "type",
-> = T extends VariantCreator<infer R, Callback, K> ? R : T extends string ? T : never;
+	TValue extends string | VariantCreator<string, Callback, TType>,
+	TType extends string = "type",
+> = TValue extends VariantCreator<infer TName, Callback, TType> ? TName : TValue extends string ? TValue : never;

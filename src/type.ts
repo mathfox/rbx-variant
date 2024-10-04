@@ -15,8 +15,6 @@ export const {
 	scoped,
 	sequence,
 	lookup,
-	typed,
-	types,
 	variant,
 	variantList,
 	variantModule,

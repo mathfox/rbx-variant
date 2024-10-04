@@ -16,6 +16,5 @@ export type {
 	VariantOf,
 	VariantModule,
 } from "./precepts";
-export { pass } from "./typed";
 export type { HOI } from "./utils";
 export { fields, none, payload } from "./variant.tools";
