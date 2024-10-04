@@ -5,14 +5,14 @@
  *
  * @param defaults set some default values for the object. Note this does *not* adjust the return type.
  */
-export function fields<T extends Record<string, defined>>(): (
-	...args: Record<string, never> extends T ? [input?: T] : [input: T]
-) => T;
+export function fields<TInput extends Record<string, defined>>(): (
+	...args: Record<string, never> extends TInput ? [input?: TInput] : [input: TInput]
+) => TInput;
 
 /**
  * Take a single variable of type T and store as 'payload'
  */
-export function payload<T>(): () => { payload: T };
+export function payload<TInput>(): () => { payload: TInput };
 
 /**
  * Create an empty variation (`{type: 'literal'}`).

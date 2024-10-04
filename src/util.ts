@@ -1,4 +1,4 @@
-import type { Func, VariantCreator } from "./precepts";
+import type { VariantCreator } from "./precepts";
 
 /**
  * Collapse a complex type into a more easily read object.
