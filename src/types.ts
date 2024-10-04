@@ -1,5 +1,4 @@
 import { isArray } from "@rbxts/phantom/src/Array";
-import { values } from "@rbxts/phantom/src/Dictionary";
 import type { Func, TypesOf, VariantCreator, VariantModule } from "./precepts";
 import type { Identity } from "./util";
 import { isVariantCreator } from "./variant";

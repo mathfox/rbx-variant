@@ -1,5 +1,4 @@
-import { isArray } from "@rbxts/phantom/src/Array";
-import { entries, keys } from "@rbxts/phantom/src/Dictionary";
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type { GenericTemplate, GenericVariantRecord } from "./generic";
 import type { Func, RawVariant, VariantCreator } from "./precepts";
 import { type Identity, identityFunc } from "./util";
@@ -53,9 +52,7 @@ function descopeType<S extends string, T extends string>(s: ScopedType<S, T>): T
 	return (s.split("/")[1] ?? s) as T;
 }
 
-const VARIANT_CREATOR_BRAND: unique symbol = {
-	__brand: "Variant Creator",
-} as any;
+const VARIANT_CREATOR_BRAND: unique symbol = {} as any;
 
 /**
  * Checks whether the provided value is a table with branded member
@@ -285,12 +282,11 @@ export function variantImpl<K extends string>(key: K): VariantFuncs<K> {
 		} as any;
 	}
 
-	function variation<T extends string, F extends Func = () => {}>(t: T, creator?: F) {
+	function variation<TName extends string, TCreator extends Callback = () => {}>(t: TName, creator?: TCreator) {
 		const maker = {
 			output: { key, type: t },
 			name: t,
 			[VARIANT_CREATOR_BRAND]: true,
-			toString: () => t,
 		};
 
 		setmetatable(maker, {

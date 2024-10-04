@@ -29,25 +29,19 @@ export type PatchObjectOrPromise<T extends {} | PromiseLike<{}>, U extends {}> =
 /**
  * The type marking metadata.
  */
-export type Outputs<K, T> = {
-	output: {
+export interface Outputs<K, T> {
+	readonly output: {
 		/**
 		 * Discriminant property key
 		 */
-		key: K;
+		readonly key: K;
+
 		/**
 		 * The type of object created by this function.
 		 */
-		type: T;
+		readonly type: T;
 	};
-};
-
-/**
- * More specific toString();
- */
-export type Stringable<ReturnType extends string> = {
-	toString(): ReturnType;
-};
+}
 
 /**
  * The constructor function for one tag of a variant type
@@ -57,13 +51,12 @@ export type Stringable<ReturnType extends string> = {
  * @template K the discriminant.
  */
 export type VariantCreator<
-	T extends string,
+	TName extends string,
 	F extends (...args: Array<any>) => {} = (...args: Array<any>) => {},
 	K extends string = "type",
-> = ((...args: Parameters<F>) => PatchObjectOrPromise<ReturnType<F>, Record<K, T>>) &
-	Outputs<K, T> &
-	Stringable<T> & {
-		name: T;
+> = ((...args: Parameters<F>) => PatchObjectOrPromise<ReturnType<F>, Record<K, TName>>) &
+	Outputs<K, TName> & {
+		name: TName;
 	};
 
 /**
@@ -75,11 +68,6 @@ export type CreatorOutput<VC extends VariantCreator<string, Func, string>> = Ret
 		? R
 		: never
 	: ReturnType<VC>;
-
-/**
- * Basic building block, the loose function signature.
- */
-export type Func = (...args: Array<any>) => any;
 
 /**
  * A variant module definition. Literally an object serving as
