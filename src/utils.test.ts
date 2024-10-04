@@ -1,4 +1,4 @@
-import { identityFunc } from "./util";
+import { identityFunc } from "./utils";
 import { expect, it } from "@rbxts/jest-globals";
 
 export = () => {

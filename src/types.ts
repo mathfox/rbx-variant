@@ -1,6 +1,6 @@
 import { isArray } from "@rbxts/phantom/src/Array";
 import type { Func, TypesOf, VariantCreator, VariantModule } from "./precepts";
-import type { Identity } from "./util";
+import type { Identity } from "./utils";
 import { isVariantCreator } from "./variant";
 
 export interface TypesFunc<K extends string> {

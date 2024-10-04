@@ -1,7 +1,7 @@
 import isArray from "@rbxts/phantom/src/Array/isArray";
 import type { GenericTemplate, GenericVariantRecord } from "./generic";
 import type { Func, RawVariant, VariantCreator } from "./precepts";
-import { type Identity, identityFunc } from "./util";
+import { type Identity, identityFunc } from "./utils";
 
 /**
  * A variant rendered as an object.

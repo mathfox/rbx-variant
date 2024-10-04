@@ -1,5 +1,5 @@
 import type { Func, VariantCreator } from "./precepts";
-import type { TypeStr } from "./util";
+import type { TypeStr } from "./utils";
 
 export interface IsTypeFunc<K extends string> {
 	/**

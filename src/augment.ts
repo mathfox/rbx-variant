@@ -1,6 +1,6 @@
 import type { Func, PatchObjectOrPromise, RawVariant, VariantCreator, VariantOf, VariantTypeSpread } from "./precepts";
 import { variation } from "./type";
-import type { Identity } from "./util";
+import type { Identity } from "./utils";
 import { type VariantRecord, isVariantCreator } from "./variant";
 
 /**

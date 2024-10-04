@@ -3,7 +3,7 @@ import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { Handler } from "./match";
 import { just } from "./match.tools";
 import type { Func, Limited, Splay, VariantCreator, VariantError } from "./precepts";
-import type { TypeStr } from "./util";
+import type { TypeStr } from "./utils";
 import { isVariantCreator } from "./variant";
 
 /**

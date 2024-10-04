@@ -1,5 +1,5 @@
 import type { Func } from "./precepts";
-import type { Identity } from "./util";
+import type { Identity } from "./utils";
 
 /**
  * Template that follows a particular pattern.

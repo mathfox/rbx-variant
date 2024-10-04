@@ -1,6 +1,6 @@
 import { keys, values } from "@rbxts/phantom/src/Dictionary";
 import type { TypeMap, TypesOf, VariantModule } from "./precepts";
-import type { Identity } from "./util";
+import type { Identity } from "./utils";
 
 /**
  * A catalog object listing the types inherent to some `VariantModule`

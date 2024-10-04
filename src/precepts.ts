@@ -1,4 +1,4 @@
-import type { Identity, IsNever } from "./util";
+import type { Identity, IsNever } from "./utils";
 
 /**
  * Used in writing cases of a type-first variant.
@@ -13,53 +13,6 @@ export type Variant<Type extends string, Fields extends {} = {}, Key extends str
 	Fields;
 
 /**
- * Given an object or a promise containing an object, patch it to
- * include some extra properties.
- *
- * This is mostly used to merge the `{type: ______}` property into
- * the body definition of a variant.
- *
- * Note: Places items at the top of the resulting object - this helps clearly
- * identify the discriminant in a union.
- */
-export type PatchObjectOrPromise<T extends {} | PromiseLike<{}>, U extends {}> = T extends PromiseLike<infer R>
-	? Promise<Identity<U & R>>
-	: Identity<U & T>;
-
-/**
- * The type marking metadata.
- */
-export interface Outputs<K, T> {
-	readonly output: {
-		/**
-		 * Discriminant property key
-		 */
-		readonly key: K;
-
-		/**
-		 * The type of object created by this function.
-		 */
-		readonly type: T;
-	};
-}
-
-/**
- * The constructor function for one tag of a variant type
- *
- * @template T literal string used as the type
- * @template F function serving as the variant definition
- * @template K the discriminant.
- */
-export type VariantCreator<
-	TName extends string,
-	F extends (...args: Array<any>) => {} = (...args: Array<any>) => {},
-	K extends string = "type",
-> = ((...args: Parameters<F>) => PatchObjectOrPromise<ReturnType<F>, Record<K, TName>>) &
-	Outputs<K, TName> & {
-		name: TName;
-	};
-
-/**
  * Given a VariantCreator, extract the output type. Unpack it
  * from a promise if it is inside one.
  */
@@ -68,14 +21,6 @@ export type CreatorOutput<VC extends VariantCreator<string, Func, string>> = Ret
 		? R
 		: never
 	: ReturnType<VC>;
-
-/**
- * A variant module definition. Literally an object serving as
- * a collection of variant constructors.
- */
-export type VariantModule<K extends string> = {
-	[name: string]: VariantCreator<string, Func, K>;
-};
 
 /**
  * A mapping of friendly names to the underlying type literals.
