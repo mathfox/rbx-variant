@@ -1,4 +1,3 @@
-import { keys } from "@rbxts/phantom/src/Dictionary";
 import type { Func, PatchObjectOrPromise, RawVariant, VariantCreator, VariantOf, VariantTypeSpread } from "./precepts";
 import { variation } from "./type";
 import type { Identity } from "./util";

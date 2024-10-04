@@ -3,11 +3,11 @@ import type { Func, VariantCreator } from "./precepts";
 /**
  * Collapse a complex type into a more easily read object.
  */
-export type Identity<T> = T extends object
+export type Identity<TValue> = TValue extends object
 	? {} & {
-			[P in keyof T]: T[P];
+			[TKey in keyof TValue]: TValue[TKey];
 		}
-	: T;
+	: TValue;
 
 /**
  * https://github.com/microsoft/TypeScript/issues/31751#issuecomment-498526919
@@ -53,6 +53,6 @@ export type TypeStr<
  * ```
  */
 export const HOI =
-	<Constraint>() =>
-	<T extends Constraint>(definition: T) =>
+	<TConstraint>() =>
+	<TDefinition extends TConstraint>(definition: TDefinition) =>
 		definition;
